@@ -114,6 +114,39 @@ function submitCoop() {
 renderCityList('all');
 
 
+// ============ 抖音口令复制 ============
+function copyDouyinCode() {
+  const code = '梵优茗宠 直播间口令：萌宠666';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(() => {
+      showToast('口令已复制：萌宠666，打开抖音即可进入直播间 🎬');
+    }).catch(() => {
+      fallbackCopy(code);
+    });
+  } else {
+    fallbackCopy(code);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  ta.style.top = '-9999px';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('口令已复制：萌宠666，打开抖音即可进入直播间 🎬');
+  } catch (e) {
+    showToast('复制失败，请稍后再试');
+  }
+  document.body.removeChild(ta);
+}
+
+
 // ============ Banner 轮播 ============
 (function initBanner() {
   const track = document.getElementById('bannerTrack');

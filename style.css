@@ -1121,49 +1121,107 @@ body {
   background: var(--primary);
 }
 
-/* ========== 精选分类 ========== */
-.category-section {
-  margin: 10px 0;
-  background: var(--card-bg);
-  border-radius: var(--radius-lg);
-  padding: 14px 8px;
-  box-shadow: var(--shadow-sm);
-}
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px 4px;
-}
-.category-item {
+/* ========== 信息栏 ========== */
+.stats-bar {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  transition: transform var(--transition);
-}
-.category-item:active { transform: scale(0.95); }
-.category-item-icon {
-  width: 44px;
-  height: 44px;
+  background: var(--card-bg);
   border-radius: var(--radius);
+  margin: 6px 0 8px;
+  padding: 10px 6px;
+  box-shadow: var(--shadow-sm);
+  gap: 2px;
+}
+.stats-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  cursor: pointer;
+  transition: background var(--transition);
+  border-radius: var(--radius-sm);
+}
+.stats-bar-item:active { background: #f5f1ec; }
+.stats-bar-item svg { width: 14px; height: 14px; flex-shrink: 0; }
+.stats-bar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* 城市定位 */
+.stats-bar-item:first-child { color: var(--text); flex-shrink: 0; }
+.stats-bar-item:first-child svg:first-child { color: var(--primary); }
+.stats-city-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+}
+.stats-arrow {
+  width: 12px !important;
+  height: 12px !important;
+  color: var(--text-light);
+}
+
+/* 萌友数 */
+.stats-friends {
+  flex: 1;
+  justify-content: center;
+  cursor: default;
+  gap: 2px;
+  min-width: 0;
+}
+.stats-friends:active { background: transparent; }
+.stats-friends-label {
+  font-size: 10px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+.stats-friends-num {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent);
+}
+.stats-friends-sep {
+  font-size: 10px;
+  color: var(--border);
+  margin: 0 2px;
+}
+
+/* 抖音直播 */
+.stats-douyin {
+  flex-shrink: 0;
+  gap: 5px;
+  background: linear-gradient(135deg, #ff0050 0%, #ff2d6d 100%);
+  padding: 5px 10px 5px 6px;
+  border-radius: 14px;
+  color: #fff;
+}
+.stats-douyin:active { background: linear-gradient(135deg, #e00046 0%, #e62860 100%); }
+.stats-douyin-icon {
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
 }
-.category-item-icon.c1 { background: #fff3e0; }
-.category-item-icon.c2 { background: #e8f5e9; }
-.category-item-icon.c3 { background: #e3f2fd; }
-.category-item-icon.c4 { background: #fce4ec; }
-.category-item-icon.c5 { background: #f3e5f5; }
-.category-item-icon.c6 { background: #e0f7fa; }
-.category-item-icon.c7 { background: #fff8e1; }
-.category-item-icon.c8 { background: #f1f8e9; }
-.category-item-label {
+.stats-douyin-icon svg {
+  width: 14px;
+  height: 14px;
+  color: #fff;
+}
+.stats-douyin-text {
   font-size: 11px;
-  color: var(--text);
-  font-weight: 500;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.stats-douyin-dot {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  animation: pulse-dot 1.5s ease-in-out infinite;
 }
 
 /* ========== AI定制卡片 ========== */

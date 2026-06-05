@@ -83,41 +83,28 @@
       </div>
     </div>
 
-    <!-- ==================== 精选分类 ==================== -->
-    <div class="category-section">
-      <div class="category-grid">
-        <div class="category-item" onclick="showToast('狗狗零食')">
-          <div class="category-item-icon c1">🦴</div>
-          <div class="category-item-label">狗狗零食</div>
+    <!-- ==================== 信息栏 ==================== -->
+    <div class="stats-bar">
+      <div class="stats-bar-item" onclick="switchTab('city', document.querySelector('.nav-item:nth-child(2)'))">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="stats-city-name" id="statsCityName">杭州市</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="stats-arrow"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="stats-bar-divider"></div>
+      <div class="stats-bar-item stats-friends">
+        <span class="stats-friends-label">同城萌友</span>
+        <span class="stats-friends-num" id="statsLocalFriends">8,562</span>
+        <span class="stats-friends-sep">|</span>
+        <span class="stats-friends-label">全国萌友</span>
+        <span class="stats-friends-num" id="statsAllFriends">128,936</span>
+      </div>
+      <div class="stats-bar-divider"></div>
+      <div class="stats-bar-item stats-douyin" onclick="copyDouyinCode()">
+        <div class="stats-douyin-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.89a2.89 2.89 0 0 1-2.88 2.59 2.9 2.9 0 0 1-2.89-2.9 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.53a6.37 6.37 0 0 0-.79-.05A6.38 6.38 0 0 0 3.1 15.6a6.38 6.38 0 0 0 6.38 6.38 6.38 6.38 0 0 0 6.38-6.38V8.67a8.3 8.3 0 0 0 4.84 1.56v-3.45a4.8 4.8 0 0 1-1.11-.09z"/></svg>
         </div>
-        <div class="category-item" onclick="showToast('猫咪零食')">
-          <div class="category-item-icon c2">🐟</div>
-          <div class="category-item-label">猫咪零食</div>
-        </div>
-        <div class="category-item" onclick="showToast('主粮罐頭')">
-          <div class="category-item-icon c3">🥫</div>
-          <div class="category-item-label">主粮罐头</div>
-        </div>
-        <div class="category-item" onclick="showToast('营养保健')">
-          <div class="category-item-icon c4">💊</div>
-          <div class="category-item-label">营养保健</div>
-        </div>
-        <div class="category-item" onclick="showToast('玩具用品')">
-          <div class="category-item-icon c5">🎾</div>
-          <div class="category-item-label">玩具用品</div>
-        </div>
-        <div class="category-item" onclick="showToast('清洁护理')">
-          <div class="category-item-icon c6">🧴</div>
-          <div class="category-item-label">清洁护理</div>
-        </div>
-        <div class="category-item" onclick="showToast('服饰出行')">
-          <div class="category-item-icon c7">👔</div>
-          <div class="category-item-label">服饰出行</div>
-        </div>
-        <div class="category-item" onclick="showToast('医疗健康')">
-          <div class="category-item-icon c8">🏥</div>
-          <div class="category-item-label">医疗健康</div>
-        </div>
+        <span class="stats-douyin-text">直播中</span>
+        <span class="stats-douyin-dot"></span>
       </div>
     </div>
 
