@@ -13,12 +13,11 @@ function showToast(msg) {
   setTimeout(() => toast.remove(), 2100);
 }
 
-
 // ============ Tab 切换 ============
 function switchTab(tab, el) {
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.querySelectorAll('.nav-item-creator').forEach(n => n.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach((n) => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item-creator').forEach((n) => n.classList.remove('active'));
+  document.querySelectorAll('.page').forEach((p) => p.classList.remove('active'));
   // 确保返回按钮隐藏
   document.getElementById('headerBack').classList.add('hidden');
   // 清除拼团定时器
@@ -27,9 +26,9 @@ function switchTab(tab, el) {
     groupCountdownTimer = null;
   }
   if (tab === 'creator') {
-    el.classList.add('active');
+    el?.classList.add('active');
   } else {
-    el.classList.add('active');
+    el?.classList.add('active');
   }
   if (tab === 'home') {
     document.getElementById('homePage').classList.add('active');
@@ -54,13 +53,14 @@ function switchTab(tab, el) {
 function handleHeaderBack() {
   if (document.getElementById('detailPage').classList.contains('active')) {
     navigateBackFromDetail();
+  } else if (document.getElementById('shopPage').classList.contains('active')) {
+    goBackFromShop();
   } else if (document.getElementById('posterPage').classList.contains('active')) {
     goBackFromPoster();
   } else if (document.getElementById('quizPage').classList.contains('active')) {
     goBackFromQuiz();
   }
 }
-
 
 // ============ 申请合作 ============
 function openCoopForm() {
@@ -113,16 +113,18 @@ function submitCoop() {
 // 初始渲染同城列表（切换tab时触发）
 renderCityList('all');
 
-
 // ============ 抖音口令复制 ============
 function copyDouyinCode() {
   const code = '梵优茗宠 直播间口令：萌宠666';
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(code).then(() => {
-      showToast('口令已复制：萌宠666，打开抖音即可进入直播间 🎬');
-    }).catch(() => {
-      fallbackCopy(code);
-    });
+    navigator.clipboard
+      .writeText(code)
+      .then(() => {
+        showToast('口令已复制：萌宠666，打开抖音即可进入直播间 🎬');
+      })
+      .catch(() => {
+        fallbackCopy(code);
+      });
   } else {
     fallbackCopy(code);
   }
@@ -146,7 +148,6 @@ function fallbackCopy(text) {
   document.body.removeChild(ta);
 }
 
-
 // ============ Banner 轮播 ============
 (function initBanner() {
   const track = document.getElementById('bannerTrack');
@@ -161,7 +162,9 @@ function fallbackCopy(text) {
     dots.forEach((d, i) => d.classList.toggle('active', i === current));
   }
 
-  function next() { goTo(current + 1); }
+  function next() {
+    goTo(current + 1);
+  }
 
   // 监听手动滑动，同步圆点
   let scrollEndTimer;
@@ -200,7 +203,9 @@ function startCountdown() {
   const sEl = document.getElementById('cd-s');
 
   function tick() {
-    if (total <= 0) { total = 12 * 3600; }
+    if (total <= 0) {
+      total = 12 * 3600;
+    }
     const h = Math.floor(total / 3600);
     const m = Math.floor((total % 3600) / 60);
     const s = total % 60;
