@@ -5,14 +5,17 @@ let quizAutoAdvanceTimer = null;
 // 重置答题状态
 function resetQuiz() {
   // 清除定时器
-  if (quizAutoAdvanceTimer) { clearTimeout(quizAutoAdvanceTimer); quizAutoAdvanceTimer = null; }
+  if (quizAutoAdvanceTimer) {
+    clearTimeout(quizAutoAdvanceTimer);
+    quizAutoAdvanceTimer = null;
+  }
   quizCurrentIndex = 0;
   // 清除所有单选
-  document.querySelectorAll('#quizPage .quiz-radio').forEach(r => r.classList.remove('selected'));
+  document.querySelectorAll('#quizPage .quiz-radio').forEach((r) => r.classList.remove('selected'));
   // 清除所有多选
-  document.querySelectorAll('#quizPage .quiz-checkbox').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('#quizPage .quiz-checkbox').forEach((c) => c.classList.remove('selected'));
   // 清除所有输入
-  document.querySelectorAll('#quizPage .quiz-input').forEach(i => {
+  document.querySelectorAll('#quizPage .quiz-input').forEach((i) => {
     i.value = '';
     i.classList.remove('has-value');
   });
@@ -25,7 +28,7 @@ function resetQuiz() {
   document.getElementById('dQ2Field').classList.add('hidden');
   document.getElementById('dQ10Field').classList.add('hidden');
   // 显示所有题目（恢复默认状态）
-  document.querySelectorAll('#quizQuestionsArea .quiz-field').forEach(f => {
+  document.querySelectorAll('#quizQuestionsArea .quiz-field').forEach((f) => {
     f.style.display = '';
   });
   // 隐藏导航
@@ -45,7 +48,7 @@ function buildQuestionList() {
   const activeSet = getActiveSet();
   if (activeSet) {
     const fields = activeSet.querySelectorAll('.quiz-field');
-    fields.forEach(field => {
+    fields.forEach((field) => {
       if (!field.classList.contains('hidden')) {
         list.push(field);
       }
@@ -84,7 +87,7 @@ function showQuestion(index) {
   quizCurrentIndex = index;
 
   // 隐藏所有题目
-  document.querySelectorAll('#quizQuestionsArea .quiz-field').forEach(f => {
+  document.querySelectorAll('#quizQuestionsArea .quiz-field').forEach((f) => {
     f.style.display = 'none';
   });
 
@@ -131,7 +134,7 @@ function updateNavButtons(questions) {
   nav.classList.remove('hidden');
 
   // 题目指示器
-  indicator.textContent = (quizCurrentIndex + 1) + '/' + total;
+  indicator.textContent = quizCurrentIndex + 1 + '/' + total;
 
   // 上一题
   if (quizCurrentIndex === 0) {
@@ -203,7 +206,7 @@ function updateQuizProgress(questions) {
   const total = questions.length;
 
   let answered = 0;
-  questions.forEach(field => {
+  questions.forEach((field) => {
     if (isQuestionAnswered(field)) answered++;
   });
 
@@ -234,21 +237,21 @@ function collectAnswers() {
   if (!activeSet) return result;
 
   // 单选
-  activeSet.querySelectorAll('.quiz-radio-group').forEach(group => {
+  activeSet.querySelectorAll('.quiz-radio-group').forEach((group) => {
     const name = group.dataset.name;
     const selected = group.querySelector('.quiz-radio.selected');
     if (selected) result[name] = selected.dataset.value;
   });
 
   // 多选
-  activeSet.querySelectorAll('.quiz-checkbox-group').forEach(group => {
+  activeSet.querySelectorAll('.quiz-checkbox-group').forEach((group) => {
     const name = group.dataset.name;
-    const selected = Array.from(group.querySelectorAll('.quiz-checkbox.selected')).map(el => el.dataset.value);
+    const selected = Array.from(group.querySelectorAll('.quiz-checkbox.selected')).map((el) => el.dataset.value);
     if (selected.length > 0) result[name] = selected;
   });
 
   // 填空 - 仅收集活跃题目集中的可见输入
-  activeSet.querySelectorAll('.quiz-field:not(.hidden) .quiz-input').forEach(input => {
+  activeSet.querySelectorAll('.quiz-field:not(.hidden) .quiz-input').forEach((input) => {
     if (input.value.trim()) result[input.id] = input.value.trim();
   });
 
@@ -261,9 +264,9 @@ function navigateToQuiz() {
   resetQuiz();
 
   // 切换到答题页
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.querySelectorAll('.nav-item-creator').forEach(n => n.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach((n) => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item-creator').forEach((n) => n.classList.remove('active'));
+  document.querySelectorAll('.page').forEach((p) => p.classList.remove('active'));
   document.getElementById('quizPage').classList.add('active');
   // 显示返回按钮
   document.getElementById('headerBack').classList.remove('hidden');
@@ -286,7 +289,7 @@ function goBackFromQuiz() {
 // ============ 单选处理 ============
 function selectRadio(el) {
   const group = el.parentElement;
-  group.querySelectorAll('.quiz-radio').forEach(r => r.classList.remove('selected'));
+  group.querySelectorAll('.quiz-radio').forEach((r) => r.classList.remove('selected'));
   el.classList.add('selected');
 
   // --- 宠物类型切换 ---
@@ -393,7 +396,7 @@ function submitQuiz() {
   // 校验必填（仅可见题目）
   const fields = activeSet.querySelectorAll('.quiz-field:not(.hidden)');
   let allFilled = true;
-  fields.forEach(f => {
+  fields.forEach((f) => {
     const radio = f.querySelector('.quiz-radio.selected');
     const checkbox = f.querySelector('.quiz-checkbox.selected');
     const input = f.querySelector('.quiz-input');
@@ -423,90 +426,167 @@ function submitQuiz() {
   }, 800);
 }
 
-// ============ AI配餐方案生成引擎 ============
+// ============ AI配餐方案生成引擎（数据驱动） ============
 function generateMealPlan(petType, answers) {
-  const meals = [];
+  const plans = MEAL_PLANS[petType === '猫' ? 'cat' : 'dog'];
   const isCat = petType === '猫';
-  const ageKey = isCat ? 'age' : 'dAge';
-  const weightKey = isCat ? 'q7Input' : 'dQ7Input';
-  const age = answers[ageKey] || '';
-  const weight = parseFloat(answers[weightKey]) || 4;
-  const isYoung = age.includes('幼');
-  const isOld = age.includes('老');
 
-  if (isCat) {
-    // 猫咪配餐
-    meals.push({
-      icon: '🍗', cls: 'c1', name: '鲜鸡肉冻干颗粒',
-      effect: '优质动物蛋白，易消化吸收，助力肌肉健康',
-      gram: Math.round(weight * 2.5) + 'g'
+  // 答题键名映射
+  const keys = isCat
+    ? {
+        age: 'age',
+        gender: 'gender',
+        neuter: 'neuter',
+        weight: 'q7Input',
+        activity: 'activity',
+        mode: 'mode',
+        stomach: 'stomach',
+        skin: 'skin',
+        urinary: 'urinary',
+        joint: 'joint',
+        allergy: 'allergy',
+        metabolism: 'metabolism',
+      }
+    : {
+        age: 'dAge',
+        gender: 'dGender',
+        neuter: 'dNeuter',
+        weight: 'dQ7Input',
+        activity: 'dActivity',
+        mode: 'dMode',
+        stomach: 'dStomach',
+        skin: 'dSkin',
+        urinary: null,
+        joint: 'dJoint',
+        allergy: 'dAllergy',
+        metabolism: 'dMetabolism',
+        walk: 'dWalk',
+        tear: 'dTear',
+      };
+
+  // 评分函数
+  function scorePlan(plan) {
+    const rules = plan.matchRules;
+    if (rules.isDefault) return -1; // 默认方案最低优先级，仅兜底
+
+    let score = 0;
+
+    // 年龄匹配
+    const ageVal = answers[keys.age];
+    if (rules.age && ageVal) {
+      const ageStr = Array.isArray(ageVal) ? ageVal.join('') : ageVal;
+      rules.age.forEach((r) => {
+        if (ageStr.includes(r.replace(/（.*?）/, '').replace(/\(.*?\)/, ''))) score += 10;
+      });
+      // 关键词匹配
+      if (ageStr.includes('幼')) {
+        rules.age.forEach((r) => {
+          if (r.includes('幼')) score += 5;
+        });
+      }
+      if (ageStr.includes('老')) {
+        rules.age.forEach((r) => {
+          if (r.includes('老')) score += 5;
+        });
+      }
+    }
+
+    // 健康勾选匹配（最多变，高分）
+    const healthKeys = isCat ? ['stomach', 'skin', 'urinary', 'joint', 'allergy'] : ['stomach', 'skin', 'joint', 'allergy', 'metabolism', 'tear'];
+    healthKeys.forEach((hk) => {
+      const ruleVals = rules[hk];
+      if (!ruleVals) return;
+      const ansVal = answers[keys[hk]];
+      if (!ansVal) return;
+      const ansArr = Array.isArray(ansVal) ? ansVal : [ansVal];
+      ruleVals.forEach((rv) => {
+        ansArr.forEach((av) => {
+          if (av && av.includes(rv)) score += 15;
+        });
+      });
     });
-    meals.push({
-      icon: '🐟', cls: 'c2', name: '深海三文鱼颗粒',
-      effect: '富含Omega-3，亮泽毛发，呵护皮肤健康',
-      gram: Math.round(weight * 1.8) + 'g'
-    });
-    if (isOld) {
-      meals.push({
-        icon: '💊', cls: 'c3', name: '关节养护颗粒',
-        effect: '葡萄糖胺+软骨素，延缓关节老化，灵活步履',
-        gram: '3g'
+
+    // 活动量匹配
+    const actVal = answers[keys.activity];
+    if (rules.activity && actVal) {
+      const actStr = Array.isArray(actVal) ? actVal.join('') : actVal;
+      rules.activity.forEach((r) => {
+        if (actStr.includes(r)) score += 8;
       });
     }
-    meals.push({
-      icon: '🧬', cls: 'c4', name: '牛磺酸强化颗粒',
-      effect: '保护视力与心脏功能，猫咪必需氨基酸',
-      gram: '2g'
-    });
-    meals.push({
-      icon: '🦠', cls: 'c5', name: '复合益生菌颗粒',
-      effect: '平衡肠道菌群，减少软便与消化问题',
-      gram: '3g'
-    });
-    if (isYoung) {
-      meals.push({
-        icon: '🥛', cls: 'c6', name: '成长钙磷颗粒',
-        effect: '促进骨骼发育，幼猫成长关键营养',
-        gram: '3g'
+
+    // 绝育匹配
+    const neuterVal = answers[keys.neuter];
+    if (rules.neuter && neuterVal) {
+      rules.neuter.forEach((r) => {
+        if (neuterVal.includes(r)) score += 5;
       });
     }
-  } else {
-    // 狗狗配餐
-    meals.push({
-      icon: '🥩', cls: 'c1', name: '鲜牛肉冻干颗粒',
-      effect: '高蛋白低脂肪，强健肌肉，增强免疫力',
-      gram: Math.round(weight * 3.5) + 'g'
-    });
-    meals.push({
-      icon: '🍗', cls: 'c2', name: '鲜鸡肉能量颗粒',
-      effect: '易消化优质蛋白，每日活力能量来源',
-      gram: Math.round(weight * 2.8) + 'g'
-    });
-    if (isOld) {
-      meals.push({
-        icon: '🦴', cls: 'c3', name: '关节宝颗粒',
-        effect: '氨糖+软骨素配方，守护关节灵活度',
-        gram: '5g'
+
+    // 饲养模式匹配
+    const modeVal = answers[keys.mode];
+    if (rules.mode && modeVal) {
+      rules.mode.forEach((r) => {
+        if (modeVal.includes(r)) score += 12;
       });
     }
-    meals.push({
-      icon: '🧬', cls: 'c4', name: '卵磷脂美毛颗粒',
-      effect: '含蛋黄卵磷脂，滋养毛囊，被毛蓬松亮泽',
-      gram: '4g'
-    });
-    meals.push({
-      icon: '🦠', cls: 'c5', name: '肠胃调理颗粒',
-      effect: '多重益生菌+膳食纤维，呵护肠胃健康',
-      gram: '4g'
-    });
-    meals.push({
-      icon: '💪', cls: 'c6', name: '综合维生素颗粒',
-      effect: '维生素A/D/E/B群全覆盖，均衡每日营养',
-      gram: '3g'
-    });
+
+    // 遛弯频率匹配（狗专用）
+    if (keys.walk) {
+      const walkVal = answers[keys.walk];
+      if (rules.walk && walkVal) {
+        rules.walk.forEach((r) => {
+          if (walkVal.includes(r)) score += 6;
+        });
+      }
+    }
+
+    return score;
   }
 
-  return meals;
+  // 找最高分方案
+  let bestPlan = null;
+  let bestScore = -Infinity;
+  plans.forEach((p) => {
+    const s = scorePlan(p);
+    if (s > bestScore) {
+      bestScore = s;
+      bestPlan = p;
+    }
+  });
+
+  // 兜底：如果没有匹配到（score <= 0），用默认方案
+  if (!bestPlan || bestScore <= 0) {
+    bestPlan = plans.find((p) => p.matchRules.isDefault) || plans[0];
+  }
+
+  // 转换为原格式
+  const meals = bestPlan.ingredients.map((ing, i) => ({
+    icon: getMealIcon(ing.name),
+    cls: 'c' + (i + 1),
+    name: ing.name,
+    gram: ing.weight,
+  }));
+
+  return { meals, plan: bestPlan };
+}
+
+// 根据颗粒名称返回图标
+function getMealIcon(name) {
+  if (name.includes('鸡胸') || name.includes('鸡肉')) return '🍗';
+  if (name.includes('鸭胸') || name.includes('鸭肉')) return '🦆';
+  if (name.includes('牛肉')) return '🥩';
+  if (name.includes('鹿肉')) return '🦌';
+  if (name.includes('兔肉')) return '🐇';
+  if (name.includes('鹌鹑')) return '🕊️';
+  if (name.includes('三文鱼') || name.includes('鳕鱼')) return '🐟';
+  if (name.includes('美毛')) return '✨';
+  if (name.includes('养胃')) return '🧬';
+  if (name.includes('苹果') || name.includes('果')) return '🍎';
+  if (name.includes('南瓜') || name.includes('蔬') || name.includes('胡萝卜')) return '🥕';
+  if (name.includes('西兰花')) return '🥦';
+  if (name.includes('雪梨')) return '🍐';
+  return '🍽️';
 }
 
 // ============ 体质检测分析 ============
@@ -518,114 +598,153 @@ function generateConstitutionAnalysis(answers, isCat) {
   // 猫咪维度
   const catDims = [
     {
-      key: 'company', label: '情绪陪伴', healthy: ['充足陪伴'],
-      tag: '情绪敏感', emoji: '💔',
+      key: 'company',
+      label: '情绪陪伴',
+      healthy: ['充足陪伴'],
+      tag: '情绪敏感',
+      emoji: '💔',
       texts: {
-        '无陪伴': '长期独处容易产生焦虑情绪，建议多陪伴互动',
-        '少量陪伴': '陪伴时间有限，可通过益智玩具缓解孤独感'
-      }
+        无陪伴: '长期独处容易产生焦虑情绪，建议多陪伴互动',
+        少量陪伴: '陪伴时间有限，可通过益智玩具缓解孤独感',
+      },
     },
     {
-      key: 'stomach', label: '肠胃健康', healthy: ['肠胃健康'],
-      tag: '肠胃敏感', emoji: '🍽️',
+      key: 'stomach',
+      label: '肠胃健康',
+      healthy: ['肠胃健康'],
+      tag: '肠胃敏感',
+      emoji: '🍽️',
       texts: {
-        '软便': '肠胃较为敏感，建议低敏易消化配方',
-        '便秘': '肠道蠕动偏弱，需增加膳食纤维摄入',
-        '频繁呕吐': '消化系统负担较重，建议少食多餐'
-      }
+        软便: '肠胃较为敏感，建议低敏易消化配方',
+        便秘: '肠道蠕动偏弱，需增加膳食纤维摄入',
+        频繁呕吐: '消化系统负担较重，建议少食多餐',
+      },
     },
     {
-      key: 'skin', label: '皮毛健康', healthy: ['皮肤健康'],
-      tag: '皮毛养护', emoji: '🐾',
+      key: 'skin',
+      label: '皮毛健康',
+      healthy: ['皮肤健康'],
+      tag: '皮毛养护',
+      emoji: '🐾',
       texts: {
-        '掉毛重': '换毛期营养不足，需补充优质蛋白和Omega-3',
-        '皮屑瘙痒': '皮肤屏障受损，建议Omega脂肪酸滋养',
-        '毛发干枯': '毛发缺乏光泽，卵磷脂美毛配方有助改善'
-      }
+        掉毛重: '换毛期营养不足，需补充优质蛋白和Omega-3',
+        皮屑瘙痒: '皮肤屏障受损，建议Omega脂肪酸滋养',
+        毛发干枯: '毛发缺乏光泽，卵磷脂美毛配方有助改善',
+      },
     },
     {
-      key: 'urinary', label: '泌尿健康', healthy: ['泌尿健康'],
-      tag: '泌尿调理', emoji: '💧',
+      key: 'urinary',
+      label: '泌尿健康',
+      healthy: ['泌尿健康'],
+      tag: '泌尿调理',
+      emoji: '💧',
       texts: {
-        '尿频上火': '泌尿系统偏热，建议清热利尿配方',
-        '泪痕重': '内火偏旺，低敏清淡饮食有助减轻泪痕'
-      }
+        尿频上火: '泌尿系统偏热，建议清热利尿配方',
+        泪痕重: '内火偏旺，低敏清淡饮食有助减轻泪痕',
+      },
     },
     {
-      key: 'joint', label: '关节健康', healthy: ['关节健康'],
-      tag: '关节养护', emoji: '🦴',
-      texts: { '关节老化': '关节灵活度下降，氨糖软骨素有助舒缓' }
+      key: 'joint',
+      label: '关节健康',
+      healthy: ['关节健康'],
+      tag: '关节养护',
+      emoji: '🦴',
+      texts: { 关节老化: '关节灵活度下降，氨糖软骨素有助舒缓' },
     },
     {
-      key: 'allergy', label: '过敏体质', healthy: ['无过敏'],
-      tag: '过敏体质', emoji: '⚠️',
+      key: 'allergy',
+      label: '过敏体质',
+      healthy: ['无过敏'],
+      tag: '过敏体质',
+      emoji: '⚠️',
       texts: {
-        '肉类过敏': '对特定肉类蛋白敏感，需严格规避过敏源',
-        '谷物过敏': '谷物不耐受，建议选择无谷低敏配方'
-      }
-    }
+        肉类过敏: '对特定肉类蛋白敏感，需严格规避过敏源',
+        谷物过敏: '谷物不耐受，建议选择无谷低敏配方',
+      },
+    },
   ];
 
   // 狗狗维度
   const dogDims = [
     {
-      key: 'dWalk', label: '运动活力', healthy: ['3～5次', '每天1次以上'],
-      tag: '运动不足', emoji: '🏃',
+      key: 'dWalk',
+      label: '运动活力',
+      healthy: ['3～5次', '每天1次以上'],
+      tag: '运动不足',
+      emoji: '🏃',
       texts: {
         '＜1次': '运动量严重不足，需关注体重管理与关节负担',
-        '1～2次': '运动量偏少，适当增加户外活动时间更有益健康'
-      }
+        '1～2次': '运动量偏少，适当增加户外活动时间更有益健康',
+      },
     },
     {
-      key: 'dStomach', label: '肠胃健康', healthy: ['肠胃健康'],
-      tag: '肠胃敏感', emoji: '🍽️',
+      key: 'dStomach',
+      label: '肠胃健康',
+      healthy: ['肠胃健康'],
+      tag: '肠胃敏感',
+      emoji: '🍽️',
       texts: {
-        '拉稀': '肠道菌群失衡，益生菌调理配方有助改善',
-        '挑食': '食欲不稳定，适口性好的鲜肉配方更受欢迎',
-        '积食': '消化能力偏弱，建议小颗粒易消化配方'
-      }
+        拉稀: '肠道菌群失衡，益生菌调理配方有助改善',
+        挑食: '食欲不稳定，适口性好的鲜肉配方更受欢迎',
+        积食: '消化能力偏弱，建议小颗粒易消化配方',
+      },
     },
     {
-      key: 'dSkin', label: '皮肤健康', healthy: ['皮肤健康'],
-      tag: '皮肤养护', emoji: '🐾',
+      key: 'dSkin',
+      label: '皮肤健康',
+      healthy: ['皮肤健康'],
+      tag: '皮肤养护',
+      emoji: '🐾',
       texts: {
-        '异位性皮炎': '皮肤敏感体质，低敏配方配合Omega脂肪酸有助缓解',
-        '季节性脱毛': '换毛期营养需求增加，美毛配方有助减少异常掉毛',
-        '瘙痒泛红': '皮肤屏障受损，抗炎舒缓配方有助修护'
-      }
+        异位性皮炎: '皮肤敏感体质，低敏配方配合Omega脂肪酸有助缓解',
+        季节性脱毛: '换毛期营养需求增加，美毛配方有助减少异常掉毛',
+        瘙痒泛红: '皮肤屏障受损，抗炎舒缓配方有助修护',
+      },
     },
     {
-      key: 'dTear', label: '泪痕上火', healthy: ['无异常'],
-      tag: '泪痕调理', emoji: '💧',
+      key: 'dTear',
+      label: '泪痕上火',
+      healthy: ['无异常'],
+      tag: '泪痕调理',
+      emoji: '💧',
       texts: {
-        '顽固泪痕': '泪腺分泌旺盛，清淡低盐配方有助减轻泪痕',
-        '易上火': '内火偏旺，鸭肉等凉性食材有助清热降火'
-      }
+        顽固泪痕: '泪腺分泌旺盛，清淡低盐配方有助减轻泪痕',
+        易上火: '内火偏旺，鸭肉等凉性食材有助清热降火',
+      },
     },
     {
-      key: 'dJoint', label: '关节健康', healthy: ['关节健康'],
-      tag: '关节养护', emoji: '🦴',
+      key: 'dJoint',
+      label: '关节健康',
+      healthy: ['关节健康'],
+      tag: '关节养护',
+      emoji: '🦴',
       texts: {
-        '髌骨不良': '髌骨问题需长期养护，关节保护配方有助舒缓',
-        '关节老化': '关节磨损加剧，氨糖+软骨素双重养护'
-      }
+        髌骨不良: '髌骨问题需长期养护，关节保护配方有助舒缓',
+        关节老化: '关节磨损加剧，氨糖+软骨素双重养护',
+      },
     },
     {
-      key: 'dMetabolism', label: '代谢健康', healthy: ['代谢正常'],
-      tag: '代谢调理', emoji: '⚖️',
+      key: 'dMetabolism',
+      label: '代谢健康',
+      healthy: ['代谢正常'],
+      tag: '代谢调理',
+      emoji: '⚖️',
       texts: {
-        '肥胖高血脂': '体重管理刻不容缓，低脂高纤配方有助控制体重',
-        '胰腺敏感': '胰腺负担较重，低脂易消化配方减轻胰腺压力'
-      }
+        肥胖高血脂: '体重管理刻不容缓，低脂高纤配方有助控制体重',
+        胰腺敏感: '胰腺负担较重，低脂易消化配方减轻胰腺压力',
+      },
     },
     {
-      key: 'dAllergy', label: '过敏体质', healthy: ['无过敏'],
-      tag: '过敏体质', emoji: '⚠️',
+      key: 'dAllergy',
+      label: '过敏体质',
+      healthy: ['无过敏'],
+      tag: '过敏体质',
+      emoji: '⚠️',
       texts: {
-        '肉类过敏': '对特定肉类蛋白敏感，需严格规避过敏源',
-        '谷物过敏': '谷物不耐受，无谷低敏配方更适合'
-      }
-    }
+        肉类过敏: '对特定肉类蛋白敏感，需严格规避过敏源',
+        谷物过敏: '谷物不耐受，无谷低敏配方更适合',
+      },
+    },
   ];
 
   const dims = isCat ? catDims : dogDims;
@@ -633,12 +752,12 @@ function generateConstitutionAnalysis(answers, isCat) {
   const tags = [];
   let summaryParts = [];
 
-  dims.forEach(dim => {
+  dims.forEach((dim) => {
     const val = answers[dim.key];
     if (!val) return;
 
     const selected = Array.isArray(val) ? val : [val];
-    const problems = selected.filter(v => !dim.healthy.includes(v));
+    const problems = selected.filter((v) => !dim.healthy.includes(v));
 
     if (problems.length > 0) {
       issues.push({ ...dim, problems, count: problems.length });
@@ -652,7 +771,7 @@ function generateConstitutionAnalysis(answers, isCat) {
 
   // 体质类型：问题最多的维度，或并列
   issues.sort((a, b) => b.count - a.count);
-  const topIssues = issues.filter(i => i.count === (issues[0]?.count || 0));
+  const topIssues = issues.filter((i) => i.count === (issues[0]?.count || 0));
 
   let typeLabel, typeEmoji, description;
 
@@ -662,22 +781,26 @@ function generateConstitutionAnalysis(answers, isCat) {
     description = isYoung
       ? '小宝贝目前身体状态很棒，正处于快速成长期，均衡营养是关键'
       : isOld
-      ? '毛孩子整体健康状况良好，保持当前养护习惯，适量补充关节和心脏营养'
-      : '爱宠各方面指标都很健康，继续保持科学喂养，适当预防即可';
+        ? '毛孩子整体健康状况良好，保持当前养护习惯，适量补充关节和心脏营养'
+        : '爱宠各方面指标都很健康，继续保持科学喂养，适当预防即可';
   } else if (topIssues.length === 1) {
     typeLabel = topIssues[0].tag;
     typeEmoji = topIssues[0].emoji;
     const ageHint = isYoung ? '幼年' : isOld ? '老年' : '成年';
-    description = `${ageHint}期${isCat ? '猫咪' : '狗狗'}以「${topIssues[0].label}」为主要体质特征。` +
-      summaryParts.slice(0, 2).join('；') + '。' +
+    description =
+      `${ageHint}期${isCat ? '猫咪' : '狗狗'}以「${topIssues[0].label}」为主要体质特征。` +
+      summaryParts.slice(0, 2).join('；') +
+      '。' +
       (isCat ? '定制配餐已针对性调整营养配比，帮助改善体质。' : '定制颗粒已优化配方，针对性改善核心问题。');
   } else {
-    const labels = topIssues.map(i => i.label).join(' · ');
+    const labels = topIssues.map((i) => i.label).join(' · ');
     typeLabel = labels;
     typeEmoji = topIssues[0].emoji;
     const ageHint = isYoung ? '幼年' : isOld ? '老年' : '成年';
-    description = `${ageHint}期${isCat ? '猫咪' : '狗狗'}呈现复合型体质特征，${topIssues.map(i => i.label).join('与')}需同时关注。` +
-      summaryParts.slice(0, 2).join('；') + '。' +
+    description =
+      `${ageHint}期${isCat ? '猫咪' : '狗狗'}呈现复合型体质特征，${topIssues.map((i) => i.label).join('与')}需同时关注。` +
+      summaryParts.slice(0, 2).join('；') +
+      '。' +
       '多维度定制颗粒组合，全面覆盖营养调理需求。';
   }
 
@@ -685,7 +808,7 @@ function generateConstitutionAnalysis(answers, isCat) {
     typeLabel,
     typeEmoji,
     description,
-    tags: tags.length > 0 ? tags : [{ label: '健康活力', emoji: isCat ? '🐱' : '🐶' }]
+    tags: tags.length > 0 ? tags : [{ label: '健康活力', emoji: isCat ? '🐱' : '🐶' }],
   };
 }
 
@@ -719,14 +842,14 @@ function renderPoster(answers) {
     { k: '绝育', v: neuter },
     { k: '体重', v: weight ? weight + 'kg' : '' },
     { k: '活动量', v: activity },
-    { k: '饲养', v: mode }
+    { k: '饲养', v: mode },
   ];
   if (walk) infoItems.push({ k: '遛弯', v: walk });
 
   const emoji = isCat ? '🐱' : '🐶';
   const infoGrid = infoItems
-    .filter(item => item.v)
-    .map(item => `<div class="poster-info-item"><span class="key">${item.k}</span><span class="val">${item.v}</span></div>`)
+    .filter((item) => item.v)
+    .map((item) => `<div class="poster-info-item"><span class="key">${item.k}</span><span class="val">${item.v}</span></div>`)
     .join('');
 
   document.getElementById('posterPetInfo').innerHTML = `
@@ -739,9 +862,7 @@ function renderPoster(answers) {
   heroImg.className = 'poster-hero-img ' + (isCat ? 'cat-bg' : 'dog-bg');
 
   const analysis = generateConstitutionAnalysis(answers, isCat);
-  const tagsHTML = analysis.tags.map(t =>
-    `<span class="constitution-tag"><span class="tag-emoji">${t.emoji}</span>${t.label}</span>`
-  ).join('');
+  const tagsHTML = analysis.tags.map((t) => `<span class="constitution-tag"><span class="tag-emoji">${t.emoji}</span>${t.label}</span>`).join('');
 
   document.getElementById('posterHeroContent').innerHTML = `
     <div class="constitution-header">
@@ -751,37 +872,52 @@ function renderPoster(answers) {
       </div>
     </div>
     <div class="constitution-desc">${analysis.description}</div>
-    <div class="constitution-tags">${tagsHTML}</div>
   `;
 
-  // 生成配餐
-  const meals = generateMealPlan(petType, answers);
-  const mealHTML = meals.map((m, i) => `
+  // 生成配餐（数据驱动匹配）
+  const { meals, plan } = generateMealPlan(petType, answers);
+  const mealHTML = meals
+    .map(
+      (m, i) => `
     <div class="poster-meal-item">
       <div class="poster-meal-dot ${m.cls}">${m.icon}</div>
       <div class="poster-meal-info">
         <div class="poster-meal-name">${m.name}</div>
-        <div class="poster-meal-effect">${m.effect}</div>
       </div>
       <div class="poster-meal-gram">${m.gram}</div>
     </div>
-  `).join('');
+  `,
+    )
+    .join('');
   document.getElementById('posterMealList').innerHTML = mealHTML;
 
-  // 计算价格：4种颗粒约¥89/月起，6种约¥129/月起
-  const basePrice = meals.length <= 4 ? 89 : 129;
+  // 价格：使用匹配方案的价格
+  const basePrice = plan.monthlyPrice || 89;
   document.getElementById('posterBuyPrice').innerHTML = `¥${basePrice}<span>/月起</span>`;
   // 存当前单价到全局方便后续计算
   window._posterBasePrice = basePrice;
+  // 显示方案名称
+  const nutritionContent = document.getElementById('nutritionContent');
+  if (plan.name) {
+    // 在体质分析下方显示方案名
+    let planEl = document.getElementById('matchedPlanName');
+    if (!planEl) {
+      planEl = document.createElement('div');
+      planEl.id = 'matchedPlanName';
+      planEl.className = 'matched-plan-name';
+      nutritionContent.appendChild(planEl);
+    }
+    planEl.textContent = plan.name;
+  }
 
   // 滚动到顶部
   document.getElementById('posterPage').querySelector('.poster-scroll').scrollTop = 0;
 
   // 重置购买选项（默认一日一次餐 + 30天）
-  document.querySelectorAll('[data-name="mealFreq"] .purchase-chip').forEach(c => c.classList.remove('selected'));
-  document.querySelectorAll('[data-name="mealFreq"] .purchase-chip[data-value="1"]').forEach(c => c.classList.add('selected'));
-  document.querySelectorAll('[data-name="mealDays"] .purchase-chip').forEach(c => c.classList.remove('selected'));
-  document.querySelectorAll('[data-name="mealDays"] .purchase-chip[data-value="30"]').forEach(c => c.classList.add('selected'));
+  document.querySelectorAll('[data-name="mealFreq"] .purchase-chip').forEach((c) => c.classList.remove('selected'));
+  document.querySelectorAll('[data-name="mealFreq"] .purchase-chip[data-value="1"]').forEach((c) => c.classList.add('selected'));
+  document.querySelectorAll('[data-name="mealDays"] .purchase-chip').forEach((c) => c.classList.remove('selected'));
+  document.querySelectorAll('[data-name="mealDays"] .purchase-chip[data-value="30"]').forEach((c) => c.classList.add('selected'));
   document.getElementById('purchaseTotalPrice').textContent = '¥' + basePrice;
 }
 
@@ -798,7 +934,7 @@ function closePurchaseOptions(e) {
 
 function selectPurchaseOption(el) {
   const group = el.parentElement;
-  group.querySelectorAll('.purchase-chip').forEach(c => c.classList.remove('selected'));
+  group.querySelectorAll('.purchase-chip').forEach((c) => c.classList.remove('selected'));
   el.classList.add('selected');
   updatePurchaseTotal();
 }
@@ -852,16 +988,18 @@ function generatePosterImage() {
   showToast('正在生成海报...');
 
   html2canvas(scrollEl, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#f8f4f0',
-      logging: false
-    }).then(canvas => {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#f8f4f0',
+    logging: false,
+  })
+    .then((canvas) => {
       if (barEl) barEl.style.display = '';
       const dataUrl = canvas.toDataURL('image/png');
       document.getElementById('posterPreviewImg').src = dataUrl;
       document.getElementById('posterPreviewOverlay').classList.remove('hidden');
-    }).catch(err => {
+    })
+    .catch((err) => {
       if (barEl) barEl.style.display = '';
       console.error('生成海报失败:', err);
       showToast('海报生成失败，请重试');
@@ -928,17 +1066,21 @@ function sharePosterImage() {
   const file = new File([blob], '梵优茗宠_AI配餐方案.png', { type: 'image/png' });
 
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    navigator.share({
-      title: '梵优茗宠 · AI定制配餐方案',
-      text: '我家毛孩子的专属AI配餐方案，科学定制，营养更精准！',
-      files: [file]
-    }).catch(() => {});
+    navigator
+      .share({
+        title: '梵优茗宠 · AI定制配餐方案',
+        text: '我家毛孩子的专属AI配餐方案，科学定制，营养更精准！',
+        files: [file],
+      })
+      .catch(() => {});
   } else if (navigator.share) {
-    navigator.share({
-      title: '梵优茗宠 · AI定制配餐方案',
-      text: '我家毛孩子的专属AI配餐方案，科学定制，营养更精准！',
-      url: window.location.href
-    }).catch(() => {});
+    navigator
+      .share({
+        title: '梵优茗宠 · AI定制配餐方案',
+        text: '我家毛孩子的专属AI配餐方案，科学定制，营养更精准！',
+        url: window.location.href,
+      })
+      .catch(() => {});
   } else {
     showToast('请长按海报图片分享给好友 📲');
   }

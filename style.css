@@ -291,7 +291,6 @@ body {
   line-height: 1.4;
   margin-bottom: 6px;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -984,7 +983,6 @@ body {
   margin-bottom: 3px;
   line-height: 1.3;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -2426,7 +2424,6 @@ body {
   color: var(--text-secondary);
   line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -2809,7 +2806,6 @@ body {
   color: var(--text-secondary);
   line-height: 1.5;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 6px;
@@ -2985,7 +2981,6 @@ body {
   line-height: 1.4;
   margin-bottom: 8px;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -4070,21 +4065,24 @@ body {
 }
 .poster-meals-list {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 .poster-meal-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  width: 48%;
+  gap: 6px;
+  margin-top: 5px;
   background: var(--card-bg);
   border-radius: var(--radius);
   padding: 10px 12px;
   box-shadow: var(--shadow-sm);
 }
 .poster-meal-dot {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   flex-shrink: 0;
   display: flex;
@@ -4116,15 +4114,9 @@ body {
 }
 .poster-meal-name {
   font-size: 13px;
-  font-weight: 600;
   color: var(--text);
-  margin-bottom: 2px;
 }
-.poster-meal-effect {
-  font-size: 11px;
-  color: var(--text-secondary);
-  line-height: 1.3;
-}
+
 .poster-meal-gram {
   font-size: 12px;
   font-weight: 600;
@@ -4242,7 +4234,9 @@ body {
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  transition: transform 0.15s, opacity 0.15s;
+  transition:
+    transform 0.15s,
+    opacity 0.15s;
   padding: 8px 12px;
   border: none;
 }
@@ -4265,7 +4259,6 @@ body {
   color: #fff;
   box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
   padding: 10px 18px;
-}
 }
 .poster-buy-btn:active {
   transform: scale(0.96);
@@ -4745,8 +4738,7 @@ body {
   color: var(--text);
   margin-bottom: 8px;
 }
-.profile-member-card-progress {
-}
+
 .profile-member-progress-bar {
   height: 6px;
   background: #e0e0e0;
@@ -5710,7 +5702,10 @@ body {
 /* ============ 海报生成预览弹窗 ============ */
 .poster-preview-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.65);
   z-index: 1000;
   display: flex;
@@ -5718,7 +5713,9 @@ body {
   justify-content: center;
   animation: fadeIn 0.25s ease;
 }
-.poster-preview-overlay.hidden { display: none; }
+.poster-preview-overlay.hidden {
+  display: none;
+}
 
 .poster-preview-card {
   width: 92%;
@@ -5746,7 +5743,8 @@ body {
   color: var(--text);
 }
 .preview-close-btn {
-  width: 28px; height: 28px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5792,7 +5790,9 @@ body {
   font-weight: 600;
   cursor: pointer;
   border: none;
-  transition: opacity 0.15s, transform 0.15s;
+  transition:
+    opacity 0.15s,
+    transform 0.15s;
 }
 .preview-action-btn:active {
   transform: scale(0.97);

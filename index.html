@@ -390,500 +390,498 @@
 
             <!-- 题目区域（一次显示一题） -->
             <div class="quiz-questions-area" id="quizQuestionsArea">
-
-            <!-- 宠物类型选择 -->
-            <div class="quiz-field quiz-field-pet-type">
-              <div class="quiz-field-label">
-                <span class="q-num">🐾</span>请选择宠物类型
-                <span class="type-badge single">单选</span>
-              </div>
-              <div class="quiz-radio-group quiz-radio-group-pet" data-name="petType">
-                <div class="quiz-radio quiz-radio-pet" data-value="猫" onclick="selectRadio(this)">
-                  <span class="r-dot"></span>
-                  <span class="quiz-pet-icon">🐱</span>
-                  <span class="quiz-pet-label">猫猫</span>
-                </div>
-                <div class="quiz-radio quiz-radio-pet" data-value="狗" onclick="selectRadio(this)">
-                  <span class="r-dot"></span>
-                  <span class="quiz-pet-icon">🐶</span>
-                  <span class="quiz-pet-label">狗狗</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- ============ 猫咪题目 ============ -->
-            <div id="catQuestions" class="hidden">
-              <!-- CQ1 猫咪品种【单选题】 -->
-              <div class="quiz-field" data-q="1">
+              <!-- 宠物类型选择 -->
+              <div class="quiz-field quiz-field-pet-type">
                 <div class="quiz-field-label">
-                  <span class="q-num">1</span>猫咪品种
+                  <span class="q-num">🐾</span>请选择宠物类型
                   <span class="type-badge single">单选</span>
                 </div>
-                <div class="quiz-radio-group" data-name="breed">
-                  <div class="quiz-radio" data-value="英短" onclick="selectRadio(this)"><span class="r-dot"></span>英短</div>
-                  <div class="quiz-radio" data-value="美短" onclick="selectRadio(this)"><span class="r-dot"></span>美短</div>
-                  <div class="quiz-radio" data-value="布偶" onclick="selectRadio(this)"><span class="r-dot"></span>布偶</div>
-                  <div class="quiz-radio" data-value="德文卷毛" onclick="selectRadio(this)"><span class="r-dot"></span>德文卷毛</div>
-                  <div class="quiz-radio" data-value="暹罗" onclick="selectRadio(this)"><span class="r-dot"></span>暹罗</div>
-                  <div class="quiz-radio" data-value="蓝猫" onclick="selectRadio(this)"><span class="r-dot"></span>蓝猫</div>
-                  <div class="quiz-radio" data-value="加菲" onclick="selectRadio(this)"><span class="r-dot"></span>加菲</div>
-                  <div class="quiz-radio" data-value="缅因" onclick="selectRadio(this)"><span class="r-dot"></span>缅因</div>
-                  <div class="quiz-radio" data-value="阿比西尼亚" onclick="selectRadio(this)"><span class="r-dot"></span>阿比西尼亚</div>
-                  <div class="quiz-radio" data-value="其他" onclick="selectRadio(this)"><span class="r-dot"></span>其他</div>
-                </div>
-              </div>
-
-              <!-- CQ2 其他品种【填空题】 -->
-              <div class="quiz-field hidden" data-q="2" id="q2Field">
-                <div class="quiz-field-label">
-                  <span class="q-num">2</span>其他品种
-                  <span class="type-badge fill">填空</span>
-                </div>
-                <div class="quiz-input-wrap">
-                  <input class="quiz-input" type="text" id="q2Input" placeholder="请输入猫咪品种" oninput="onQuizInput(this)" />
-                </div>
-              </div>
-
-              <!-- CQ3 宠物昵称【填空题】 -->
-              <div class="quiz-field" data-q="3">
-                <div class="quiz-field-label">
-                  <span class="q-num">3</span>宠物昵称
-                  <span class="type-badge fill">填空</span>
-                </div>
-                <div class="quiz-input-wrap">
-                  <input class="quiz-input" type="text" id="q3Input" placeholder="请输入爱宠昵称" oninput="onQuizInput(this)" maxlength="20" />
-                </div>
-              </div>
-
-              <!-- CQ4 性别【单选题】 -->
-              <div class="quiz-field" data-q="4">
-                <div class="quiz-field-label">
-                  <span class="q-num">4</span>性别
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="gender">
-                  <div class="quiz-radio" data-value="公" onclick="selectRadio(this)"><span class="r-dot"></span>弟弟(公)</div>
-                  <div class="quiz-radio" data-value="母" onclick="selectRadio(this)"><span class="r-dot"></span>妹妹(母)</div>
-                </div>
-              </div>
-
-              <!-- CQ5 年龄段【单选题】 -->
-              <div class="quiz-field" data-q="5">
-                <div class="quiz-field-label">
-                  <span class="q-num">5</span>年龄段
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="age">
-                  <div class="quiz-radio" data-value="幼猫" onclick="selectRadio(this)"><span class="r-dot"></span>幼猫(0～12月)</div>
-                  <div class="quiz-radio" data-value="成猫" onclick="selectRadio(this)"><span class="r-dot"></span>成猫(1～7岁)</div>
-                  <div class="quiz-radio" data-value="老年猫" onclick="selectRadio(this)"><span class="r-dot"></span>老年猫(7岁+)</div>
-                </div>
-              </div>
-
-              <!-- CQ6 绝育情况【单选题】 -->
-              <div class="quiz-field" data-q="6">
-                <div class="quiz-field-label">
-                  <span class="q-num">6</span>绝育情况
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="neuter">
-                  <div class="quiz-radio" data-value="已绝育" onclick="selectRadio(this)"><span class="r-dot"></span>已绝育</div>
-                  <div class="quiz-radio" data-value="未绝育" onclick="selectRadio(this)"><span class="r-dot"></span>未绝育</div>
-                </div>
-              </div>
-
-              <!-- CQ7 体重(kg)【填空题】 -->
-              <div class="quiz-field" data-q="7">
-                <div class="quiz-field-label">
-                  <span class="q-num">7</span>体重(kg)
-                  <span class="type-badge fill">填空</span>
-                </div>
-                <div class="quiz-input-wrap">
-                  <input
-                    class="quiz-input"
-                    type="number"
-                    id="q7Input"
-                    placeholder="请输入体重（kg）"
-                    oninput="onQuizInput(this)"
-                    min="0.1"
-                    max="30"
-                    step="0.1"
-                  />
-                </div>
-              </div>
-
-              <!-- CQ8 日常活动量【单选题】 -->
-              <div class="quiz-field" data-q="8">
-                <div class="quiz-field-label">
-                  <span class="q-num">8</span>日常活动量
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="activity">
-                  <div class="quiz-radio" data-value="低" onclick="selectRadio(this)"><span class="r-dot"></span>低（大部分时间睡觉）</div>
-                  <div class="quiz-radio" data-value="中" onclick="selectRadio(this)"><span class="r-dot"></span>中（每天少量玩耍）</div>
-                  <div class="quiz-radio" data-value="高" onclick="selectRadio(this)"><span class="r-dot"></span>高（精力旺盛爱跑酷）</div>
-                </div>
-              </div>
-
-              <!-- CQ9 饲养模式【单选题】 -->
-              <div class="quiz-field" data-q="9">
-                <div class="quiz-field-label">
-                  <span class="q-num">9</span>饲养模式
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="mode">
-                  <div class="quiz-radio" data-value="单宠" onclick="selectRadio(this)"><span class="r-dot"></span>单宠饲养</div>
-                  <div class="quiz-radio" data-value="多宠" onclick="selectRadio(this)"><span class="r-dot"></span>多宠饲养</div>
-                </div>
-              </div>
-
-              <!-- CQ10 多宠数量【填空题】 -->
-              <div class="quiz-field hidden" data-q="10" id="q10Field">
-                <div class="quiz-field-label">
-                  <span class="q-num">10</span>多宠数量
-                  <span class="type-badge fill">填空</span>
-                </div>
-                <div class="quiz-input-wrap">
-                  <input
-                    class="quiz-input"
-                    type="number"
-                    id="q10Input"
-                    placeholder="请输入宠物总数"
-                    oninput="onQuizInput(this)"
-                    min="2"
-                    max="50"
-                    step="1"
-                  />
-                </div>
-              </div>
-
-              <!-- CQ11 每日陪伴时长【单选题】 -->
-              <div class="quiz-field" data-q="11">
-                <div class="quiz-field-label">
-                  <span class="q-num">11</span>每日陪伴时长
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="company">
-                  <div class="quiz-radio" data-value="无陪伴" onclick="selectRadio(this)"><span class="r-dot"></span>无陪伴（整日独处）</div>
-                  <div class="quiz-radio" data-value="少量陪伴" onclick="selectRadio(this)">
-                    <span class="r-dot"></span>少量陪伴（白天独处，夜间短时）
+                <div class="quiz-radio-group quiz-radio-group-pet" data-name="petType">
+                  <div class="quiz-radio quiz-radio-pet" data-value="猫" onclick="selectRadio(this)">
+                    <span class="r-dot"></span>
+                    <span class="quiz-pet-icon">🐱</span>
+                    <span class="quiz-pet-label">猫猫</span>
                   </div>
-                  <div class="quiz-radio" data-value="充足陪伴" onclick="selectRadio(this)">
-                    <span class="r-dot"></span>充足陪伴（白天互动，夜间同处）
+                  <div class="quiz-radio quiz-radio-pet" data-value="狗" onclick="selectRadio(this)">
+                    <span class="r-dot"></span>
+                    <span class="quiz-pet-icon">🐶</span>
+                    <span class="quiz-pet-label">狗狗</span>
                   </div>
                 </div>
               </div>
 
-              <!-- CQ12 肠胃健康【多选题】 -->
-              <div class="quiz-field" data-q="12">
-                <div class="quiz-field-label">
-                  <span class="q-num">12</span>肠胃健康
-                  <span class="type-badge multi">多选</span>
+              <!-- ============ 猫咪题目 ============ -->
+              <div id="catQuestions" class="hidden">
+                <!-- CQ1 猫咪品种【单选题】 -->
+                <div class="quiz-field" data-q="1">
+                  <div class="quiz-field-label">
+                    <span class="q-num">1</span>猫咪品种
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="breed">
+                    <div class="quiz-radio" data-value="英短" onclick="selectRadio(this)"><span class="r-dot"></span>英短</div>
+                    <div class="quiz-radio" data-value="美短" onclick="selectRadio(this)"><span class="r-dot"></span>美短</div>
+                    <div class="quiz-radio" data-value="布偶" onclick="selectRadio(this)"><span class="r-dot"></span>布偶</div>
+                    <div class="quiz-radio" data-value="德文卷毛" onclick="selectRadio(this)"><span class="r-dot"></span>德文卷毛</div>
+                    <div class="quiz-radio" data-value="暹罗" onclick="selectRadio(this)"><span class="r-dot"></span>暹罗</div>
+                    <div class="quiz-radio" data-value="蓝猫" onclick="selectRadio(this)"><span class="r-dot"></span>蓝猫</div>
+                    <div class="quiz-radio" data-value="加菲" onclick="selectRadio(this)"><span class="r-dot"></span>加菲</div>
+                    <div class="quiz-radio" data-value="缅因" onclick="selectRadio(this)"><span class="r-dot"></span>缅因</div>
+                    <div class="quiz-radio" data-value="阿比西尼亚" onclick="selectRadio(this)"><span class="r-dot"></span>阿比西尼亚</div>
+                    <div class="quiz-radio" data-value="其他" onclick="selectRadio(this)"><span class="r-dot"></span>其他</div>
+                  </div>
                 </div>
-                <div class="quiz-checkbox-group" data-name="stomach">
-                  <div class="quiz-checkbox" data-value="软便" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>软便</div>
-                  <div class="quiz-checkbox" data-value="便秘" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>便秘</div>
-                  <div class="quiz-checkbox" data-value="频繁呕吐" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>频繁呕吐</div>
-                  <div class="quiz-checkbox" data-value="肠胃健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>肠胃健康</div>
+
+                <!-- CQ2 其他品种【填空题】 -->
+                <div class="quiz-field hidden" data-q="2" id="q2Field">
+                  <div class="quiz-field-label">
+                    <span class="q-num">2</span>其他品种
+                    <span class="type-badge fill">填空</span>
+                  </div>
+                  <div class="quiz-input-wrap">
+                    <input class="quiz-input" type="text" id="q2Input" placeholder="请输入猫咪品种" oninput="onQuizInput(this)" />
+                  </div>
+                </div>
+
+                <!-- CQ3 宠物昵称【填空题】 -->
+                <div class="quiz-field" data-q="3">
+                  <div class="quiz-field-label">
+                    <span class="q-num">3</span>宠物昵称
+                    <span class="type-badge fill">填空</span>
+                  </div>
+                  <div class="quiz-input-wrap">
+                    <input class="quiz-input" type="text" id="q3Input" placeholder="请输入爱宠昵称" oninput="onQuizInput(this)" maxlength="20" />
+                  </div>
+                </div>
+
+                <!-- CQ4 性别【单选题】 -->
+                <div class="quiz-field" data-q="4">
+                  <div class="quiz-field-label">
+                    <span class="q-num">4</span>性别
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="gender">
+                    <div class="quiz-radio" data-value="公" onclick="selectRadio(this)"><span class="r-dot"></span>弟弟(公)</div>
+                    <div class="quiz-radio" data-value="母" onclick="selectRadio(this)"><span class="r-dot"></span>妹妹(母)</div>
+                  </div>
+                </div>
+
+                <!-- CQ5 年龄段【单选题】 -->
+                <div class="quiz-field" data-q="5">
+                  <div class="quiz-field-label">
+                    <span class="q-num">5</span>年龄段
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="age">
+                    <div class="quiz-radio" data-value="幼猫" onclick="selectRadio(this)"><span class="r-dot"></span>幼猫(0～12月)</div>
+                    <div class="quiz-radio" data-value="成猫" onclick="selectRadio(this)"><span class="r-dot"></span>成猫(1～7岁)</div>
+                    <div class="quiz-radio" data-value="老年猫" onclick="selectRadio(this)"><span class="r-dot"></span>老年猫(7岁+)</div>
+                  </div>
+                </div>
+
+                <!-- CQ6 绝育情况【单选题】 -->
+                <div class="quiz-field" data-q="6">
+                  <div class="quiz-field-label">
+                    <span class="q-num">6</span>绝育情况
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="neuter">
+                    <div class="quiz-radio" data-value="已绝育" onclick="selectRadio(this)"><span class="r-dot"></span>已绝育</div>
+                    <div class="quiz-radio" data-value="未绝育" onclick="selectRadio(this)"><span class="r-dot"></span>未绝育</div>
+                  </div>
+                </div>
+
+                <!-- CQ7 体重(kg)【填空题】 -->
+                <div class="quiz-field" data-q="7">
+                  <div class="quiz-field-label">
+                    <span class="q-num">7</span>体重(kg)
+                    <span class="type-badge fill">填空</span>
+                  </div>
+                  <div class="quiz-input-wrap">
+                    <input
+                      class="quiz-input"
+                      type="number"
+                      id="q7Input"
+                      placeholder="请输入体重（kg）"
+                      oninput="onQuizInput(this)"
+                      min="0.1"
+                      max="30"
+                      step="0.1"
+                    />
+                  </div>
+                </div>
+
+                <!-- CQ8 日常活动量【单选题】 -->
+                <div class="quiz-field" data-q="8">
+                  <div class="quiz-field-label">
+                    <span class="q-num">8</span>日常活动量
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="activity">
+                    <div class="quiz-radio" data-value="低" onclick="selectRadio(this)"><span class="r-dot"></span>低（大部分时间睡觉）</div>
+                    <div class="quiz-radio" data-value="中" onclick="selectRadio(this)"><span class="r-dot"></span>中（每天少量玩耍）</div>
+                    <div class="quiz-radio" data-value="高" onclick="selectRadio(this)"><span class="r-dot"></span>高（精力旺盛爱跑酷）</div>
+                  </div>
+                </div>
+
+                <!-- CQ9 饲养模式【单选题】 -->
+                <div class="quiz-field" data-q="9">
+                  <div class="quiz-field-label">
+                    <span class="q-num">9</span>饲养模式
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="mode">
+                    <div class="quiz-radio" data-value="单宠" onclick="selectRadio(this)"><span class="r-dot"></span>单宠饲养</div>
+                    <div class="quiz-radio" data-value="多宠" onclick="selectRadio(this)"><span class="r-dot"></span>多宠饲养</div>
+                  </div>
+                </div>
+
+                <!-- CQ10 多宠数量【填空题】 -->
+                <div class="quiz-field hidden" data-q="10" id="q10Field">
+                  <div class="quiz-field-label">
+                    <span class="q-num">10</span>多宠数量
+                    <span class="type-badge fill">填空</span>
+                  </div>
+                  <div class="quiz-input-wrap">
+                    <input
+                      class="quiz-input"
+                      type="number"
+                      id="q10Input"
+                      placeholder="请输入宠物总数"
+                      oninput="onQuizInput(this)"
+                      min="2"
+                      max="50"
+                      step="1"
+                    />
+                  </div>
+                </div>
+
+                <!-- CQ11 每日陪伴时长【单选题】 -->
+                <div class="quiz-field" data-q="11">
+                  <div class="quiz-field-label">
+                    <span class="q-num">11</span>每日陪伴时长
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="company">
+                    <div class="quiz-radio" data-value="无陪伴" onclick="selectRadio(this)"><span class="r-dot"></span>无陪伴（整日独处）</div>
+                    <div class="quiz-radio" data-value="少量陪伴" onclick="selectRadio(this)">
+                      <span class="r-dot"></span>少量陪伴（白天独处，夜间短时）
+                    </div>
+                    <div class="quiz-radio" data-value="充足陪伴" onclick="selectRadio(this)">
+                      <span class="r-dot"></span>充足陪伴（白天互动，夜间同处）
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CQ12 肠胃健康【多选题】 -->
+                <div class="quiz-field" data-q="12">
+                  <div class="quiz-field-label">
+                    <span class="q-num">12</span>肠胃健康
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="stomach">
+                    <div class="quiz-checkbox" data-value="软便" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>软便</div>
+                    <div class="quiz-checkbox" data-value="便秘" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>便秘</div>
+                    <div class="quiz-checkbox" data-value="频繁呕吐" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>频繁呕吐</div>
+                    <div class="quiz-checkbox" data-value="肠胃健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>肠胃健康</div>
+                  </div>
+                </div>
+
+                <!-- CQ13 皮毛健康【多选题】 -->
+                <div class="quiz-field" data-q="13">
+                  <div class="quiz-field-label">
+                    <span class="q-num">13</span>皮毛健康
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="skin">
+                    <div class="quiz-checkbox" data-value="掉毛重" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>掉毛重</div>
+                    <div class="quiz-checkbox" data-value="皮屑瘙痒" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>皮屑瘙痒</div>
+                    <div class="quiz-checkbox" data-value="毛发干枯" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>毛发干枯</div>
+                    <div class="quiz-checkbox" data-value="皮肤健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>皮肤健康</div>
+                  </div>
+                </div>
+
+                <!-- CQ14 泌尿健康【多选题】 -->
+                <div class="quiz-field" data-q="14">
+                  <div class="quiz-field-label">
+                    <span class="q-num">14</span>泌尿健康
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="urinary">
+                    <div class="quiz-checkbox" data-value="尿频上火" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>尿频上火</div>
+                    <div class="quiz-checkbox" data-value="泪痕重" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>泪痕重</div>
+                    <div class="quiz-checkbox" data-value="泌尿健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>泌尿健康</div>
+                  </div>
+                </div>
+
+                <!-- CQ15 关节健康【多选题】 -->
+                <div class="quiz-field" data-q="15">
+                  <div class="quiz-field-label">
+                    <span class="q-num">15</span>关节健康
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="joint">
+                    <div class="quiz-checkbox" data-value="关节老化" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>关节老化</div>
+                    <div class="quiz-checkbox" data-value="关节健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>关节健康</div>
+                  </div>
+                </div>
+
+                <!-- CQ16 过敏情况【多选题】 -->
+                <div class="quiz-field" data-q="16">
+                  <div class="quiz-field-label">
+                    <span class="q-num">16</span>过敏情况
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="allergy">
+                    <div class="quiz-checkbox" data-value="肉类过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>肉类过敏</div>
+                    <div class="quiz-checkbox" data-value="谷物过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>谷物过敏</div>
+                    <div class="quiz-checkbox" data-value="无过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>无过敏</div>
+                  </div>
                 </div>
               </div>
+              <!-- /#catQuestions -->
 
-              <!-- CQ13 皮毛健康【多选题】 -->
-              <div class="quiz-field" data-q="13">
-                <div class="quiz-field-label">
-                  <span class="q-num">13</span>皮毛健康
-                  <span class="type-badge multi">多选</span>
+              <!-- ============ 狗狗题目 ============ -->
+              <div id="dogQuestions" class="hidden">
+                <!-- DQ1 狗狗品种【单选题】 -->
+                <div class="quiz-field" data-q="1">
+                  <div class="quiz-field-label">
+                    <span class="q-num">1</span>狗狗品种
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="dBreed">
+                    <div class="quiz-radio" data-value="泰迪" onclick="selectRadio(this)"><span class="r-dot"></span>泰迪</div>
+                    <div class="quiz-radio" data-value="比熊" onclick="selectRadio(this)"><span class="r-dot"></span>比熊</div>
+                    <div class="quiz-radio" data-value="吉娃娃" onclick="selectRadio(this)"><span class="r-dot"></span>吉娃娃</div>
+                    <div class="quiz-radio" data-value="博美" onclick="selectRadio(this)"><span class="r-dot"></span>博美</div>
+                    <div class="quiz-radio" data-value="约克夏" onclick="selectRadio(this)"><span class="r-dot"></span>约克夏</div>
+                    <div class="quiz-radio" data-value="马尔济斯" onclick="selectRadio(this)"><span class="r-dot"></span>马尔济斯</div>
+                    <div class="quiz-radio" data-value="雪纳瑞" onclick="selectRadio(this)"><span class="r-dot"></span>雪纳瑞</div>
+                    <div class="quiz-radio" data-value="柴犬" onclick="selectRadio(this)"><span class="r-dot"></span>柴犬</div>
+                    <div class="quiz-radio" data-value="柯基" onclick="selectRadio(this)"><span class="r-dot"></span>柯基</div>
+                    <div class="quiz-radio" data-value="其他" onclick="selectRadio(this)"><span class="r-dot"></span>其他</div>
+                  </div>
                 </div>
-                <div class="quiz-checkbox-group" data-name="skin">
-                  <div class="quiz-checkbox" data-value="掉毛重" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>掉毛重</div>
-                  <div class="quiz-checkbox" data-value="皮屑瘙痒" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>皮屑瘙痒</div>
-                  <div class="quiz-checkbox" data-value="毛发干枯" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>毛发干枯</div>
-                  <div class="quiz-checkbox" data-value="皮肤健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>皮肤健康</div>
+
+                <!-- DQ2 其他品种【填空题】 -->
+                <div class="quiz-field hidden" data-q="2" id="dQ2Field">
+                  <div class="quiz-field-label">
+                    <span class="q-num">2</span>其他品种
+                    <span class="type-badge fill">填空</span>
+                  </div>
+                  <div class="quiz-input-wrap">
+                    <input class="quiz-input" type="text" id="dQ2Input" placeholder="请输入狗狗品种" oninput="onQuizInput(this)" />
+                  </div>
+                </div>
+
+                <!-- DQ3 宠物昵称【填空题】 -->
+                <div class="quiz-field" data-q="3">
+                  <div class="quiz-field-label">
+                    <span class="q-num">3</span>宠物昵称
+                    <span class="type-badge fill">填空</span>
+                  </div>
+                  <div class="quiz-input-wrap">
+                    <input class="quiz-input" type="text" id="dQ3Input" placeholder="请输入爱宠昵称" oninput="onQuizInput(this)" maxlength="20" />
+                  </div>
+                </div>
+
+                <!-- DQ4 性别【单选题】 -->
+                <div class="quiz-field" data-q="4">
+                  <div class="quiz-field-label">
+                    <span class="q-num">4</span>性别
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="dGender">
+                    <div class="quiz-radio" data-value="公" onclick="selectRadio(this)"><span class="r-dot"></span>弟弟(公)</div>
+                    <div class="quiz-radio" data-value="母" onclick="selectRadio(this)"><span class="r-dot"></span>妹妹(母)</div>
+                  </div>
+                </div>
+
+                <!-- DQ5 年龄段【单选题】 -->
+                <div class="quiz-field" data-q="5">
+                  <div class="quiz-field-label">
+                    <span class="q-num">5</span>年龄段
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="dAge">
+                    <div class="quiz-radio" data-value="幼犬" onclick="selectRadio(this)"><span class="r-dot"></span>幼犬(0～12月)</div>
+                    <div class="quiz-radio" data-value="成犬" onclick="selectRadio(this)"><span class="r-dot"></span>成犬(1～8岁)</div>
+                    <div class="quiz-radio" data-value="老年犬" onclick="selectRadio(this)"><span class="r-dot"></span>老年犬(8岁+)</div>
+                  </div>
+                </div>
+
+                <!-- DQ6 绝育情况【单选题】 -->
+                <div class="quiz-field" data-q="6">
+                  <div class="quiz-field-label">
+                    <span class="q-num">6</span>绝育情况
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="dNeuter">
+                    <div class="quiz-radio" data-value="已绝育" onclick="selectRadio(this)"><span class="r-dot"></span>已绝育</div>
+                    <div class="quiz-radio" data-value="未绝育" onclick="selectRadio(this)"><span class="r-dot"></span>未绝育</div>
+                  </div>
+                </div>
+
+                <!-- DQ7 体重(kg)【填空题】 -->
+                <div class="quiz-field" data-q="7">
+                  <div class="quiz-field-label">
+                    <span class="q-num">7</span>体重(kg)
+                    <span class="type-badge fill">填空</span>
+                  </div>
+                  <div class="quiz-input-wrap">
+                    <input
+                      class="quiz-input"
+                      type="number"
+                      id="dQ7Input"
+                      placeholder="请输入体重（kg）"
+                      oninput="onQuizInput(this)"
+                      min="0.1"
+                      max="80"
+                      step="0.1"
+                    />
+                  </div>
+                </div>
+
+                <!-- DQ8 日常活动量【单选题】 -->
+                <div class="quiz-field" data-q="8">
+                  <div class="quiz-field-label">
+                    <span class="q-num">8</span>日常活动量
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="dActivity">
+                    <div class="quiz-radio" data-value="低" onclick="selectRadio(this)"><span class="r-dot"></span>低（大部分时间在家）</div>
+                    <div class="quiz-radio" data-value="中" onclick="selectRadio(this)"><span class="r-dot"></span>中（每天短时间活动）</div>
+                    <div class="quiz-radio" data-value="高" onclick="selectRadio(this)"><span class="r-dot"></span>高（每天大量运动）</div>
+                  </div>
+                </div>
+
+                <!-- DQ9 饲养模式【单选题】 -->
+                <div class="quiz-field" data-q="9">
+                  <div class="quiz-field-label">
+                    <span class="q-num">9</span>饲养模式
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="dMode">
+                    <div class="quiz-radio" data-value="单宠" onclick="selectRadio(this)"><span class="r-dot"></span>单宠饲养</div>
+                    <div class="quiz-radio" data-value="多宠" onclick="selectRadio(this)"><span class="r-dot"></span>多宠饲养</div>
+                  </div>
+                </div>
+
+                <!-- DQ10 多宠数量【填空题】 -->
+                <div class="quiz-field hidden" data-q="10" id="dQ10Field">
+                  <div class="quiz-field-label">
+                    <span class="q-num">10</span>多宠数量
+                    <span class="type-badge fill">填空</span>
+                  </div>
+                  <div class="quiz-input-wrap">
+                    <input
+                      class="quiz-input"
+                      type="number"
+                      id="dQ10Input"
+                      placeholder="请输入宠物总数"
+                      oninput="onQuizInput(this)"
+                      min="2"
+                      max="50"
+                      step="1"
+                    />
+                  </div>
+                </div>
+
+                <!-- DQ11 每周遛弯次数【单选题】 -->
+                <div class="quiz-field" data-q="11">
+                  <div class="quiz-field-label">
+                    <span class="q-num">11</span>每周遛弯次数
+                    <span class="type-badge single">单选</span>
+                  </div>
+                  <div class="quiz-radio-group" data-name="dWalk">
+                    <div class="quiz-radio" data-value="＜1次" onclick="selectRadio(this)"><span class="r-dot"></span>＜1次</div>
+                    <div class="quiz-radio" data-value="1～2次" onclick="selectRadio(this)"><span class="r-dot"></span>1～2次</div>
+                    <div class="quiz-radio" data-value="3～5次" onclick="selectRadio(this)"><span class="r-dot"></span>3～5次</div>
+                    <div class="quiz-radio" data-value="每天1次以上" onclick="selectRadio(this)"><span class="r-dot"></span>每天1次以上</div>
+                  </div>
+                </div>
+
+                <!-- DQ12 肠胃健康【多选题】 -->
+                <div class="quiz-field" data-q="12">
+                  <div class="quiz-field-label">
+                    <span class="q-num">12</span>肠胃健康
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="dStomach">
+                    <div class="quiz-checkbox" data-value="拉稀" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>拉稀</div>
+                    <div class="quiz-checkbox" data-value="挑食" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>挑食</div>
+                    <div class="quiz-checkbox" data-value="积食" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>积食</div>
+                    <div class="quiz-checkbox" data-value="肠胃健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>肠胃健康</div>
+                  </div>
+                </div>
+
+                <!-- DQ13 皮肤健康【多选题】 -->
+                <div class="quiz-field" data-q="13">
+                  <div class="quiz-field-label">
+                    <span class="q-num">13</span>皮肤健康
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="dSkin">
+                    <div class="quiz-checkbox" data-value="异位性皮炎" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>异位性皮炎</div>
+                    <div class="quiz-checkbox" data-value="季节性脱毛" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>季节性脱毛</div>
+                    <div class="quiz-checkbox" data-value="瘙痒泛红" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>瘙痒泛红</div>
+                    <div class="quiz-checkbox" data-value="皮肤健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>皮肤健康</div>
+                  </div>
+                </div>
+
+                <!-- DQ14 泪痕情况【多选题】 -->
+                <div class="quiz-field" data-q="14">
+                  <div class="quiz-field-label">
+                    <span class="q-num">14</span>泪痕情况
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="dTear">
+                    <div class="quiz-checkbox" data-value="顽固泪痕" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>顽固泪痕</div>
+                    <div class="quiz-checkbox" data-value="易上火" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>易上火</div>
+                    <div class="quiz-checkbox" data-value="无异常" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>无异常</div>
+                  </div>
+                </div>
+
+                <!-- DQ15 关节健康【多选题】 -->
+                <div class="quiz-field" data-q="15">
+                  <div class="quiz-field-label">
+                    <span class="q-num">15</span>关节健康
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="dJoint">
+                    <div class="quiz-checkbox" data-value="髌骨不良" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>髌骨不良</div>
+                    <div class="quiz-checkbox" data-value="关节老化" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>关节老化</div>
+                    <div class="quiz-checkbox" data-value="关节健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>关节健康</div>
+                  </div>
+                </div>
+
+                <!-- DQ16 代谢情况【多选题】 -->
+                <div class="quiz-field" data-q="16">
+                  <div class="quiz-field-label">
+                    <span class="q-num">16</span>代谢情况
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="dMetabolism">
+                    <div class="quiz-checkbox" data-value="肥胖高血脂" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>肥胖高血脂</div>
+                    <div class="quiz-checkbox" data-value="胰腺敏感" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>胰腺敏感</div>
+                    <div class="quiz-checkbox" data-value="代谢正常" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>代谢正常</div>
+                  </div>
+                </div>
+
+                <!-- DQ17 过敏情况【多选题】 -->
+                <div class="quiz-field" data-q="17">
+                  <div class="quiz-field-label">
+                    <span class="q-num">17</span>过敏情况
+                    <span class="type-badge multi">多选</span>
+                  </div>
+                  <div class="quiz-checkbox-group" data-name="dAllergy">
+                    <div class="quiz-checkbox" data-value="肉类过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>肉类过敏</div>
+                    <div class="quiz-checkbox" data-value="谷物过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>谷物过敏</div>
+                    <div class="quiz-checkbox" data-value="无过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>无过敏</div>
+                  </div>
                 </div>
               </div>
-
-              <!-- CQ14 泌尿健康【多选题】 -->
-              <div class="quiz-field" data-q="14">
-                <div class="quiz-field-label">
-                  <span class="q-num">14</span>泌尿健康
-                  <span class="type-badge multi">多选</span>
-                </div>
-                <div class="quiz-checkbox-group" data-name="urinary">
-                  <div class="quiz-checkbox" data-value="尿频上火" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>尿频上火</div>
-                  <div class="quiz-checkbox" data-value="泪痕重" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>泪痕重</div>
-                  <div class="quiz-checkbox" data-value="泌尿健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>泌尿健康</div>
-                </div>
-              </div>
-
-              <!-- CQ15 关节健康【多选题】 -->
-              <div class="quiz-field" data-q="15">
-                <div class="quiz-field-label">
-                  <span class="q-num">15</span>关节健康
-                  <span class="type-badge multi">多选</span>
-                </div>
-                <div class="quiz-checkbox-group" data-name="joint">
-                  <div class="quiz-checkbox" data-value="关节老化" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>关节老化</div>
-                  <div class="quiz-checkbox" data-value="关节健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>关节健康</div>
-                </div>
-              </div>
-
-              <!-- CQ16 过敏情况【多选题】 -->
-              <div class="quiz-field" data-q="16">
-                <div class="quiz-field-label">
-                  <span class="q-num">16</span>过敏情况
-                  <span class="type-badge multi">多选</span>
-                </div>
-                <div class="quiz-checkbox-group" data-name="allergy">
-                  <div class="quiz-checkbox" data-value="肉类过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>肉类过敏</div>
-                  <div class="quiz-checkbox" data-value="谷物过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>谷物过敏</div>
-                  <div class="quiz-checkbox" data-value="无过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>无过敏</div>
-                </div>
-              </div>
-            </div>
-            <!-- /#catQuestions -->
-
-            <!-- ============ 狗狗题目 ============ -->
-            <div id="dogQuestions" class="hidden">
-              <!-- DQ1 狗狗品种【单选题】 -->
-              <div class="quiz-field" data-q="1">
-                <div class="quiz-field-label">
-                  <span class="q-num">1</span>狗狗品种
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="dBreed">
-                  <div class="quiz-radio" data-value="泰迪" onclick="selectRadio(this)"><span class="r-dot"></span>泰迪</div>
-                  <div class="quiz-radio" data-value="比熊" onclick="selectRadio(this)"><span class="r-dot"></span>比熊</div>
-                  <div class="quiz-radio" data-value="吉娃娃" onclick="selectRadio(this)"><span class="r-dot"></span>吉娃娃</div>
-                  <div class="quiz-radio" data-value="博美" onclick="selectRadio(this)"><span class="r-dot"></span>博美</div>
-                  <div class="quiz-radio" data-value="约克夏" onclick="selectRadio(this)"><span class="r-dot"></span>约克夏</div>
-                  <div class="quiz-radio" data-value="马尔济斯" onclick="selectRadio(this)"><span class="r-dot"></span>马尔济斯</div>
-                  <div class="quiz-radio" data-value="雪纳瑞" onclick="selectRadio(this)"><span class="r-dot"></span>雪纳瑞</div>
-                  <div class="quiz-radio" data-value="柴犬" onclick="selectRadio(this)"><span class="r-dot"></span>柴犬</div>
-                  <div class="quiz-radio" data-value="柯基" onclick="selectRadio(this)"><span class="r-dot"></span>柯基</div>
-                  <div class="quiz-radio" data-value="其他" onclick="selectRadio(this)"><span class="r-dot"></span>其他</div>
-                </div>
-              </div>
-
-              <!-- DQ2 其他品种【填空题】 -->
-              <div class="quiz-field hidden" data-q="2" id="dQ2Field">
-                <div class="quiz-field-label">
-                  <span class="q-num">2</span>其他品种
-                  <span class="type-badge fill">填空</span>
-                </div>
-                <div class="quiz-input-wrap">
-                  <input class="quiz-input" type="text" id="dQ2Input" placeholder="请输入狗狗品种" oninput="onQuizInput(this)" />
-                </div>
-              </div>
-
-              <!-- DQ3 宠物昵称【填空题】 -->
-              <div class="quiz-field" data-q="3">
-                <div class="quiz-field-label">
-                  <span class="q-num">3</span>宠物昵称
-                  <span class="type-badge fill">填空</span>
-                </div>
-                <div class="quiz-input-wrap">
-                  <input class="quiz-input" type="text" id="dQ3Input" placeholder="请输入爱宠昵称" oninput="onQuizInput(this)" maxlength="20" />
-                </div>
-              </div>
-
-              <!-- DQ4 性别【单选题】 -->
-              <div class="quiz-field" data-q="4">
-                <div class="quiz-field-label">
-                  <span class="q-num">4</span>性别
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="dGender">
-                  <div class="quiz-radio" data-value="公" onclick="selectRadio(this)"><span class="r-dot"></span>弟弟(公)</div>
-                  <div class="quiz-radio" data-value="母" onclick="selectRadio(this)"><span class="r-dot"></span>妹妹(母)</div>
-                </div>
-              </div>
-
-              <!-- DQ5 年龄段【单选题】 -->
-              <div class="quiz-field" data-q="5">
-                <div class="quiz-field-label">
-                  <span class="q-num">5</span>年龄段
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="dAge">
-                  <div class="quiz-radio" data-value="幼犬" onclick="selectRadio(this)"><span class="r-dot"></span>幼犬(0～12月)</div>
-                  <div class="quiz-radio" data-value="成犬" onclick="selectRadio(this)"><span class="r-dot"></span>成犬(1～8岁)</div>
-                  <div class="quiz-radio" data-value="老年犬" onclick="selectRadio(this)"><span class="r-dot"></span>老年犬(8岁+)</div>
-                </div>
-              </div>
-
-              <!-- DQ6 绝育情况【单选题】 -->
-              <div class="quiz-field" data-q="6">
-                <div class="quiz-field-label">
-                  <span class="q-num">6</span>绝育情况
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="dNeuter">
-                  <div class="quiz-radio" data-value="已绝育" onclick="selectRadio(this)"><span class="r-dot"></span>已绝育</div>
-                  <div class="quiz-radio" data-value="未绝育" onclick="selectRadio(this)"><span class="r-dot"></span>未绝育</div>
-                </div>
-              </div>
-
-              <!-- DQ7 体重(kg)【填空题】 -->
-              <div class="quiz-field" data-q="7">
-                <div class="quiz-field-label">
-                  <span class="q-num">7</span>体重(kg)
-                  <span class="type-badge fill">填空</span>
-                </div>
-                <div class="quiz-input-wrap">
-                  <input
-                    class="quiz-input"
-                    type="number"
-                    id="dQ7Input"
-                    placeholder="请输入体重（kg）"
-                    oninput="onQuizInput(this)"
-                    min="0.1"
-                    max="80"
-                    step="0.1"
-                  />
-                </div>
-              </div>
-
-              <!-- DQ8 日常活动量【单选题】 -->
-              <div class="quiz-field" data-q="8">
-                <div class="quiz-field-label">
-                  <span class="q-num">8</span>日常活动量
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="dActivity">
-                  <div class="quiz-radio" data-value="低" onclick="selectRadio(this)"><span class="r-dot"></span>低（大部分时间在家）</div>
-                  <div class="quiz-radio" data-value="中" onclick="selectRadio(this)"><span class="r-dot"></span>中（每天短时间活动）</div>
-                  <div class="quiz-radio" data-value="高" onclick="selectRadio(this)"><span class="r-dot"></span>高（每天大量运动）</div>
-                </div>
-              </div>
-
-              <!-- DQ9 饲养模式【单选题】 -->
-              <div class="quiz-field" data-q="9">
-                <div class="quiz-field-label">
-                  <span class="q-num">9</span>饲养模式
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="dMode">
-                  <div class="quiz-radio" data-value="单宠" onclick="selectRadio(this)"><span class="r-dot"></span>单宠饲养</div>
-                  <div class="quiz-radio" data-value="多宠" onclick="selectRadio(this)"><span class="r-dot"></span>多宠饲养</div>
-                </div>
-              </div>
-
-              <!-- DQ10 多宠数量【填空题】 -->
-              <div class="quiz-field hidden" data-q="10" id="dQ10Field">
-                <div class="quiz-field-label">
-                  <span class="q-num">10</span>多宠数量
-                  <span class="type-badge fill">填空</span>
-                </div>
-                <div class="quiz-input-wrap">
-                  <input
-                    class="quiz-input"
-                    type="number"
-                    id="dQ10Input"
-                    placeholder="请输入宠物总数"
-                    oninput="onQuizInput(this)"
-                    min="2"
-                    max="50"
-                    step="1"
-                  />
-                </div>
-              </div>
-
-              <!-- DQ11 每周遛弯次数【单选题】 -->
-              <div class="quiz-field" data-q="11">
-                <div class="quiz-field-label">
-                  <span class="q-num">11</span>每周遛弯次数
-                  <span class="type-badge single">单选</span>
-                </div>
-                <div class="quiz-radio-group" data-name="dWalk">
-                  <div class="quiz-radio" data-value="＜1次" onclick="selectRadio(this)"><span class="r-dot"></span>＜1次</div>
-                  <div class="quiz-radio" data-value="1～2次" onclick="selectRadio(this)"><span class="r-dot"></span>1～2次</div>
-                  <div class="quiz-radio" data-value="3～5次" onclick="selectRadio(this)"><span class="r-dot"></span>3～5次</div>
-                  <div class="quiz-radio" data-value="每天1次以上" onclick="selectRadio(this)"><span class="r-dot"></span>每天1次以上</div>
-                </div>
-              </div>
-
-              <!-- DQ12 肠胃健康【多选题】 -->
-              <div class="quiz-field" data-q="12">
-                <div class="quiz-field-label">
-                  <span class="q-num">12</span>肠胃健康
-                  <span class="type-badge multi">多选</span>
-                </div>
-                <div class="quiz-checkbox-group" data-name="dStomach">
-                  <div class="quiz-checkbox" data-value="拉稀" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>拉稀</div>
-                  <div class="quiz-checkbox" data-value="挑食" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>挑食</div>
-                  <div class="quiz-checkbox" data-value="积食" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>积食</div>
-                  <div class="quiz-checkbox" data-value="肠胃健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>肠胃健康</div>
-                </div>
-              </div>
-
-              <!-- DQ13 皮肤健康【多选题】 -->
-              <div class="quiz-field" data-q="13">
-                <div class="quiz-field-label">
-                  <span class="q-num">13</span>皮肤健康
-                  <span class="type-badge multi">多选</span>
-                </div>
-                <div class="quiz-checkbox-group" data-name="dSkin">
-                  <div class="quiz-checkbox" data-value="异位性皮炎" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>异位性皮炎</div>
-                  <div class="quiz-checkbox" data-value="季节性脱毛" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>季节性脱毛</div>
-                  <div class="quiz-checkbox" data-value="瘙痒泛红" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>瘙痒泛红</div>
-                  <div class="quiz-checkbox" data-value="皮肤健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>皮肤健康</div>
-                </div>
-              </div>
-
-              <!-- DQ14 泪痕情况【多选题】 -->
-              <div class="quiz-field" data-q="14">
-                <div class="quiz-field-label">
-                  <span class="q-num">14</span>泪痕情况
-                  <span class="type-badge multi">多选</span>
-                </div>
-                <div class="quiz-checkbox-group" data-name="dTear">
-                  <div class="quiz-checkbox" data-value="顽固泪痕" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>顽固泪痕</div>
-                  <div class="quiz-checkbox" data-value="易上火" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>易上火</div>
-                  <div class="quiz-checkbox" data-value="无异常" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>无异常</div>
-                </div>
-              </div>
-
-              <!-- DQ15 关节健康【多选题】 -->
-              <div class="quiz-field" data-q="15">
-                <div class="quiz-field-label">
-                  <span class="q-num">15</span>关节健康
-                  <span class="type-badge multi">多选</span>
-                </div>
-                <div class="quiz-checkbox-group" data-name="dJoint">
-                  <div class="quiz-checkbox" data-value="髌骨不良" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>髌骨不良</div>
-                  <div class="quiz-checkbox" data-value="关节老化" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>关节老化</div>
-                  <div class="quiz-checkbox" data-value="关节健康" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>关节健康</div>
-                </div>
-              </div>
-
-              <!-- DQ16 代谢情况【多选题】 -->
-              <div class="quiz-field" data-q="16">
-                <div class="quiz-field-label">
-                  <span class="q-num">16</span>代谢情况
-                  <span class="type-badge multi">多选</span>
-                </div>
-                <div class="quiz-checkbox-group" data-name="dMetabolism">
-                  <div class="quiz-checkbox" data-value="肥胖高血脂" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>肥胖高血脂</div>
-                  <div class="quiz-checkbox" data-value="胰腺敏感" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>胰腺敏感</div>
-                  <div class="quiz-checkbox" data-value="代谢正常" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>代谢正常</div>
-                </div>
-              </div>
-
-              <!-- DQ17 过敏情况【多选题】 -->
-              <div class="quiz-field" data-q="17">
-                <div class="quiz-field-label">
-                  <span class="q-num">17</span>过敏情况
-                  <span class="type-badge multi">多选</span>
-                </div>
-                <div class="quiz-checkbox-group" data-name="dAllergy">
-                  <div class="quiz-checkbox" data-value="肉类过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>肉类过敏</div>
-                  <div class="quiz-checkbox" data-value="谷物过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>谷物过敏</div>
-                  <div class="quiz-checkbox" data-value="无过敏" onclick="toggleCheckbox(this)"><span class="c-box">✓</span>无过敏</div>
-                </div>
-              </div>
-            </div>
-            <!-- /#dogQuestions -->
-
+              <!-- /#dogQuestions -->
             </div>
             <!-- /quizQuestionsArea -->
 
@@ -930,7 +928,7 @@
             </div>
 
             <div class="poster-meals">
-              <div class="poster-meals-title">🍽️ 营养方案</div>
+              <div class="poster-meals-title">🍽️ 营养方案：<span id="nutritionContent"></span></div>
               <div class="poster-meals-list" id="posterMealList"></div>
             </div>
 
@@ -967,15 +965,10 @@
           <div class="poster-buy-bar">
             <div class="poster-buy-info">
               <div class="poster-buy-price" id="posterBuyPrice">¥89<span>/月起</span></div>
-              <div class="poster-buy-desc">AI定制专属每日配餐</div>
             </div>
             <div class="poster-buy-actions">
-              <button class="poster-action-btn poster-action-outline" onclick="generatePosterImage()">
-                <span class="action-icon">📷</span>生成海报
-              </button>
-              <button class="poster-action-btn poster-action-outline" onclick="sharePoster()">
-                <span class="action-icon">🔗</span>分享
-              </button>
+              <button class="poster-action-btn poster-action-outline" onclick="generatePosterImage()">生成海报</button>
+              <button class="poster-action-btn poster-action-outline" onclick="sharePoster()">分享</button>
               <button class="poster-action-btn poster-action-primary" onclick="openPurchaseOptions()">立即购买</button>
             </div>
           </div>
