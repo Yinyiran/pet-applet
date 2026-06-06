@@ -4052,14 +4052,18 @@ body {
 
 /* 配餐颗粒列表 */
 .poster-meals {
-  margin-bottom: 12px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: var(--shadow-md);
+  margin-top: 14px;
+  padding: 0 4px;
 }
 .poster-meals-title {
   font-size: 15px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 10px;
   display: flex;
+  padding: 10px;
   align-items: center;
   gap: 6px;
 }
@@ -4131,7 +4135,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 0;
+  padding: 12px 0;
   border-top: 1px dashed var(--border);
   margin-top: 4px;
 }
