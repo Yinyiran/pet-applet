@@ -101,7 +101,7 @@
               <span class="stats-friends-num" id="statsAllFriends">128,936</span>
             </div>
             <div class="stats-bar-divider"></div>
-            <div class="stats-bar-item stats-douyin" onclick="copyDouyinCode()">
+            <div class="stats-bar-item stats-douyin" onclick="openDouyinCard()">
               <div class="stats-douyin-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path
@@ -119,7 +119,7 @@
             <div class="ai-card-glow"></div>
             <div class="ai-card-glow2"></div>
             <div class="ai-card-title">AI 专属定制</div>
-            <div class="ai-card-subtitle">填写猫咪基础信息，AI智能分析爱宠特征，精准推荐最适合的营养配餐方案</div>
+            <div class="ai-card-subtitle">填写宠物基础信息，AI智能分析爱宠特征，精准推荐最适合的营养配餐方案</div>
             <div class="ai-card-cta">
               开始定制
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -380,7 +380,7 @@
           <div class="quiz-page-container">
             <div class="quiz-page-header">
               <div class="quiz-page-title">AI 宠物配餐</div>
-              <div class="quiz-page-subtitle">基础信息采集表</div>
+              <div class="quiz-page-subtitle">智能分析爱宠特征，精准推荐最适合的营养配餐方案</div>
             </div>
 
             <div class="quiz-progress">
@@ -1823,6 +1823,52 @@
               <div class="video-list" id="videoList"></div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 抖音直播间介绍弹窗 ==================== -->
+    <div class="douyin-overlay hidden" id="douyinOverlay" onclick="closeDouyinCard(event)">
+      <div class="douyin-card">
+        <div class="douyin-card-handle"></div>
+        <div class="douyin-card-hero">
+          <div class="douyin-card-hero-badge">🔴 直播中</div>
+          <div class="douyin-card-hero-title">梵优茗宠 抖音直播间</div>
+          <div class="douyin-card-hero-desc">每日 19:00-22:00 直播 · AI定制配餐专场</div>
+        </div>
+        <div class="douyin-card-body">
+          <div class="douyin-card-section">
+            <div class="douyin-card-section-icon">🤖</div>
+            <div class="douyin-card-section-info">
+              <div class="douyin-card-section-title">AI 专属定制配餐</div>
+              <div class="douyin-card-section-desc">
+                填写猫咪/狗狗基础信息，AI 智能分析爱宠年龄、品种、体重、健康状态， 精准推荐最适合的营养配餐方案，科学搭配、告别盲目选粮。
+              </div>
+            </div>
+          </div>
+          <div class="douyin-card-section">
+            <div class="douyin-card-section-icon">🎁</div>
+            <div class="douyin-card-section-info">
+              <div class="douyin-card-section-title">直播间专属福利</div>
+              <div class="douyin-card-section-desc">
+                每日直播抽取 3 名幸运萌友，免费获得 AI 定制配餐方案！ 关注直播间还可领取专属优惠券，限时福利不容错过。
+              </div>
+            </div>
+          </div>
+          <div class="douyin-card-section">
+            <div class="douyin-card-section-icon">📱</div>
+            <div class="douyin-card-section-info">
+              <div class="douyin-card-section-title">如何参与</div>
+              <div class="douyin-card-section-desc">复制下方抖音号，打开抖音搜索关注，开播时会收到提醒， 不错过每一场 AI 定制配餐干货分享！</div>
+            </div>
+          </div>
+        </div>
+        <div class="douyin-card-footer">
+          <div class="douyin-card-id">
+            <span class="douyin-card-id-label">抖音号</span>
+            <span class="douyin-card-id-value" id="douyinIdText">FanYouMingChong</span>
+          </div>
+          <button class="douyin-card-copy-btn" onclick="copyDouyinId(event)">复制抖音号</button>
         </div>
       </div>
     </div>

@@ -3,58 +3,58 @@
 // 商品数据：按分类组织
 const shopProducts = {
   snack: [
-    { id: 'chicken-stick', name: '鸡肉缠绕磨牙棒', emoji: '🦴', price: 25.9, orig: 39.9, sales: 3280, tag: 'hot', tagText: '热卖' },
-    { id: 'salmon-freeze', name: '深海三文鱼冻干', emoji: '🐟', price: 39.9, orig: 59.9, sales: 1890, tag: 'new', tagText: '新品' },
-    { id: 'cheese-biscuit', name: '芝士训练饼干', emoji: '🧀', price: 18.9, orig: 29.9, sales: 5120, tag: 'best', tagText: '爆款' },
-    { id: 'beef-grain', name: '原切牛肉粒', emoji: '🥩', price: 32.9, orig: 45.9, sales: 2460, tag: 'hot', tagText: '热卖' },
-    { id: 'teeth-stick', name: '磨牙洁齿棒', emoji: '🦴', price: 19.9, orig: 39.9, sales: 5890, tag: 'hot', tagText: '限时' },
-    { id: 'duck-strip', name: '鸭肉缠绕薯条', emoji: '🍟', price: 22.9, orig: 36.9, sales: 1760, tag: 'new', tagText: '新品' },
-    { id: 'lamb-grain', name: '羊肉粒零食', emoji: '🍖', price: 28.9, orig: 42.9, sales: 1350, tag: '', tagText: '' },
-    { id: 'shrimp-dry', name: '南极磷虾干', emoji: '🦐', price: 35.9, orig: 55.9, sales: 980, tag: 'new', tagText: '新品' }
+    { id: 'chicken-stick', name: '鸡肉缠绕磨牙棒', emoji: '🦴', price: 25.9, orig: 39.9, sales: 3280, stock: 560, tag: 'hot', tagText: '热卖', desc: '精选鸡胸肉缠绕，低温烘干保留营养，助磨牙洁齿' },
+    { id: 'salmon-freeze', name: '深海三文鱼冻干', emoji: '🐟', price: 39.9, orig: 59.9, sales: 1890, stock: 320, tag: 'new', tagText: '新品', desc: '纯三文鱼制成，富含Omega-3，美毛护肤' },
+    { id: 'cheese-biscuit', name: '芝士训练饼干', emoji: '🧀', price: 18.9, orig: 29.9, sales: 5120, stock: 890, tag: 'best', tagText: '爆款', desc: '添加真实芝士，训练奖励首选，小巧易带' },
+    { id: 'beef-grain', name: '原切牛肉粒', emoji: '🥩', price: 32.9, orig: 45.9, sales: 2460, stock: 410, tag: 'hot', tagText: '热卖', desc: '原切牛肉低温烘干，高蛋白低脂肪' },
+    { id: 'teeth-stick', name: '磨牙洁齿棒', emoji: '🦴', price: 19.9, orig: 39.9, sales: 5890, stock: 1200, tag: 'hot', tagText: '限时', desc: '独特纹理设计，深入牙缝清洁，预防牙结石' },
+    { id: 'duck-strip', name: '鸭肉缠绕薯条', emoji: '🍟', price: 22.9, orig: 36.9, sales: 1760, stock: 380, tag: 'new', tagText: '新品', desc: '鸭肉缠绕红薯条，清火降燥，适合易上火体质' },
+    { id: 'lamb-grain', name: '羊肉粒零食', emoji: '🍖', price: 28.9, orig: 42.9, sales: 1350, stock: 270, tag: '', tagText: '', desc: '新西兰羊肉制成，无添加防腐剂，适口性极佳' },
+    { id: 'shrimp-dry', name: '南极磷虾干', emoji: '🦐', price: 35.9, orig: 55.9, sales: 980, stock: 180, tag: 'new', tagText: '新品', desc: '南极磷虾天然晒干，富含虾青素，提升免疫力' }
   ],
   staple: [
-    { id: 'chicken-rice', name: '鸡肉益生菌粮', emoji: '🍚', price: 89.0, orig: 128.0, sales: 2100, tag: 'best', tagText: '爆款' },
-    { id: 'salmon-rice', name: '三文鱼全期粮', emoji: '🐠', price: 108.0, orig: 158.0, sales: 1680, tag: 'hot', tagText: '热卖' },
-    { id: 'beef-can', name: '牛肉蔬菜罐头', emoji: '🥫', price: 15.9, orig: 22.9, sales: 4320, tag: 'hot', tagText: '热卖' },
-    { id: 'lamb-can', name: '羊肉胡萝卜罐头', emoji: '🥘', price: 16.9, orig: 24.9, sales: 2980, tag: '', tagText: '' },
-    { id: 'puppy-milk', name: '幼犬羊奶粉', emoji: '🍼', price: 68.0, orig: 98.0, sales: 1560, tag: '', tagText: '' },
-    { id: 'senior-food', name: '老年犬配方粮', emoji: '🦴', price: 128.0, orig: 168.0, sales: 890, tag: 'new', tagText: '新品' }
+    { id: 'chicken-rice', name: '鸡肉益生菌粮', emoji: '🍚', price: 89.0, orig: 128.0, sales: 2100, stock: 450, tag: 'best', tagText: '爆款', desc: '添加活性益生菌，呵护肠道健康，全价全期犬粮' },
+    { id: 'salmon-rice', name: '三文鱼全期粮', emoji: '🐠', price: 108.0, orig: 158.0, sales: 1680, stock: 320, tag: 'hot', tagText: '热卖', desc: '三文鱼+糙米配方，美毛亮毛，适合全年龄段' },
+    { id: 'beef-can', name: '牛肉蔬菜罐头', emoji: '🥫', price: 15.9, orig: 22.9, sales: 4320, stock: 980, tag: 'hot', tagText: '热卖', desc: '真实牛肉块+新鲜蔬菜，高肉含量，拌粮更香' },
+    { id: 'lamb-can', name: '羊肉胡萝卜罐头', emoji: '🥘', price: 16.9, orig: 24.9, sales: 2980, stock: 760, tag: '', tagText: '', desc: '羊肉温补配方，搭配胡萝卜，适合体质虚弱犬只' },
+    { id: 'puppy-milk', name: '幼犬羊奶粉', emoji: '🍼', price: 68.0, orig: 98.0, sales: 1560, stock: 210, tag: '', tagText: '', desc: '脱膻羊奶粉，含DHA&ARA，贴近犬乳配方' },
+    { id: 'senior-food', name: '老年犬配方粮', emoji: '🦴', price: 128.0, orig: 168.0, sales: 890, stock: 160, tag: 'new', tagText: '新品', desc: '低脂肪高纤维，添加葡萄糖胺，呵护老年犬关节' }
   ],
   brand: [
-    { id: 'brand-royal', name: '皇家犬粮小型犬', emoji: '👑', price: 158.0, orig: 198.0, sales: 3450, tag: 'best', tagText: '大牌' },
-    { id: 'brand-purina', name: '冠能全价犬粮', emoji: '⭐', price: 138.0, orig: 168.0, sales: 2890, tag: 'hot', tagText: '热卖' },
-    { id: 'brand-hills', name: '希尔思处方粮', emoji: '💊', price: 228.0, orig: 268.0, sales: 760, tag: '', tagText: '' },
-    { id: 'brand-acana', name: '爱肯拿草原犬粮', emoji: '🌾', price: 198.0, orig: 248.0, sales: 1230, tag: 'hot', tagText: '热卖' },
-    { id: 'brand-orijen', name: '渴望六种鱼', emoji: '🐟', price: 258.0, orig: 298.0, sales: 980, tag: 'best', tagText: '大牌' },
-    { id: 'brand-nulo', name: 'Nulo自由系列', emoji: '🏃', price: 168.0, orig: 208.0, sales: 650, tag: '', tagText: '' }
+    { id: 'brand-royal', name: '皇家犬粮小型犬', emoji: '👑', price: 158.0, orig: 198.0, sales: 3450, stock: 290, tag: 'best', tagText: '大牌', desc: '皇家专属小型犬配方，颗粒小巧，促进咀嚼' },
+    { id: 'brand-purina', name: '冠能全价犬粮', emoji: '⭐', price: 138.0, orig: 168.0, sales: 2890, stock: 340, tag: 'hot', tagText: '热卖', desc: '冠能旗舰系列，高蛋白配方，支持肌肉发育' },
+    { id: 'brand-hills', name: '希尔思处方粮', emoji: '💊', price: 228.0, orig: 268.0, sales: 760, stock: 95, tag: '', tagText: '', desc: '兽医推荐处方粮，针对敏感肠胃特殊配方' },
+    { id: 'brand-acana', name: '爱肯拿草原犬粮', emoji: '🌾', price: 198.0, orig: 248.0, sales: 1230, stock: 180, tag: 'hot', tagText: '热卖', desc: '加拿大进口，75%肉类含量，无谷物低GI配方' },
+    { id: 'brand-orijen', name: '渴望六种鱼', emoji: '🐟', price: 258.0, orig: 298.0, sales: 980, stock: 120, tag: 'best', tagText: '大牌', desc: '六种野生鱼类配方，Omega丰富，顶级无谷粮' },
+    { id: 'brand-nulo', name: 'Nulo自由系列', emoji: '🏃', price: 168.0, orig: 208.0, sales: 650, stock: 140, tag: '', tagText: '', desc: '美国Nulo，高蛋白低碳水，适合减脂期犬只' }
   ],
   clothes: [
-    { id: 'cloth-vest', name: '秋冬保暖马甲', emoji: '🦺', price: 49.9, orig: 79.9, sales: 1890, tag: 'hot', tagText: '热卖' },
-    { id: 'cloth-rain', name: '宠物透明雨衣', emoji: '🌂', price: 35.9, orig: 55.9, sales: 1340, tag: '', tagText: '' },
-    { id: 'cloth-sweater', name: '针织毛衣', emoji: '🧶', price: 42.9, orig: 68.9, sales: 980, tag: 'new', tagText: '新品' },
-    { id: 'cloth-shoe', name: '防滑小鞋子', emoji: '👟', price: 29.9, orig: 45.9, sales: 760, tag: '', tagText: '' },
-    { id: 'cloth-collar', name: '真皮项圈', emoji: '⭕', price: 68.0, orig: 98.0, sales: 1120, tag: 'best', tagText: '爆款' },
-    { id: 'cloth-bow', name: '蝴蝶结发饰', emoji: '🎀', price: 12.9, orig: 19.9, sales: 2560, tag: 'hot', tagText: '热卖' }
+    { id: 'cloth-vest', name: '秋冬保暖马甲', emoji: '🦺', price: 49.9, orig: 79.9, sales: 1890, stock: 520, tag: 'hot', tagText: '热卖', desc: '加厚棉填充，防风防水面料，四脚设计不勒腿' },
+    { id: 'cloth-rain', name: '宠物透明雨衣', emoji: '🌂', price: 35.9, orig: 55.9, sales: 1340, stock: 380, tag: '', tagText: '', desc: '全透明设计，可爱不减，雨天遛狗必备' },
+    { id: 'cloth-sweater', name: '针织毛衣', emoji: '🧶', price: 42.9, orig: 68.9, sales: 980, stock: 260, tag: 'new', tagText: '新品', desc: '柔软针织面料，V领设计，拍照出片神器' },
+    { id: 'cloth-shoe', name: '防滑小鞋子', emoji: '👟', price: 29.9, orig: 45.9, sales: 760, stock: 410, tag: '', tagText: '', desc: '防滑橡胶底，魔术贴设计，户外出行保护爪垫' },
+    { id: 'cloth-collar', name: '真皮项圈', emoji: '⭕', price: 68.0, orig: 98.0, sales: 1120, stock: 190, tag: 'best', tagText: '爆款', desc: '头层牛皮手工缝制，可刻字定制，经典耐用' },
+    { id: 'cloth-bow', name: '蝴蝶结发饰', emoji: '🎀', price: 12.9, orig: 19.9, sales: 2560, stock: 880, tag: 'hot', tagText: '热卖', desc: '韩系蝴蝶结设计，弹力松紧带，佩戴舒适' }
   ],
   toy: [
-    { id: 'toy-ball', name: '耐咬发声球', emoji: '⚽', price: 19.9, orig: 29.9, sales: 4320, tag: 'best', tagText: '爆款' },
-    { id: 'toy-rope', name: '互动拔河绳', emoji: '🪢', price: 22.9, orig: 35.9, sales: 2870, tag: 'hot', tagText: '热卖' },
-    { id: 'toy-frisbee', name: '户外飞盘', emoji: '🥏', price: 25.9, orig: 39.9, sales: 1980, tag: '', tagText: '' },
-    { id: 'toy-plush', name: '发声毛绒玩具', emoji: '🧸', price: 18.9, orig: 28.9, sales: 3450, tag: 'hot', tagText: '热卖' },
-    { id: 'toy-teaser', name: '逗猫棒套装', emoji: '🎣', price: 15.9, orig: 25.9, sales: 5120, tag: 'best', tagText: '爆款' },
-    { id: 'toy-tunnel', name: '折叠隧道', emoji: '🕳️', price: 39.9, orig: 59.9, sales: 1230, tag: '', tagText: '' }
+    { id: 'toy-ball', name: '耐咬发声球', emoji: '⚽', price: 19.9, orig: 29.9, sales: 4320, stock: 670, tag: 'best', tagText: '爆款', desc: '天然橡胶材质，内置发声器，激发寻回本能' },
+    { id: 'toy-rope', name: '互动拔河绳', emoji: '🪢', price: 22.9, orig: 35.9, sales: 2870, stock: 540, tag: 'hot', tagText: '热卖', desc: '棉绳编织结实耐咬，清洁牙齿，增进主宠感情' },
+    { id: 'toy-frisbee', name: '户外飞盘', emoji: '🥏', price: 25.9, orig: 39.9, sales: 1980, stock: 320, tag: '', tagText: '', desc: '软性材质不伤嘴，空中飞行稳定，户外必备' },
+    { id: 'toy-plush', name: '发声毛绒玩具', emoji: '🧸', price: 18.9, orig: 28.9, sales: 3450, stock: 780, tag: 'hot', tagText: '热卖', desc: '多种动物造型可选，柔软短绒，抱着睡觉也安心' },
+    { id: 'toy-teaser', name: '逗猫棒套装', emoji: '🎣', price: 15.9, orig: 25.9, sales: 5120, stock: 920, tag: 'best', tagText: '爆款', desc: '3支装超值套装，羽毛+铃铛组合，猫咪疯抢' },
+    { id: 'toy-tunnel', name: '折叠隧道', emoji: '🕳️', price: 39.9, orig: 59.9, sales: 1230, stock: 210, tag: '', tagText: '', desc: '3米加长隧道，可折叠收纳，满足猫咪钻洞天性' }
   ],
   clean: [
-    { id: 'clean-shampoo', name: '宠物香波', emoji: '🧴', price: 39.9, orig: 55.9, sales: 2890, tag: 'hot', tagText: '热卖' },
-    { id: 'clean-tooth', name: '宠物牙膏套装', emoji: '🪥', price: 29.9, orig: 45.9, sales: 1670, tag: '', tagText: '' },
-    { id: 'clean-wipe', name: '除菌湿巾', emoji: '🧻', price: 15.9, orig: 24.9, sales: 5430, tag: 'best', tagText: '爆款' },
-    { id: 'clean-ear', name: '耳部清洁液', emoji: '👂', price: 25.9, orig: 38.9, sales: 1230, tag: '', tagText: '' }
+    { id: 'clean-shampoo', name: '宠物香波', emoji: '🧴', price: 39.9, orig: 55.9, sales: 2890, stock: 450, tag: 'hot', tagText: '热卖', desc: '燕麦+芦荟配方，温和洁净不刺激，幼宠适用' },
+    { id: 'clean-tooth', name: '宠物牙膏套装', emoji: '🪥', price: 29.9, orig: 45.9, sales: 1670, stock: 380, tag: '', tagText: '', desc: '鸡肉味牙膏狗狗不抗拒，指套刷深入清洁' },
+    { id: 'clean-wipe', name: '除菌湿巾', emoji: '🧻', price: 15.9, orig: 24.9, sales: 5430, stock: 1200, tag: 'best', tagText: '爆款', desc: '75%酒精除菌，外出清洁爪垫便便，便携随身' },
+    { id: 'clean-ear', name: '耳部清洁液', emoji: '👂', price: 25.9, orig: 38.9, sales: 1230, stock: 290, tag: '', tagText: '', desc: '温和配方溶解耳垢，预防耳螨，每周使用2-3次' }
   ],
   health: [
-    { id: 'health-vitamin', name: '综合维生素片', emoji: '💊', price: 68.0, orig: 98.0, sales: 1870, tag: 'hot', tagText: '热卖' },
-    { id: 'health-probiotic', name: '宠物益生菌', emoji: '🦠', price: 45.9, orig: 68.9, sales: 2340, tag: 'best', tagText: '爆款' },
-    { id: 'health-joint', name: '关节养护片', emoji: '🦵', price: 78.0, orig: 118.0, sales: 980, tag: '', tagText: '' },
-    { id: 'health-calcium', name: '液体钙', emoji: '🥛', price: 55.9, orig: 79.9, sales: 1450, tag: '', tagText: '' }
+    { id: 'health-vitamin', name: '综合维生素片', emoji: '💊', price: 68.0, orig: 98.0, sales: 1870, stock: 340, tag: 'hot', tagText: '热卖', desc: '12种维生素+矿物质，每日一片，全面补充营养' },
+    { id: 'health-probiotic', name: '宠物益生菌', emoji: '🦠', price: 45.9, orig: 68.9, sales: 2340, tag: 'best', tagText: '爆款', desc: '200亿活性益生菌，改善软便腹泻，空腹喂食效果佳' },
+    { id: 'health-joint', name: '关节养护片', emoji: '🦵', price: 78.0, orig: 118.0, sales: 980, stock: 210, tag: '', tagText: '', desc: '氨基葡萄糖+软骨素，中老年犬必备，呵护关节灵活' },
+    { id: 'health-calcium', name: '液体钙', emoji: '🥛', price: 55.9, orig: 79.9, sales: 1450, stock: 270, tag: '', tagText: '', desc: '液态离子钙易吸收，搭配维生素D3，强健骨骼' }
   ]
 };
 
@@ -202,7 +202,32 @@ function renderShopList() {
     return;
   }
 
-  list.innerHTML = products.map(function(p) {
+  list.innerHTML = products.map(function(p, idx) {
+    if (idx === 0) {
+      // 第一个商品：横向大卡片
+      return '<div class="shop-product-card shop-product-card--featured" onclick="openProductDetail(\'' + p.id + '\')">' +
+        '<div class="shop-product-img-wrap--featured">' +
+          '<div class="shop-product-img--featured">' + p.emoji + '</div>' +
+          (p.tag ? '<span class="shop-product-tag ' + p.tag + '">' + p.tagText + '</span>' : '') +
+        '</div>' +
+        '<div class="shop-product-info--featured">' +
+          '<div class="shop-product-name--featured">' + p.name + '</div>' +
+          '<div class="shop-product-desc--featured">' + p.desc + '</div>' +
+          '<div class="shop-product-meta--featured">' +
+            '<span class="shop-product-price"><span class="unit">¥</span>' + p.price + '</span>' +
+            '<span class="shop-product-orig">¥' + p.orig + '</span>' +
+          '</div>' +
+          '<div class="shop-product-bottom--featured">' +
+            '<span class="shop-product-sales--featured">已售 ' + formatSales(p.sales) + '</span>' +
+            '<span class="shop-product-stock--featured">库存 ' + p.stock + '</span>' +
+            '<span class="shop-product-cart-btn--featured" onclick="event.stopPropagation(); addShopProductToCart(\'' + p.id + '\')">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>' +
+            '</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+    // 其余商品：原价布局 + 购物车icon
     return '<div class="shop-product-card" onclick="openProductDetail(\'' + p.id + '\')">' +
       '<div class="shop-product-img-wrap">' +
         '<div class="shop-product-img">' + p.emoji + '</div>' +
@@ -213,6 +238,9 @@ function renderShopList() {
         '<div class="shop-product-meta">' +
           '<span class="shop-product-price"><span class="unit">¥</span>' + p.price + '</span>' +
           '<span class="shop-product-orig">¥' + p.orig + '</span>' +
+          '<span class="shop-product-cart-btn" onclick="event.stopPropagation(); addShopProductToCart(\'' + p.id + '\')">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>' +
+          '</span>' +
         '</div>' +
         '<div class="shop-product-sales">已售 ' + formatSales(p.sales) + '</div>' +
       '</div>' +
@@ -224,4 +252,22 @@ function formatSales(n) {
   if (n >= 10000) return (n / 10000).toFixed(1) + 'w';
   if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
   return String(n);
+}
+
+// ============ 通过 id 加入购物车 ============
+function addShopProductToCart(id) {
+  var product = null;
+  var cats = ['snack', 'staple', 'brand', 'clothes', 'toy', 'clean', 'health'];
+  for (var c = 0; c < cats.length; c++) {
+    var list = shopProducts[cats[c]];
+    if (!list) continue;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === id) { product = list[i]; break; }
+    }
+    if (product) break;
+  }
+  if (!product) return;
+  if (typeof addToCart === 'function') {
+    addToCart(product.emoji, product.name, product.price);
+  }
 }
