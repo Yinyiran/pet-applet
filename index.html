@@ -918,11 +918,19 @@
 
             <div class="poster-hero" id="posterHero">
               <div class="poster-hero-img"></div>
-              <div class="poster-hero-tag" id="posterHeroTag">🐱 专属配餐</div>
+              <div class="poster-hero-content" id="posterHeroContent">
+                <div class="constitution-header">
+                  <div class="constitution-badge">
+                    <span class="badge-emoji">🐱</span>
+                    <span class="badge-label">健康活力型</span>
+                  </div>
+                </div>
+                <div class="constitution-desc">爱宠各方面指标都很健康，继续保持科学喂养，适当预防即可。</div>
+              </div>
             </div>
 
             <div class="poster-meals">
-              <div class="poster-meals-title">🍽️ 定制配餐颗粒</div>
+              <div class="poster-meals-title">🍽️ 营养方案</div>
               <div class="poster-meals-list" id="posterMealList"></div>
             </div>
 
@@ -939,12 +947,37 @@
             <div style="height: 88px"></div>
           </div>
 
+          <!-- 海报生成预览弹窗 -->
+          <div class="poster-preview-overlay hidden" id="posterPreviewOverlay" onclick="closePosterPreview(event)">
+            <div class="poster-preview-card">
+              <div class="poster-preview-header">
+                <span class="preview-title">长按保存海报</span>
+                <button class="preview-close-btn" onclick="document.getElementById('posterPreviewOverlay').classList.add('hidden')">✕</button>
+              </div>
+              <div class="poster-preview-body" id="posterPreviewBody">
+                <img class="poster-preview-img" id="posterPreviewImg" src="" alt="配餐海报" />
+              </div>
+              <div class="poster-preview-actions">
+                <button class="preview-action-btn outline" onclick="downloadPosterImage()">保存到相册</button>
+                <button class="preview-action-btn primary" onclick="sharePosterImage()">分享给好友</button>
+              </div>
+            </div>
+          </div>
+
           <div class="poster-buy-bar">
             <div class="poster-buy-info">
               <div class="poster-buy-price" id="posterBuyPrice">¥89<span>/月起</span></div>
               <div class="poster-buy-desc">AI定制专属每日配餐</div>
             </div>
-            <button class="poster-buy-btn" onclick="openPurchaseOptions()">立即购买</button>
+            <div class="poster-buy-actions">
+              <button class="poster-action-btn poster-action-outline" onclick="generatePosterImage()">
+                <span class="action-icon">📷</span>生成海报
+              </button>
+              <button class="poster-action-btn poster-action-outline" onclick="sharePoster()">
+                <span class="action-icon">🔗</span>分享
+              </button>
+              <button class="poster-action-btn poster-action-primary" onclick="openPurchaseOptions()">立即购买</button>
+            </div>
           </div>
         </div>
         <!-- /#posterPage -->
@@ -1898,9 +1931,11 @@
       </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="js/city.js"></script>
     <script src="js/shop.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/meal-data.js"></script>
     <script src="js/quiz.js"></script>
     <script src="js/course.js"></script>
     <script src="js/cart.js"></script>

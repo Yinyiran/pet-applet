@@ -509,6 +509,186 @@ function generateMealPlan(petType, answers) {
   return meals;
 }
 
+// ============ 体质检测分析 ============
+function generateConstitutionAnalysis(answers, isCat) {
+  const age = answers[isCat ? 'age' : 'dAge'] || '';
+  const isYoung = age.includes('幼');
+  const isOld = age.includes('老');
+
+  // 猫咪维度
+  const catDims = [
+    {
+      key: 'company', label: '情绪陪伴', healthy: ['充足陪伴'],
+      tag: '情绪敏感', emoji: '💔',
+      texts: {
+        '无陪伴': '长期独处容易产生焦虑情绪，建议多陪伴互动',
+        '少量陪伴': '陪伴时间有限，可通过益智玩具缓解孤独感'
+      }
+    },
+    {
+      key: 'stomach', label: '肠胃健康', healthy: ['肠胃健康'],
+      tag: '肠胃敏感', emoji: '🍽️',
+      texts: {
+        '软便': '肠胃较为敏感，建议低敏易消化配方',
+        '便秘': '肠道蠕动偏弱，需增加膳食纤维摄入',
+        '频繁呕吐': '消化系统负担较重，建议少食多餐'
+      }
+    },
+    {
+      key: 'skin', label: '皮毛健康', healthy: ['皮肤健康'],
+      tag: '皮毛养护', emoji: '🐾',
+      texts: {
+        '掉毛重': '换毛期营养不足，需补充优质蛋白和Omega-3',
+        '皮屑瘙痒': '皮肤屏障受损，建议Omega脂肪酸滋养',
+        '毛发干枯': '毛发缺乏光泽，卵磷脂美毛配方有助改善'
+      }
+    },
+    {
+      key: 'urinary', label: '泌尿健康', healthy: ['泌尿健康'],
+      tag: '泌尿调理', emoji: '💧',
+      texts: {
+        '尿频上火': '泌尿系统偏热，建议清热利尿配方',
+        '泪痕重': '内火偏旺，低敏清淡饮食有助减轻泪痕'
+      }
+    },
+    {
+      key: 'joint', label: '关节健康', healthy: ['关节健康'],
+      tag: '关节养护', emoji: '🦴',
+      texts: { '关节老化': '关节灵活度下降，氨糖软骨素有助舒缓' }
+    },
+    {
+      key: 'allergy', label: '过敏体质', healthy: ['无过敏'],
+      tag: '过敏体质', emoji: '⚠️',
+      texts: {
+        '肉类过敏': '对特定肉类蛋白敏感，需严格规避过敏源',
+        '谷物过敏': '谷物不耐受，建议选择无谷低敏配方'
+      }
+    }
+  ];
+
+  // 狗狗维度
+  const dogDims = [
+    {
+      key: 'dWalk', label: '运动活力', healthy: ['3～5次', '每天1次以上'],
+      tag: '运动不足', emoji: '🏃',
+      texts: {
+        '＜1次': '运动量严重不足，需关注体重管理与关节负担',
+        '1～2次': '运动量偏少，适当增加户外活动时间更有益健康'
+      }
+    },
+    {
+      key: 'dStomach', label: '肠胃健康', healthy: ['肠胃健康'],
+      tag: '肠胃敏感', emoji: '🍽️',
+      texts: {
+        '拉稀': '肠道菌群失衡，益生菌调理配方有助改善',
+        '挑食': '食欲不稳定，适口性好的鲜肉配方更受欢迎',
+        '积食': '消化能力偏弱，建议小颗粒易消化配方'
+      }
+    },
+    {
+      key: 'dSkin', label: '皮肤健康', healthy: ['皮肤健康'],
+      tag: '皮肤养护', emoji: '🐾',
+      texts: {
+        '异位性皮炎': '皮肤敏感体质，低敏配方配合Omega脂肪酸有助缓解',
+        '季节性脱毛': '换毛期营养需求增加，美毛配方有助减少异常掉毛',
+        '瘙痒泛红': '皮肤屏障受损，抗炎舒缓配方有助修护'
+      }
+    },
+    {
+      key: 'dTear', label: '泪痕上火', healthy: ['无异常'],
+      tag: '泪痕调理', emoji: '💧',
+      texts: {
+        '顽固泪痕': '泪腺分泌旺盛，清淡低盐配方有助减轻泪痕',
+        '易上火': '内火偏旺，鸭肉等凉性食材有助清热降火'
+      }
+    },
+    {
+      key: 'dJoint', label: '关节健康', healthy: ['关节健康'],
+      tag: '关节养护', emoji: '🦴',
+      texts: {
+        '髌骨不良': '髌骨问题需长期养护，关节保护配方有助舒缓',
+        '关节老化': '关节磨损加剧，氨糖+软骨素双重养护'
+      }
+    },
+    {
+      key: 'dMetabolism', label: '代谢健康', healthy: ['代谢正常'],
+      tag: '代谢调理', emoji: '⚖️',
+      texts: {
+        '肥胖高血脂': '体重管理刻不容缓，低脂高纤配方有助控制体重',
+        '胰腺敏感': '胰腺负担较重，低脂易消化配方减轻胰腺压力'
+      }
+    },
+    {
+      key: 'dAllergy', label: '过敏体质', healthy: ['无过敏'],
+      tag: '过敏体质', emoji: '⚠️',
+      texts: {
+        '肉类过敏': '对特定肉类蛋白敏感，需严格规避过敏源',
+        '谷物过敏': '谷物不耐受，无谷低敏配方更适合'
+      }
+    }
+  ];
+
+  const dims = isCat ? catDims : dogDims;
+  const issues = [];
+  const tags = [];
+  let summaryParts = [];
+
+  dims.forEach(dim => {
+    const val = answers[dim.key];
+    if (!val) return;
+
+    const selected = Array.isArray(val) ? val : [val];
+    const problems = selected.filter(v => !dim.healthy.includes(v));
+
+    if (problems.length > 0) {
+      issues.push({ ...dim, problems, count: problems.length });
+      tags.push({ label: dim.tag, emoji: dim.emoji });
+      // 取第一个问题的文本作为该维度摘要
+      const firstProblem = problems[0];
+      const text = dim.texts[firstProblem];
+      if (text) summaryParts.push(text);
+    }
+  });
+
+  // 体质类型：问题最多的维度，或并列
+  issues.sort((a, b) => b.count - a.count);
+  const topIssues = issues.filter(i => i.count === (issues[0]?.count || 0));
+
+  let typeLabel, typeEmoji, description;
+
+  if (issues.length === 0) {
+    typeLabel = '健康活力型';
+    typeEmoji = isCat ? '🐱' : '🐶';
+    description = isYoung
+      ? '小宝贝目前身体状态很棒，正处于快速成长期，均衡营养是关键'
+      : isOld
+      ? '毛孩子整体健康状况良好，保持当前养护习惯，适量补充关节和心脏营养'
+      : '爱宠各方面指标都很健康，继续保持科学喂养，适当预防即可';
+  } else if (topIssues.length === 1) {
+    typeLabel = topIssues[0].tag;
+    typeEmoji = topIssues[0].emoji;
+    const ageHint = isYoung ? '幼年' : isOld ? '老年' : '成年';
+    description = `${ageHint}期${isCat ? '猫咪' : '狗狗'}以「${topIssues[0].label}」为主要体质特征。` +
+      summaryParts.slice(0, 2).join('；') + '。' +
+      (isCat ? '定制配餐已针对性调整营养配比，帮助改善体质。' : '定制颗粒已优化配方，针对性改善核心问题。');
+  } else {
+    const labels = topIssues.map(i => i.label).join(' · ');
+    typeLabel = labels;
+    typeEmoji = topIssues[0].emoji;
+    const ageHint = isYoung ? '幼年' : isOld ? '老年' : '成年';
+    description = `${ageHint}期${isCat ? '猫咪' : '狗狗'}呈现复合型体质特征，${topIssues.map(i => i.label).join('与')}需同时关注。` +
+      summaryParts.slice(0, 2).join('；') + '。' +
+      '多维度定制颗粒组合，全面覆盖营养调理需求。';
+  }
+
+  return {
+    typeLabel,
+    typeEmoji,
+    description,
+    tags: tags.length > 0 ? tags : [{ label: '健康活力', emoji: isCat ? '🐱' : '🐶' }]
+  };
+}
+
 function renderPoster(answers) {
   const petType = answers['petType'] || '猫';
   const isCat = petType === '猫';
@@ -554,11 +734,25 @@ function renderPoster(answers) {
     <div class="poster-info-grid">${infoGrid}</div>
   `;
 
-  // 英雄区
+  // 英雄区 - 体质检测分析
   const heroImg = document.getElementById('posterHero').querySelector('.poster-hero-img');
   heroImg.className = 'poster-hero-img ' + (isCat ? 'cat-bg' : 'dog-bg');
-  const heroTag = document.getElementById('posterHeroTag');
-  heroTag.textContent = isCat ? '🐱 猫咪专属配餐' : '🐶 狗狗专属配餐';
+
+  const analysis = generateConstitutionAnalysis(answers, isCat);
+  const tagsHTML = analysis.tags.map(t =>
+    `<span class="constitution-tag"><span class="tag-emoji">${t.emoji}</span>${t.label}</span>`
+  ).join('');
+
+  document.getElementById('posterHeroContent').innerHTML = `
+    <div class="constitution-header">
+      <div class="constitution-badge">
+        <span class="badge-emoji">${analysis.typeEmoji}</span>
+        <span class="badge-label">${analysis.typeLabel}</span>
+      </div>
+    </div>
+    <div class="constitution-desc">${analysis.description}</div>
+    <div class="constitution-tags">${tagsHTML}</div>
+  `;
 
   // 生成配餐
   const meals = generateMealPlan(petType, answers);
@@ -637,4 +831,115 @@ function goBackFromPoster() {
   document.getElementById('homePage').classList.add('active');
   document.getElementById('headerBack').classList.add('hidden');
   document.querySelectorAll('.nav-item')[0].classList.add('active');
+}
+
+// ============ 生成海报图片 ============
+function generatePosterImage() {
+  if (typeof html2canvas === 'undefined') {
+    showToast('海报生成库加载中，请稍后重试');
+    return;
+  }
+
+  const scrollEl = document.querySelector('#posterPage .poster-scroll');
+  const barEl = document.querySelector('#posterPage .poster-buy-bar');
+  if (!scrollEl) return;
+
+  // 隐藏底部栏（避免截入图片）
+  if (barEl) barEl.style.display = 'none';
+  // 滚动到顶部
+  scrollEl.scrollTop = 0;
+
+  showToast('正在生成海报...');
+
+  html2canvas(scrollEl, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#f8f4f0',
+      logging: false
+    }).then(canvas => {
+      if (barEl) barEl.style.display = '';
+      const dataUrl = canvas.toDataURL('image/png');
+      document.getElementById('posterPreviewImg').src = dataUrl;
+      document.getElementById('posterPreviewOverlay').classList.remove('hidden');
+    }).catch(err => {
+      if (barEl) barEl.style.display = '';
+      console.error('生成海报失败:', err);
+      showToast('海报生成失败，请重试');
+    });
+}
+
+// ============ 关闭海报预览 ============
+function closePosterPreview(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('posterPreviewOverlay').classList.add('hidden');
+  document.getElementById('posterPreviewImg').src = '';
+}
+
+// ============ dataUrl 转 Blob ============
+function dataUrlToBlob(dataUrl) {
+  const arr = dataUrl.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  const u8arr = new Uint8Array(bstr.length);
+  for (let i = 0; i < bstr.length; i++) {
+    u8arr[i] = bstr.charCodeAt(i);
+  }
+  return new Blob([u8arr], { type: mime });
+}
+
+// ============ 保存海报到相册 ============
+function downloadPosterImage() {
+  const img = document.getElementById('posterPreviewImg');
+  if (!img.src || img.src === window.location.href) {
+    showToast('请先生成海报');
+    return;
+  }
+  const link = document.createElement('a');
+  link.download = '梵优茗宠_AI配餐方案.png';
+  link.href = img.src;
+  // 某些浏览器需要将 a 标签添加到 DOM 中
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  showToast('已保存海报图片 📷');
+}
+
+// ============ 分享海报（底部按钮） ============
+function sharePoster() {
+  const img = document.getElementById('posterPreviewImg');
+  // 如果还没生成图片，先生成，生成完自动打开预览弹窗
+  if (!img.src || img.src.startsWith('data:image') === false) {
+    generatePosterImage();
+    return;
+  }
+  // 已生成，直接打开预览弹窗
+  document.getElementById('posterPreviewOverlay').classList.remove('hidden');
+}
+
+// ============ 分享海报图片（预览弹窗内按钮） ============
+function sharePosterImage() {
+  const img = document.getElementById('posterPreviewImg');
+  if (!img.src || img.src === window.location.href) {
+    showToast('请先生成海报');
+    return;
+  }
+
+  const blob = dataUrlToBlob(img.src);
+  const file = new File([blob], '梵优茗宠_AI配餐方案.png', { type: 'image/png' });
+
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    navigator.share({
+      title: '梵优茗宠 · AI定制配餐方案',
+      text: '我家毛孩子的专属AI配餐方案，科学定制，营养更精准！',
+      files: [file]
+    }).catch(() => {});
+  } else if (navigator.share) {
+    navigator.share({
+      title: '梵优茗宠 · AI定制配餐方案',
+      text: '我家毛孩子的专属AI配餐方案，科学定制，营养更精准！',
+      url: window.location.href
+    }).catch(() => {});
+  } else {
+    showToast('请长按海报图片分享给好友 📲');
+  }
 }
