@@ -115,7 +115,6 @@ function updateNavButtons(questions) {
   const nav = document.getElementById('quizNav');
   const prevBtn = document.getElementById('quizPrevBtn');
   const nextBtn = document.getElementById('quizNextBtn');
-  const indicator = document.getElementById('quizNavIndicator');
   const submitWrap = document.getElementById('quizSubmitWrap');
 
   if (!questions) questions = buildQuestionList();
@@ -132,9 +131,6 @@ function updateNavButtons(questions) {
     return;
   }
   nav.classList.remove('hidden');
-
-  // 题目指示器
-  indicator.textContent = quizCurrentIndex + 1 + '/' + total;
 
   // 上一题
   if (quizCurrentIndex === 0) {

@@ -222,13 +222,9 @@ body {
   display: flex;
   gap: 10px;
   box-shadow: var(--shadow-sm);
-  cursor: pointer;
   transition:
     transform var(--transition),
     box-shadow var(--transition);
-}
-.city-card:active {
-  transform: scale(0.98);
 }
 .city-card-img {
   width: 72px;
@@ -259,16 +255,37 @@ body {
   flex: 1;
   min-width: 0;
 }
+.city-card-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
 .city-card-name {
   font-size: 14px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 4px;
+}
+.city-card-enter {
+  font-size: 10px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity var(--transition);
+  line-height: 18px;
+  margin-left: auto;
+}
+.city-card-enter:active {
+  opacity: 0.7;
 }
 .city-card-tags {
   display: flex;
   gap: 4px;
-  margin-bottom: 4px;
+  margin: 8px 0;
   flex-wrap: wrap;
 }
 .city-card-tag {
@@ -321,9 +338,23 @@ body {
 .city-card-addr-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-shrink: 0;
   margin-left: 6px;
+}
+.city-card-dist {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+.city-card-dist svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  color: var(--primary);
 }
 .city-card-nav {
   width: 22px;
@@ -444,6 +475,7 @@ body {
 }
 .city-detail-dist {
   font-size: 12px;
+  margin: 0 10px;
   color: var(--text-light);
 }
 .city-detail-desc {
@@ -463,36 +495,75 @@ body {
   border-radius: var(--radius-sm);
   margin-bottom: 14px;
 }
-.city-detail-addr svg {
+.city-detail-addr span:not(.city-detail-nav) {
+  flex: 1;
+  min-width: 0;
+}
+.city-detail-addr svg:not(.city-detail-nav svg) {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
   color: var(--primary);
 }
-.city-detail-actions {
+.city-detail-nav {
+  width: 22px;
+  height: 22px;
   display: flex;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--primary);
+  border-radius: 50%;
+  transition: all var(--transition);
+  flex-shrink: 0;
+  margin-left: auto;
 }
-.city-detail-btn {
-  flex: 1;
-  padding: 10px;
-  border-radius: var(--radius);
-  font-size: 13px;
-  font-weight: 700;
-  border: none;
+.city-detail-nav:active {
+  transform: scale(0.88);
+  background: var(--primary-light);
+}
+.city-detail-nav svg {
+  width: 16px;
+  height: 16px;
+}
+.city-detail-tel {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 600;
   cursor: pointer;
   transition: opacity var(--transition);
 }
-.city-detail-btn:active {
-  opacity: 0.85;
+.city-detail-tel:active {
+  opacity: 0.7;
 }
-.city-detail-btn.primary {
-  background: var(--primary);
-  color: #fff;
+.city-detail-tel svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
 }
-.city-detail-btn.outline {
-  background: var(--primary-light);
-  color: var(--primary);
+.city-detail-products {
+  padding: 0 16px 4px;
+}
+.city-detail-products.hidden {
+  display: none;
+}
+.city-detail-products-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.city-detail-products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.city-detail-products-grid .shop-product-card {
+  width: calc(50% - 4px);
 }
 
 /* 申请合作入口 */
@@ -2752,7 +2823,16 @@ body {
 .shop-product-sales {
   font-size: 10px;
   color: var(--text-light);
+}
+.shop-product-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-top: 2px;
+}
+.shop-product-stock {
+  font-size: 10px;
+  color: var(--text-light);
 }
 
 /* ============ 首个商品横排大卡片 ============ */
@@ -3790,6 +3870,7 @@ body {
 }
 .detail-bottom-price {
   display: flex;
+  flex: 1;
   flex-direction: column;
   flex-shrink: 0;
 }
@@ -3820,7 +3901,6 @@ body {
   background: #fff8f0;
 }
 .detail-bottom-buy-btn {
-  flex: 1;
   padding: 8px 14px;
   border: none;
   background: linear-gradient(135deg, var(--accent), var(--primary));
@@ -3955,13 +4035,16 @@ body {
   gap: 6px 12px;
 }
 .poster-info-item {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-secondary);
   display: flex;
   gap: 4px;
   line-height: 1.6;
 }
 .poster-info-item .key {
+  width: 48px;
+  text-align: right;
+  padding-right: 8px;
   color: var(--text-light);
   flex-shrink: 0;
 }
@@ -4163,29 +4246,6 @@ body {
   justify-content: center;
   flex-shrink: 0;
   position: relative;
-}
-.poster-qr-placeholder {
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    linear-gradient(to right, #ccc 2px, transparent 2px) 0 0 / 10px 10px,
-    linear-gradient(to right, #ccc 2px, transparent 2px) 0 5px / 10px 10px,
-    linear-gradient(to bottom, #ccc 2px, transparent 2px) 0 0 / 10px 10px,
-    linear-gradient(to bottom, #ccc 2px, transparent 2px) 5px 0 / 10px 10px,
-    linear-gradient(135deg, #333 4px, #fff 4px, #fff 6px, #333 6px) 50% 50% / 30px 30px no-repeat;
-  border-radius: 4px;
-}
-.poster-qr-label {
-  position: absolute;
-  bottom: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 9px;
-  color: var(--text-light);
-  white-space: nowrap;
 }
 
 /* 底部固定购买栏 */
