@@ -20,3 +20,15 @@
 - 圆角系统：sm(8px) / default(12px) / lg(16px) / xl(20px)
 - 弹窗动画：fadeIn + slideUp (cubic-bezier 0.34,1.56,0.64,1)
 - Toast提示统一使用 showToast() 函数
+
+## AI答题页架构（逐题分页）
+- **分页核心**：`js/quiz.js` 中 `buildQuestionList()` 遍历 DOM 可见字段构建题目列表，`showQuestion(idx)` 控制单题显示
+- **题目容器**：所有 quiz-field 包裹在 `#quizQuestionsArea`，JS 通过 `style.display` 控制显隐
+- **自动跳转**：单选题选择后 350ms 自动 `autoAdvanceNext()`；填空/多选题需手动点「下一题」
+- **条件题目**：品种=其他 → q2Field；模式=多宠 → q10Field（猫/狗各有对应字段）
+- **导航栏**：`#quizNav` 含 prev/next 按钮 + 题目指示器；仅当 total>1 时显示
+- **提交按钮**：`#quizSubmitWrap` 初始 hidden，仅在最后一题答完后显示
+- **动画**：`.quiz-questions-area .quiz-field` 使用 `quizFadeSlideIn` 入场动画
+- **宠物类型**：大图标卡片式选择（`.quiz-radio-pet`），52px emoji，水平排列
+- **选项布局**：普通题目选项垂直排列（`flex-direction: column`），一行一个
+- **标题样式**：`.quiz-page-title` 使用渐变橙色文字（background-clip: text）

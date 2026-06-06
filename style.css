@@ -1722,17 +1722,23 @@ body {
 .quiz-page-header {
   text-align: center;
   margin-bottom: 6px;
+  padding: 4px 0;
 }
 .quiz-page-title {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 800;
-  color: var(--text);
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
   margin-bottom: 2px;
 }
 .quiz-page-subtitle {
   font-size: 13px;
   margin-top: 6px;
-  color: var(--text-secondary);
+  color: #a8998a;
+  line-height: 1.6;
 }
 .quiz-progress {
   display: flex;
@@ -1815,22 +1821,22 @@ body {
   color: #2e7d32;
 }
 
-/* 单选组 */
+/* 单选组 — 垂直排列（一行一个选项） */
 .quiz-radio-group {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 8px;
 }
 .quiz-radio {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 9px 13px;
+  gap: 10px;
+  padding: 12px 14px;
   border: 2px solid var(--border);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--transition);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text);
   background: #faf8f5;
   user-select: none;
@@ -1866,22 +1872,22 @@ body {
   border-radius: 50%;
 }
 
-/* 多选组 */
+/* 多选组 — 垂直排列 */
 .quiz-checkbox-group {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 8px;
 }
 .quiz-checkbox {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 9px 13px;
+  gap: 10px;
+  padding: 12px 14px;
   border: 2px solid var(--border);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--transition);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text);
   background: #faf8f5;
   user-select: none;
@@ -1968,6 +1974,118 @@ body {
 .quiz-submit-btn:disabled {
   opacity: 0.45;
   pointer-events: none;
+}
+
+/* ========== 答题区域（分页显示） ========== */
+.quiz-questions-area {
+  min-height: 200px;
+  position: relative;
+}
+.quiz-questions-area .quiz-field {
+  animation: quizFadeSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes quizFadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== 宠物类型大图标选择 ========== */
+.quiz-radio-group-pet {
+  flex-direction: row !important;
+  gap: 12px;
+}
+.quiz-radio-pet {
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 16px 18px;
+  border-radius: var(--radius);
+  position: relative;
+}
+.quiz-radio-pet .r-dot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+}
+.quiz-radio-pet .quiz-pet-icon {
+  font-size: 52px;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+.quiz-radio-pet.selected .quiz-pet-icon {
+  transform: scale(1.1);
+}
+.quiz-radio-pet .quiz-pet-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  transition: color var(--transition);
+}
+.quiz-radio-pet.selected .quiz-pet-label {
+  color: var(--primary-dark);
+}
+
+/* ========== 导航按钮 ========== */
+.quiz-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+  padding-bottom: 8px;
+}
+.quiz-nav-indicator {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  min-width: 50px;
+  text-align: center;
+}
+.quiz-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition);
+  color: #fff;
+  background: var(--primary);
+  box-shadow: 0 3px 12px rgba(249, 115, 22, 0.25);
+}
+.quiz-nav-btn:active {
+  transform: scale(0.96);
+  opacity: 0.9;
+}
+.quiz-nav-btn.hidden {
+  display: none;
+}
+.quiz-nav-prev {
+  background: #fff;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  box-shadow: none;
+}
+.quiz-nav-prev:active {
+  background: #f5f2ee;
+}
+.quiz-nav-btn .nav-arrow {
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 300;
 }
 
 /* ========== QUIZ MODAL ========== */

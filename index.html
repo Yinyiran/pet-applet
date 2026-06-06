@@ -388,15 +388,26 @@
               <div class="quiz-progress-text" id="quizProgressText">0/16</div>
             </div>
 
+            <!-- 题目区域（一次显示一题） -->
+            <div class="quiz-questions-area" id="quizQuestionsArea">
+
             <!-- 宠物类型选择 -->
-            <div class="quiz-field">
+            <div class="quiz-field quiz-field-pet-type">
               <div class="quiz-field-label">
                 <span class="q-num">🐾</span>请选择宠物类型
                 <span class="type-badge single">单选</span>
               </div>
-              <div class="quiz-radio-group" data-name="petType">
-                <div class="quiz-radio" data-value="猫" onclick="selectRadio(this)"><span class="r-dot"></span>🐱 猫猫</div>
-                <div class="quiz-radio" data-value="狗" onclick="selectRadio(this)"><span class="r-dot"></span>🐶 狗狗</div>
+              <div class="quiz-radio-group quiz-radio-group-pet" data-name="petType">
+                <div class="quiz-radio quiz-radio-pet" data-value="猫" onclick="selectRadio(this)">
+                  <span class="r-dot"></span>
+                  <span class="quiz-pet-icon">🐱</span>
+                  <span class="quiz-pet-label">猫猫</span>
+                </div>
+                <div class="quiz-radio quiz-radio-pet" data-value="狗" onclick="selectRadio(this)">
+                  <span class="r-dot"></span>
+                  <span class="quiz-pet-icon">🐶</span>
+                  <span class="quiz-pet-label">狗狗</span>
+                </div>
               </div>
             </div>
 
@@ -873,8 +884,22 @@
             </div>
             <!-- /#dogQuestions -->
 
+            </div>
+            <!-- /quizQuestionsArea -->
+
+            <!-- 导航按钮 -->
+            <div class="quiz-nav" id="quizNav">
+              <button class="quiz-nav-btn quiz-nav-prev hidden" id="quizPrevBtn" onclick="goToPrevQuestion()">
+                <span class="nav-arrow">‹</span>上一题
+              </button>
+              <span class="quiz-nav-indicator" id="quizNavIndicator">1/16</span>
+              <button class="quiz-nav-btn quiz-nav-next hidden" id="quizNextBtn" onclick="goToNextQuestion()">
+                下一题<span class="nav-arrow">›</span>
+              </button>
+            </div>
+
             <!-- 提交按钮 -->
-            <div class="quiz-submit-wrap">
+            <div class="quiz-submit-wrap hidden" id="quizSubmitWrap">
               <button class="quiz-submit-btn" id="quizSubmitBtn" onclick="submitQuiz()">提交，开始AI配餐</button>
             </div>
           </div>
