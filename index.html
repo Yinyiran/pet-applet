@@ -1332,6 +1332,14 @@
               <span class="profile-menu-arrow">›</span>
             </div>
 
+            <!-- ========== 邀请明细 ========== -->
+            <div class="profile-menu-item" onclick="openInviteDetail()">
+              <span class="profile-menu-icon">👥</span>
+              <span class="profile-menu-label">邀请明细</span>
+              <span class="profile-menu-badge" id="profileInviteBadge">35</span>
+              <span class="profile-menu-arrow">›</span>
+            </div>
+
             <!-- ========== 收货地址 ========== -->
             <div class="profile-menu-item" onclick="openAddressListPopup()">
               <span class="profile-menu-icon">📍</span>
@@ -2111,15 +2119,6 @@
           >
             💳 立即提现
           </div>
-          <div
-            class="commission-action-btn secondary"
-            onclick="
-              event.stopPropagation();
-              openInviteDetail();
-            "
-          >
-            👥 邀请好友 <span id="commInviteBadge" style="margin-left: 2px">35</span>
-          </div>
         </div>
 
         <!-- 最近收益 -->
@@ -2175,6 +2174,40 @@
 
         <!-- 明细列表 -->
         <div class="commission-log-list" id="commissionDetailList"></div>
+      </div>
+    </div>
+
+    <!-- ==================== 收益详情弹窗（点击明细条目） ==================== -->
+    <div class="commission-log-detail-overlay hidden" id="commissionLogDetailOverlay" onclick="closeCommissionLogDetail(event)">
+      <div class="commission-log-detail-sheet" onclick="event.stopPropagation()">
+        <div class="commission-handle"></div>
+        <div class="commission-header">
+          <div class="commission-title" id="commLogDetailTitle">收益详情</div>
+          <div class="commission-close" onclick="closeCommissionLogDetail()">✕</div>
+        </div>
+
+        <!-- 金额区 -->
+        <div class="comm-log-detail-amount-area">
+          <div class="comm-log-detail-row">
+            <span class="comm-log-detail-label">支付金额</span>
+            <span class="comm-log-detail-value" id="commLogDetailOrderAmount">¥0.00</span>
+          </div>
+          <div class="comm-log-detail-formula" id="commLogDetailFormula">¥0 × 0% = ¥0</div>
+          <div class="comm-log-detail-row">
+            <span class="comm-log-detail-label">收益金额</span>
+            <span class="comm-log-detail-earned" id="commLogDetailEarned">+0.00</span>
+          </div>
+        </div>
+
+        <!-- 状态 + 时间 -->
+        <div class="comm-log-detail-meta-bar">
+          <span class="comm-log-detail-status settled" id="commLogDetailStatus">已结算</span>
+          <span class="comm-log-detail-time" id="commLogDetailTime">2026-01-01 00:00</span>
+        </div>
+
+        <!-- 商品列表 -->
+        <div class="comm-log-detail-items-title">🛒 购买商品</div>
+        <div class="comm-log-detail-items" id="commLogDetailItems"></div>
       </div>
     </div>
 
@@ -2244,28 +2277,20 @@
 
         <!-- 邀请分享卡片 -->
         <div class="invite-share-card">
-          <div class="invite-share-title">🎉 邀请好友赚佣金</div>
-          <div class="invite-share-subtitle">好友消费你拿返佣，多级分佣上不封顶</div>
-          <div class="invite-share-code" id="inviteShareCode">FYMPET</div>
+          <div class="invite-share-title">🎉 邀请好友</div>
+          <div class="invite-share-subtitle">好友注册即可获得专属权益，一起给宠物囤好物</div>
           <div class="invite-share-actions">
-            <button class="invite-share-btn copy" onclick="copyInviteCode()">📋 复制邀请码</button>
             <button class="invite-share-btn link" onclick="shareInviteLink()">🔗 分享链接</button>
           </div>
         </div>
 
-        <!-- 邀请统计 -->
-        <div class="invite-stats">
-          <div class="invite-stat-card">
-            <div class="invite-stat-num" id="inviteTotalCount">0</div>
-            <div class="invite-stat-label">邀请总数</div>
+        <!-- Tab 切换 + 统计 -->
+        <div class="invite-tabs" id="inviteDetailTabs">
+          <div class="invite-tab active" data-tab="total" onclick="switchInviteTab('total', this)">
+            邀请总数 <span class="invite-tab-count" id="inviteTotalCount">0</span>
           </div>
-          <div class="invite-stat-card">
-            <div class="invite-stat-num" id="inviteActiveCount">0</div>
-            <div class="invite-stat-label">活跃用户</div>
-          </div>
-          <div class="invite-stat-card">
-            <div class="invite-stat-num" id="inviteTotalContribution">¥0</div>
-            <div class="invite-stat-label">贡献收益</div>
+          <div class="invite-tab" data-tab="views" onclick="switchInviteTab('views', this)">
+            浏览量 <span class="invite-tab-count" id="inviteViewsCount">0</span>
           </div>
         </div>
 
@@ -2277,6 +2302,44 @@
 
         <!-- 邀请列表 -->
         <div class="invite-list" id="inviteList"></div>
+      </div>
+    </div>
+
+    <!-- ==================== 邀请用户详情弹窗 ==================== -->
+    <div class="invite-user-overlay hidden" id="inviteUserOverlay" onclick="closeInviteUserDetail(event)">
+      <div class="invite-user-sheet" onclick="event.stopPropagation()">
+        <div class="commission-handle"></div>
+        <div class="commission-header">
+          <div class="commission-title">👤 用户详情</div>
+          <div class="commission-close" onclick="closeInviteUserDetail()">✕</div>
+        </div>
+        <div class="invite-user-content">
+          <div class="invite-user-avatar" id="inviteUserAvatar">🐶</div>
+          <div class="invite-user-name" id="inviteUserName">用户名</div>
+          <span class="invite-item-role" id="inviteUserRole">用户</span>
+          <div class="invite-user-detail-list">
+            <div class="invite-user-detail-item">
+              <span class="invite-user-detail-label">加入时间</span>
+              <span class="invite-user-detail-value" id="inviteUserJoinTime">-</span>
+            </div>
+            <div class="invite-user-detail-item">
+              <span class="invite-user-detail-label">状态</span>
+              <span class="invite-user-detail-value" id="inviteUserStatus">-</span>
+            </div>
+            <div class="invite-user-detail-item">
+              <span class="invite-user-detail-label">浏览量</span>
+              <span class="invite-user-detail-value" id="inviteUserBrowseCount">0</span>
+            </div>
+            <div class="invite-user-detail-item">
+              <span class="invite-user-detail-label">最近浏览时间</span>
+              <span class="invite-user-detail-value" id="inviteUserBrowseTime">-</span>
+            </div>
+            <div class="invite-user-detail-item">
+              <span class="invite-user-detail-label">贡献收益</span>
+              <span class="invite-user-detail-value" id="inviteUserContribution">¥0.00</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
