@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>梵优茗宠 - 爱宠专属好物</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="points.css" />
+    <link rel="stylesheet" href="commission.css" />
   </head>
   <body>
     <div class="app-container">
@@ -317,7 +319,7 @@
               <div class="course-card-icon">👨‍🏫</div>
               <div class="course-card-info">
                 <div class="course-card-tag">🔥 热门推荐</div>
-                <div class="course-card-name">达人陪跑营</div>
+                <div class="course-card-name">梵优合伙人</div>
                 <div class="course-card-features">
                   <span class="course-card-feature">1v1指导</span>
                   <span class="course-card-feature">90天陪跑</span>
@@ -333,7 +335,7 @@
               <div class="course-card-icon">💎</div>
               <div class="course-card-info">
                 <div class="course-card-tag">👑 高阶权益</div>
-                <div class="course-card-name">合伙人陪跑</div>
+                <div class="course-card-name">梵优主理人</div>
                 <div class="course-card-features">
                   <span class="course-card-feature">全年陪跑</span>
                   <span class="course-card-feature">区域代理</span>
@@ -1291,133 +1293,74 @@
               <div class="profile-user-avatar" id="profileAvatar" onclick="openAvatarPicker()">
                 <span>🐱</span>
               </div>
-              <div class="profile-user-info">
+              <div class="profile-user-info" onclick="openProfileEdit()">
                 <div class="profile-user-name" id="profileUserName">毛毛家长</div>
                 <div class="profile-user-level">
                   <span class="profile-level-tag" id="profileLevelTag">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                     </svg>
-                    达人
+                    梵优合伙人
                   </span>
                   <span class="profile-member-badge" id="profileMemberBadge">🥈 银牌会员</span>
                 </div>
               </div>
-              <div class="profile-user-arrow" onclick="openProfileEdit()">›</div>
+              <div class="profile-user-arrow">›</div>
             </div>
 
             <!-- ========== 宠物档案 ========== -->
-            <div class="profile-section">
-              <div class="profile-section-header">
-                <div class="profile-section-title">🐾 宠物档案</div>
-                <button class="profile-add-btn" onclick="openPetForm()">+ 添加宠物</button>
-              </div>
-              <div class="profile-pet-list" id="profilePetList">
-                <!-- 宠物卡片动态渲染 -->
-              </div>
-              <div class="profile-pet-empty hidden" id="profilePetEmpty">
-                <div class="profile-empty-icon">🐾</div>
-                <div class="profile-empty-text">还没有添加宠物，点击上方按钮添加</div>
-              </div>
+            <div class="profile-menu-item" onclick="openPetListPopup()">
+              <span class="profile-menu-icon">🐾</span>
+              <span class="profile-menu-label">宠物档案</span>
+              <span class="profile-menu-badge hidden" id="petCountBadge">0</span>
+              <span class="profile-menu-arrow">›</span>
+            </div>
 
-              <!-- 生日礼物提示 -->
-              <div class="profile-birthday-bar" id="profileBirthdayBar">
-                <div class="profile-birthday-content">
-                  <span>🎂</span>
-                  <span id="profileBirthdayText">本月有1只宠物即将过生日</span>
-                </div>
-                <span class="profile-birthday-gift" onclick="showToast('生日礼物将根据消费等级邮寄，请确保收货地址正确')">🎁</span>
-              </div>
+            <!-- ========== 我的积分 ========== -->
+            <div class="profile-menu-item" onclick="openPointsLogPopup()">
+              <span class="profile-menu-icon">⭐</span>
+              <span class="profile-menu-label">我的积分</span>
+              <span class="profile-menu-value" id="profilePointsValue">0</span>
+              <span class="profile-menu-arrow">›</span>
+            </div>
+
+            <!-- ========== 分佣系统 ========== -->
+            <div class="profile-menu-item commission-menu-entry" onclick="openCommissionOverview()">
+              <span class="profile-menu-icon">💸</span>
+              <span class="profile-menu-label">分佣收益</span>
+              <span class="commission-menu-value" id="commissionMenuValue">¥0.00</span>
+              <span class="profile-menu-arrow">›</span>
             </div>
 
             <!-- ========== 收货地址 ========== -->
-            <div class="profile-section">
-              <div class="profile-section-header">
-                <div class="profile-section-title">📍 收货地址</div>
-                <button class="profile-add-btn" onclick="openAddressForm()">+ 添加地址</button>
-              </div>
-              <div class="profile-address-list" id="profileAddressList"></div>
-              <div class="profile-address-empty hidden" id="profileAddressEmpty">
-                <div class="profile-empty-icon">📍</div>
-                <div class="profile-empty-text">还没有收货地址，点击上方按钮添加</div>
-              </div>
+            <div class="profile-menu-item" onclick="openAddressListPopup()">
+              <span class="profile-menu-icon">📍</span>
+              <span class="profile-menu-label">收货地址</span>
+              <span class="profile-menu-badge hidden" id="addrCountBadge">0</span>
+              <span class="profile-menu-arrow">›</span>
             </div>
 
             <!-- ========== 会员信息 ========== -->
-            <div class="profile-section">
-              <div class="profile-section-header">
-                <div class="profile-section-title">👑 会员信息</div>
-              </div>
-              <div class="profile-member-card" id="profileMemberCard">
-                <div class="profile-member-card-top">
-                  <div class="profile-member-card-icon" id="memberIcon">🥈</div>
-                  <div class="profile-member-card-info">
-                    <div class="profile-member-card-level" id="memberLevel">银牌会员</div>
-                    <div class="profile-member-card-progress">
-                      <div class="profile-member-progress-bar">
-                        <div class="profile-member-progress-fill" id="memberProgressFill" style="width: 35%"></div>
-                      </div>
-                      <div class="profile-member-progress-text" id="memberProgressText">再消费 ¥650 升级金牌会员</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="profile-member-card-detail" onclick="openMemberDetail()">查看会员权益 ›</div>
-              </div>
-
-              <!-- 充值档位 -->
-              <div class="profile-recharge-section">
-                <div class="profile-recharge-title">💰 账户充值</div>
-                <div class="profile-recharge-grid">
-                  <div class="profile-recharge-card" onclick="handleRecharge(100)">
-                    <div class="profile-recharge-amount">¥100</div>
-                    <div class="profile-recharge-gift hidden">送5元</div>
-                  </div>
-                  <div class="profile-recharge-card" onclick="handleRecharge(300)">
-                    <div class="profile-recharge-amount">¥300</div>
-                    <div class="profile-recharge-gift">送15元</div>
-                  </div>
-                  <div class="profile-recharge-card hot" onclick="handleRecharge(500)">
-                    <div class="profile-recharge-amount">¥500</div>
-                    <div class="profile-recharge-gift">送40元</div>
-                    <span class="profile-recharge-tag">🔥 热门</span>
-                  </div>
-                  <div class="profile-recharge-card" onclick="handleRecharge(1000)">
-                    <div class="profile-recharge-amount">¥1000</div>
-                    <div class="profile-recharge-gift">送100元</div>
-                  </div>
-                </div>
-                <div class="profile-recharge-custom" onclick="openCustomRecharge()">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="12" y1="5" x2="12" y2="19" />
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                  </svg>
-                  自定义金额
-                </div>
-              </div>
+            <div class="profile-menu-item" onclick="openMemberDetail()">
+              <span class="profile-menu-icon">👑</span>
+              <span class="profile-menu-label">会员信息</span>
+              <span class="profile-menu-badge" id="memberBadgeInMenu">🥈</span>
+              <span class="profile-menu-arrow">›</span>
             </div>
 
-            <!-- ========== 订单列表 ========== -->
-            <div class="profile-section">
-              <div class="profile-section-header">
-                <div class="profile-section-title">📦 我的订单</div>
-                <div class="profile-order-view-all" onclick="switchOrderTab('all')">查看全部 ›</div>
-              </div>
+            <!-- ========== 账户充值 ========== -->
+            <div class="profile-menu-item" onclick="openRechargeDetail()">
+              <span class="profile-menu-icon">💰</span>
+              <span class="profile-menu-label">账户充值</span>
+              <span class="profile-menu-arrow">›</span>
+            </div>
 
-              <!-- 订单状态Tabs -->
-              <div class="profile-order-tabs" id="profileOrderTabs">
-                <div class="profile-order-tab active" data-tab="all" onclick="switchOrderTab('all', this)">全部</div>
-                <div class="profile-order-tab" data-tab="pendingPay" onclick="switchOrderTab('pendingPay', this)">待付款</div>
-                <div class="profile-order-tab" data-tab="pendingShip" onclick="switchOrderTab('pendingShip', this)">待发货</div>
-                <div class="profile-order-tab" data-tab="shipped" onclick="switchOrderTab('shipped', this)">已发货</div>
-                <div class="profile-order-tab" data-tab="completed" onclick="switchOrderTab('completed', this)">已完成</div>
-              </div>
-
-              <!-- 订单列表 -->
-              <div class="profile-order-list" id="profileOrderList"></div>
-              <div class="profile-order-empty hidden" id="profileOrderEmpty">
-                <div class="profile-empty-icon">📦</div>
-                <div class="profile-empty-text" id="profileOrderEmptyText">暂无订单</div>
-              </div>
+            <!-- ========== 我的订单 ========== -->
+            <div class="profile-menu-item" onclick="openOrderListPopup()">
+              <span class="profile-menu-icon">📦</span>
+              <span class="profile-menu-label">我的订单</span>
+              <span class="profile-menu-badge hidden" id="orderCountBadge">0</span>
+              <span class="profile-menu-arrow">›</span>
             </div>
 
             <div style="height: 20px"></div>
@@ -1613,6 +1556,25 @@
         </div>
       </div>
 
+      <!-- ==================== 宠物列表弹窗 ==================== -->
+      <div class="pet-form-overlay hidden" id="petListOverlay" onclick="closePetListPopup(event)">
+        <div class="pet-list-sheet" onclick="event.stopPropagation()">
+          <div class="pet-form-handle"></div>
+          <div class="pet-list-header">
+            <div class="pet-list-title">🐾 宠物档案</div>
+            <button class="pet-list-add-btn" onclick="openPetForm()">+ 添加宠物</button>
+          </div>
+          <div class="pet-list-body" id="petListPopupBody">
+            <!-- 宠物卡片动态渲染 -->
+          </div>
+          <div class="pet-list-empty hidden" id="petListPopupEmpty">
+            <div class="profile-empty-icon">🐾</div>
+            <div class="profile-empty-text">还没有添加宠物，点击上方按钮添加</div>
+          </div>
+          <button class="pet-list-close-btn" onclick="closePetListPopup()">关闭</button>
+        </div>
+      </div>
+
       <!-- ==================== 地址表单弹窗 ==================== -->
       <div class="pet-form-overlay hidden" id="addressFormOverlay" onclick="closeAddressForm(event)">
         <div class="pet-form-sheet" onclick="event.stopPropagation()">
@@ -1643,6 +1605,25 @@
               <button class="pet-form-btn confirm" onclick="saveAddress()">保存</button>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- ==================== 地址列表弹窗 ==================== -->
+      <div class="pet-form-overlay hidden" id="addressListOverlay" onclick="closeAddressListPopup(event)">
+        <div class="address-list-sheet" onclick="event.stopPropagation()">
+          <div class="pet-form-handle"></div>
+          <div class="address-list-header">
+            <div class="address-list-title">📍 收货地址</div>
+            <button class="address-list-add-btn" onclick="openAddressForm()">+ 添加地址</button>
+          </div>
+          <div class="address-list-body" id="addressListPopupBody">
+            <!-- 地址卡片动态渲染 -->
+          </div>
+          <div class="address-list-empty hidden" id="addressListPopupEmpty">
+            <div class="profile-empty-icon">📍</div>
+            <div class="profile-empty-text">还没有收货地址，点击上方按钮添加</div>
+          </div>
+          <button class="address-list-close-btn" onclick="closeAddressListPopup()">关闭</button>
         </div>
       </div>
 
@@ -1743,6 +1724,47 @@
         </div>
       </div>
 
+      <!-- ==================== 账户充值详情弹窗 ==================== -->
+      <div class="pet-form-overlay hidden" id="rechargeDetailOverlay" onclick="closeRechargeDetail(event)">
+        <div class="recharge-detail-sheet" onclick="event.stopPropagation()">
+          <div class="pet-form-handle"></div>
+          <div class="recharge-detail-header">
+            <div class="recharge-detail-title">💰 账户充值</div>
+            <div class="recharge-detail-sub">多充多送，会员升级更划算</div>
+            <div class="recharge-detail-balance" id="rechargeDetailBalance">当前余额：¥128.50</div>
+          </div>
+          <div class="recharge-detail-body">
+            <div class="profile-recharge-grid">
+              <div class="profile-recharge-card" onclick="handleRechargeFromSheet(100)">
+                <div class="profile-recharge-amount">¥100</div>
+                <div class="profile-recharge-gift hidden">送5元</div>
+              </div>
+              <div class="profile-recharge-card" onclick="handleRechargeFromSheet(300)">
+                <div class="profile-recharge-amount">¥300</div>
+                <div class="profile-recharge-gift">送15元</div>
+              </div>
+              <div class="profile-recharge-card hot" onclick="handleRechargeFromSheet(500)">
+                <div class="profile-recharge-amount">¥500</div>
+                <div class="profile-recharge-gift">送40元</div>
+                <span class="profile-recharge-tag">🔥 热门</span>
+              </div>
+              <div class="profile-recharge-card" onclick="handleRechargeFromSheet(1000)">
+                <div class="profile-recharge-amount">¥1000</div>
+                <div class="profile-recharge-gift">送100元</div>
+              </div>
+            </div>
+            <div class="profile-recharge-custom" onclick="openCustomRecharge()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              自定义金额
+            </div>
+          </div>
+          <button class="order-list-close-btn" onclick="closeRechargeDetail()">关闭</button>
+        </div>
+      </div>
+
       <!-- ==================== 自定义充值弹窗 ==================== -->
       <div class="pet-form-overlay hidden" id="customRechargeOverlay" onclick="closeCustomRecharge(event)">
         <div class="custom-recharge-sheet" onclick="event.stopPropagation()">
@@ -1788,6 +1810,31 @@
         </div>
       </div>
 
+      <!-- ==================== 订单列表弹窗 ==================== -->
+      <div class="pet-form-overlay hidden" id="orderListOverlay" onclick="closeOrderListPopup(event)">
+        <div class="order-list-sheet" onclick="event.stopPropagation()">
+          <div class="pet-form-handle"></div>
+          <div class="order-list-header">
+            <div class="order-list-title">📦 我的订单</div>
+          </div>
+          <!-- 订单状态Tabs -->
+          <div class="order-list-tabs" id="orderListPopupTabs">
+            <div class="order-list-tab active" data-tab="all" onclick="switchOrderListTab('all', this)">全部</div>
+            <div class="order-list-tab" data-tab="pendingPay" onclick="switchOrderListTab('pendingPay', this)">待付款</div>
+            <div class="order-list-tab" data-tab="pendingShip" onclick="switchOrderListTab('pendingShip', this)">待发货</div>
+            <div class="order-list-tab" data-tab="shipped" onclick="switchOrderListTab('shipped', this)">已发货</div>
+            <div class="order-list-tab" data-tab="completed" onclick="switchOrderListTab('completed', this)">已完成</div>
+          </div>
+          <!-- 订单列表 -->
+          <div class="order-list-body" id="orderListPopupBody"></div>
+          <div class="order-list-empty hidden" id="orderListPopupEmpty">
+            <div class="profile-empty-icon">📦</div>
+            <div class="profile-empty-text" id="orderListPopupEmptyText">暂无订单</div>
+          </div>
+          <button class="order-list-close-btn" onclick="closeOrderListPopup()">关闭</button>
+        </div>
+      </div>
+
       <!-- ==================== 售后表单弹窗 ==================== -->
       <div class="pet-form-overlay hidden" id="afterSaleOverlay" onclick="closeAfterSaleForm(event)">
         <div class="pet-form-sheet" onclick="event.stopPropagation()">
@@ -1830,8 +1877,8 @@
             <div class="pet-form-field">
               <label>轻创等级</label>
               <select class="pet-form-select" id="profileLevelSelect">
-                <option value="达人">达人</option>
-                <option value="团长">团长</option>
+                <option value="梵优合伙人">梵优合伙人</option>
+                <option value="梵优主理人">梵优主理人</option>
               </select>
             </div>
             <div class="pet-form-actions">
@@ -1926,5 +1973,307 @@
     <script src="js/detail-group.js"></script>
     <script src="js/detail-page.js"></script>
     <script src="js/profile.js"></script>
+    <script src="js/points.js"></script>
+    <script src="js/commission.js"></script>
+
+    <!-- ==================== 积分明细弹窗 ==================== -->
+    <div class="points-log-overlay hidden" id="pointsLogOverlay" onclick="closePointsLogPopup(event)">
+      <div class="points-log-sheet" onclick="event.stopPropagation()">
+        <div class="points-log-handle"></div>
+        <div class="points-log-header">
+          <div class="points-log-title">📋 积分明细</div>
+          <div class="points-log-close" onclick="closePointsLogPopup()">✕</div>
+        </div>
+        <!-- 积分统计 -->
+        <div class="points-log-stats">
+          <div class="points-log-stat">
+            <div class="points-log-stat-num" id="pointsLogBalance">0</div>
+            <div class="points-log-stat-label">当前积分</div>
+          </div>
+          <div class="points-log-stat-divider"></div>
+          <div class="points-log-stat">
+            <div class="points-log-stat-num" id="pointsLogTotalEarned">0</div>
+            <div class="points-log-stat-label">累计获得</div>
+          </div>
+          <div class="points-log-stat-divider"></div>
+          <div class="points-log-stat">
+            <div class="points-log-stat-num" id="pointsLogTotalUsed">0</div>
+            <div class="points-log-stat-label">累计使用</div>
+          </div>
+        </div>
+        <!-- 会员积分倍率 -->
+        <div class="points-multiplier-card" id="pointsMultiplierCard">
+          <div class="points-multiplier-header">
+            <span class="points-multiplier-label">🏅 会员积分倍率</span>
+            <span class="points-multiplier-badge" id="pointsMultiplierBadge">银牌会员</span>
+          </div>
+          <div class="points-multiplier-body">
+            <div class="points-multiplier-row">
+              <span class="points-multiplier-key">当前倍率</span>
+              <span class="points-multiplier-val" id="pointsMultiplierVal">×1.3</span>
+            </div>
+            <div class="points-multiplier-row">
+              <span class="points-multiplier-key">消费积分计算</span>
+              <span class="points-multiplier-val" id="pointsMultiplierCalc">1元 = 1.3积分</span>
+            </div>
+          </div>
+          <div class="points-multiplier-example" id="pointsMultiplierExample">示例：消费100元 → 100×1.3 = <strong>130积分</strong></div>
+        </div>
+        <!-- 操作按钮 -->
+        <div class="points-log-actions">
+          <div
+            class="points-log-action-btn primary"
+            onclick="
+              event.stopPropagation();
+              closePointsLogPopup();
+              openPointsExchangePopup();
+            "
+          >
+            🎁 积分兑换
+          </div>
+          <div
+            class="points-log-action-btn secondary"
+            onclick="
+              event.stopPropagation();
+              simulateInviteFriend();
+            "
+          >
+            👥 邀请好友 +100
+          </div>
+        </div>
+        <!-- 明细列表 -->
+        <div class="points-log-list" id="pointsLogList">
+          <div class="points-log-empty hidden" id="pointsLogEmpty">暂无积分明细</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 积分兑换弹窗 ==================== -->
+    <div class="points-exchange-overlay hidden" id="pointsExchangeOverlay" onclick="closePointsExchangePopup(event)">
+      <div class="points-exchange-sheet" onclick="event.stopPropagation()">
+        <div class="points-exchange-handle"></div>
+        <div class="points-exchange-header">
+          <div class="points-exchange-title">🎁 积分兑换</div>
+          <div class="points-exchange-close" onclick="closePointsExchangePopup()">✕</div>
+        </div>
+        <!-- 当前积分 -->
+        <div class="points-exchange-balance">当前积分：<span id="pointsExchangeBalance">0</span></div>
+        <!-- 兑换商品列表 -->
+        <div class="points-exchange-list" id="pointsExchangeList"></div>
+      </div>
+    </div>
+
+    <!-- ==================== 分佣概览弹窗 ==================== -->
+    <div class="commission-overlay hidden" id="commissionOverlay" onclick="closeCommissionOverview(event)">
+      <div class="commission-sheet" onclick="event.stopPropagation()">
+        <div class="commission-handle"></div>
+        <div class="commission-header">
+          <div class="commission-title">💸 分佣收益</div>
+          <div class="commission-close" onclick="closeCommissionOverview()">✕</div>
+        </div>
+
+        <!-- 等级卡片 -->
+        <div class="commission-tier-card" id="commissionTierCard">
+          <div class="commission-tier-badge" id="commTierBadge">🌟 梵优合伙人</div>
+          <div class="commission-tier-label" id="commTierLabel"></div>
+        </div>
+
+        <!-- 收益统计 -->
+        <div class="commission-stats">
+          <div class="commission-stat">
+            <div class="commission-stat-num" id="commTotalEarned">¥0.00</div>
+            <div class="commission-stat-label">累计收益</div>
+          </div>
+          <div class="commission-stat-divider"></div>
+          <div class="commission-stat">
+            <div class="commission-stat-num pending" id="commPendingAmount">¥0.00</div>
+            <div class="commission-stat-label">待结算</div>
+          </div>
+          <div class="commission-stat-divider"></div>
+          <div class="commission-stat">
+            <div class="commission-stat-num available" id="commAvailableBalance">¥0.00</div>
+            <div class="commission-stat-label">可提现</div>
+          </div>
+        </div>
+
+        <!-- 快捷操作 -->
+        <div class="commission-actions">
+          <div
+            class="commission-action-btn primary"
+            onclick="
+              event.stopPropagation();
+              openWithdrawPopup();
+            "
+          >
+            💳 立即提现
+          </div>
+          <div
+            class="commission-action-btn secondary"
+            onclick="
+              event.stopPropagation();
+              openInviteDetail();
+            "
+          >
+            👥 邀请好友 <span id="commInviteBadge" style="margin-left: 2px">35</span>
+          </div>
+        </div>
+
+        <!-- 最近收益 -->
+        <div class="commission-section-title">
+          <span>📋 最近收益</span>
+          <span
+            class="commission-section-more"
+            onclick="
+              event.stopPropagation();
+              openCommissionDetail();
+            "
+            >查看全部 ›</span
+          >
+        </div>
+        <div class="commission-log-list" id="commissionLogList"></div>
+      </div>
+    </div>
+
+    <!-- ==================== 收益明细弹窗 ==================== -->
+    <div class="commission-detail-overlay hidden" id="commissionDetailOverlay" onclick="closeCommissionDetail(event)">
+      <div class="commission-detail-sheet" onclick="event.stopPropagation()">
+        <div class="commission-handle"></div>
+        <div class="commission-header">
+          <div class="commission-title">📋 收益明细</div>
+          <div class="commission-close" onclick="closeCommissionDetail()">✕</div>
+        </div>
+
+        <!-- 统计 -->
+        <div class="commission-stats">
+          <div class="commission-stat">
+            <div class="commission-stat-num" id="commDetailTotalEarned">¥0.00</div>
+            <div class="commission-stat-label">累计收益</div>
+          </div>
+          <div class="commission-stat-divider"></div>
+          <div class="commission-stat">
+            <div class="commission-stat-num pending" id="commDetailPending">¥0.00</div>
+            <div class="commission-stat-label">待结算</div>
+          </div>
+          <div class="commission-stat-divider"></div>
+          <div class="commission-stat">
+            <div class="commission-stat-num available" id="commDetailAvailable">¥0.00</div>
+            <div class="commission-stat-label">可提现</div>
+          </div>
+        </div>
+
+        <!-- Tab 切换 -->
+        <div class="commission-detail-tabs" id="commissionDetailTabs">
+          <div class="commission-detail-tab active" data-tab="all" onclick="switchCommissionDetailTab('all', this)">全部</div>
+          <div class="commission-detail-tab" data-tab="settled" onclick="switchCommissionDetailTab('settled', this)">已结算</div>
+          <div class="commission-detail-tab" data-tab="pending" onclick="switchCommissionDetailTab('pending', this)">待结算</div>
+          <div class="commission-detail-tab" data-tab="withdraw" onclick="switchCommissionDetailTab('withdraw', this)">提现记录</div>
+        </div>
+
+        <!-- 明细列表 -->
+        <div class="commission-log-list" id="commissionDetailList"></div>
+      </div>
+    </div>
+
+    <!-- ==================== 提现弹窗 ==================== -->
+    <div class="withdraw-overlay hidden" id="withdrawOverlay" onclick="closeWithdrawPopup(event)">
+      <div class="withdraw-sheet" onclick="event.stopPropagation()">
+        <div class="commission-handle"></div>
+        <div class="commission-header">
+          <div class="commission-title">💳 申请提现</div>
+          <div class="commission-close" onclick="closeWithdrawPopup()">✕</div>
+        </div>
+
+        <!-- 可提现余额 -->
+        <div class="withdraw-balance-card">
+          <div class="withdraw-balance-label">可提现余额</div>
+          <div class="withdraw-balance-num" id="withdrawBalance">¥0.00</div>
+        </div>
+
+        <!-- 提现表单 -->
+        <div class="withdraw-form">
+          <div class="withdraw-form-group">
+            <label class="withdraw-form-label">提现金额</label>
+            <input
+              type="number"
+              class="withdraw-form-input"
+              id="withdrawAmountInput"
+              placeholder="请输入提现金额"
+              oninput="onWithdrawAmountInput(this)"
+            />
+            <div class="withdraw-form-hint" id="withdrawMinHint">最低提现金额 ¥10</div>
+          </div>
+
+          <!-- 快捷金额 -->
+          <div class="withdraw-amount-presets" id="withdrawPresets">
+            <div class="withdraw-amount-preset" data-amount="50" onclick="selectWithdrawPreset('50', this)">¥50</div>
+            <div class="withdraw-amount-preset" data-amount="100" onclick="selectWithdrawPreset('100', this)">¥100</div>
+            <div class="withdraw-amount-preset" data-amount="200" onclick="selectWithdrawPreset('200', this)">¥200</div>
+            <div class="withdraw-amount-preset" data-amount="500" onclick="selectWithdrawPreset('500', this)">¥500</div>
+            <div class="withdraw-amount-preset" data-amount="1000" onclick="selectWithdrawPreset('1000', this)">¥1000</div>
+          </div>
+
+          <div class="withdraw-form-group">
+            <label class="withdraw-form-label">提现方式</label>
+            <select class="withdraw-form-input" id="withdrawMethodSelect" onchange="onWithdrawMethodChange(this)">
+              <option value="微信零钱">微信零钱</option>
+              <option value="银行卡">银行卡</option>
+            </select>
+          </div>
+
+          <!-- 到账预览 -->
+          <div class="withdraw-form-hint" id="withdrawPreview" style="text-align: center; font-size: 13px; margin-bottom: 14px">请输入提现金额</div>
+
+          <!-- 提交 -->
+          <button class="withdraw-submit-btn" id="withdrawSubmitBtn" disabled onclick="submitWithdraw()">确认提现</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== 邀请明细弹窗 ==================== -->
+    <div class="invite-overlay hidden" id="inviteOverlay" onclick="closeInviteDetail(event)">
+      <div class="invite-sheet" onclick="event.stopPropagation()">
+        <div class="commission-handle"></div>
+        <div class="commission-header">
+          <div class="commission-title">👥 邀请明细</div>
+          <div class="commission-close" onclick="closeInviteDetail()">✕</div>
+        </div>
+
+        <!-- 邀请分享卡片 -->
+        <div class="invite-share-card">
+          <div class="invite-share-title">🎉 邀请好友赚佣金</div>
+          <div class="invite-share-subtitle">好友消费你拿返佣，多级分佣上不封顶</div>
+          <div class="invite-share-code" id="inviteShareCode">FYMPET</div>
+          <div class="invite-share-actions">
+            <button class="invite-share-btn copy" onclick="copyInviteCode()">📋 复制邀请码</button>
+            <button class="invite-share-btn link" onclick="shareInviteLink()">🔗 分享链接</button>
+          </div>
+        </div>
+
+        <!-- 邀请统计 -->
+        <div class="invite-stats">
+          <div class="invite-stat-card">
+            <div class="invite-stat-num" id="inviteTotalCount">0</div>
+            <div class="invite-stat-label">邀请总数</div>
+          </div>
+          <div class="invite-stat-card">
+            <div class="invite-stat-num" id="inviteActiveCount">0</div>
+            <div class="invite-stat-label">活跃用户</div>
+          </div>
+          <div class="invite-stat-card">
+            <div class="invite-stat-num" id="inviteTotalContribution">¥0</div>
+            <div class="invite-stat-label">贡献收益</div>
+          </div>
+        </div>
+
+        <!-- 搜索 -->
+        <div class="invite-search">
+          <span class="invite-search-icon">🔍</span>
+          <input type="text" class="invite-search-input" placeholder="搜索邀请用户..." oninput="searchInvite(this)" />
+        </div>
+
+        <!-- 邀请列表 -->
+        <div class="invite-list" id="inviteList"></div>
+      </div>
+    </div>
   </body>
 </html>
