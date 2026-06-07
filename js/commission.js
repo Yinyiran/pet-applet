@@ -159,7 +159,7 @@ function renderTierCard(cfg) {
   // 返佣比例
   const labelEl = document.getElementById('commTierLabel');
   if (labelEl) {
-    labelEl.innerHTML = `<div class="commission-tier-rate-label">${cfg.rateLabels.join('')}</div>`;
+    labelEl.innerHTML = `<div class="commission-tier-rate-label">${cfg.rateLabels.join('、')}</div>`;
   }
 }
 

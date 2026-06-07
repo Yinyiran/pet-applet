@@ -1519,7 +1519,7 @@
       </div>
 
       <!-- ==================== 宠物表单弹窗 ==================== -->
-      <div class="pet-form-overlay hidden" id="petFormOverlay" onclick="closePetForm(event)">
+      <div class="pet-form-overlay hidden" style="z-index: 300" id="petFormOverlay" onclick="closePetForm(event)">
         <div class="pet-form-sheet" onclick="event.stopPropagation()">
           <div class="pet-form-handle"></div>
           <div class="pet-form-title" id="petFormTitle">添加宠物</div>
@@ -1576,7 +1576,7 @@
       </div>
 
       <!-- ==================== 地址表单弹窗 ==================== -->
-      <div class="pet-form-overlay hidden" id="addressFormOverlay" onclick="closeAddressForm(event)">
+      <div class="pet-form-overlay hidden" style="z-index: 300" id="addressFormOverlay" onclick="closeAddressForm(event)">
         <div class="pet-form-sheet" onclick="event.stopPropagation()">
           <div class="pet-form-handle"></div>
           <div class="pet-form-title" id="addressFormTitle">添加收货地址</div>
@@ -1628,7 +1628,7 @@
       </div>
 
       <!-- ==================== 订单详情弹窗 ==================== -->
-      <div class="pet-form-overlay hidden" id="orderDetailOverlay" onclick="closeOrderDetail(event)">
+      <div class="pet-form-overlay hidden" style="z-index: 300" id="orderDetailOverlay" onclick="closeOrderDetail(event)">
         <div class="order-detail-sheet" onclick="event.stopPropagation()">
           <div class="pet-form-handle"></div>
           <div class="order-detail-header">
@@ -1873,6 +1873,10 @@
             <div class="pet-form-field">
               <label>昵称</label>
               <input class="pet-form-input" id="profileNameInput" placeholder="请输入昵称" maxlength="15" />
+            </div>
+            <div class="pet-form-field">
+              <label>手机号</label>
+              <input class="pet-form-input" type="tel" id="profilePhoneInput" placeholder="请输入手机号" maxlength="11" />
             </div>
             <div class="pet-form-field">
               <label>轻创等级</label>

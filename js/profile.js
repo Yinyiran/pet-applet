@@ -50,7 +50,7 @@ let profileOrders = [
 let currentOrderTab = 'all';
 let currentOrderId = null;
 
-let userProfile = { name: '毛毛家长', level: '梵优主理人', avatar: '🐱', memberLevel: 'silver', totalSpent: 350, balance: 128.5 };
+let userProfile = { name: '毛毛家长', level: '梵优主理人', avatar: '🐱', memberLevel: 'silver', totalSpent: 350, balance: 128.5, phone: 15677778888 };
 let currentAfterSaleOrderId = null;
 let currentAfterSaleType = null;
 
@@ -85,6 +85,7 @@ function renderProfileUserCard() {
 // ============ 个人信息编辑 ============
 function openProfileEdit() {
   document.getElementById('profileNameInput').value = userProfile.name;
+  document.getElementById('profilePhoneInput').value = userProfile.phone || '';
   document.getElementById('profileLevelSelect').value = userProfile.level;
   document.getElementById('profileEditOverlay').classList.remove('hidden');
 }
@@ -96,6 +97,7 @@ function closeProfileEdit(e) {
 
 function saveProfile() {
   userProfile.name = document.getElementById('profileNameInput').value.trim() || userProfile.name;
+  userProfile.phone = document.getElementById('profilePhoneInput').value.trim() || userProfile.phone;
   userProfile.level = document.getElementById('profileLevelSelect').value;
   closeProfileEdit();
   renderProfileUserCard();
