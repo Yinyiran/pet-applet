@@ -6131,6 +6131,41 @@ body {
   opacity: 0.8;
 }
 
+/* ========== 宠物档案行内区域 ========== */
+.pet-archive-item {
+  cursor: default;
+  margin-bottom: 0;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border-bottom: none;
+}
+.pet-archive-item:active {
+  background: #faf8f5;
+}
+.pet-list-inline-body {
+  padding: 8px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #faf8f5;
+  border: 1px solid var(--border);
+  border-top: 1px dashed var(--border);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  margin-bottom: 8px;
+}
+.pet-list-inline-empty {
+  padding: 6px 12px 10px;
+  text-align: center;
+  background: #faf8f5;
+  border: 1px solid var(--border);
+  border-top: 1px dashed var(--border);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  margin-bottom: 8px;
+}
+.pet-list-inline-empty-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
 /* 宠物弹出卡片 */
 .pet-popup-card {
   display: flex;

@@ -1317,11 +1317,16 @@
             </div>
 
             <!-- ========== 宠物档案 ========== -->
-            <div class="profile-menu-item" onclick="openPetListPopup()">
+            <div class="profile-menu-item pet-archive-item">
               <span class="profile-menu-icon">🐾</span>
               <span class="profile-menu-label">宠物档案</span>
-              <span class="profile-menu-badge hidden" id="petCountBadge">0</span>
-              <span class="profile-menu-arrow">›</span>
+              <button class="pet-list-add-btn" onclick="event.stopPropagation(); openPetForm()">+ 添加宠物</button>
+            </div>
+            <div class="pet-list-inline-body" id="petListInlineBody">
+              <!-- 宠物卡片动态渲染 -->
+            </div>
+            <div class="pet-list-inline-empty hidden" id="petListInlineEmpty">
+              <span class="pet-list-inline-empty-text">还没有添加宠物，点击上方按钮添加</span>
             </div>
 
             <!-- ========== 我的积分 ========== -->

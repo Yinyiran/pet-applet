@@ -58,6 +58,7 @@ let currentAfterSaleType = null;
 function renderProfilePage() {
   renderProfileUserCard();
   renderMenuBadges();
+  renderPetListInline();
   renderMemberInfo();
   // 渲染积分信息（如果points.js已加载）
   if (typeof renderPointsInfo === 'function') {
@@ -120,10 +121,9 @@ function selectAvatar(emoji) {
   closeAvatarPicker();
 }
 
-// ============ 宠物档案（弹窗列表）============
+// ============ 宠物档案（行内列表）============
 function openPetListPopup() {
-  renderPetListPopupBody();
-  document.getElementById('petListOverlay').classList.remove('hidden');
+  renderPetListInline();
 }
 
 function closePetListPopup(e) {
@@ -131,10 +131,11 @@ function closePetListPopup(e) {
   document.getElementById('petListOverlay').classList.add('hidden');
 }
 
-function renderPetListPopupBody() {
-  const body = document.getElementById('petListPopupBody');
-  const empty = document.getElementById('petListPopupEmpty');
+function renderPetListInline() {
+  const body = document.getElementById('petListInlineBody');
+  const empty = document.getElementById('petListInlineEmpty');
 
+  if (!body || !empty) return;
   if (profilePets.length === 0) {
     body.innerHTML = '';
     empty.classList.remove('hidden');
@@ -158,7 +159,7 @@ function renderPetListPopupBody() {
           </div>
           <div class="pet-popup-card-actions">
             <span class="pet-popup-edit" onclick="editPet(${p.id})">✏️</span>
-            <span class="pet-popup-del" onclick="deletePetInPopup(${p.id})">🗑️</span>
+            <span class="pet-popup-del" onclick="deletePetInline(${p.id})">🗑️</span>
           </div>
         </div>
       `;
@@ -168,15 +169,20 @@ function renderPetListPopupBody() {
   updatePetCountBadge();
 }
 
-function deletePetInPopup(id) {
+function deletePetInline(id) {
   profilePets = profilePets.filter((p) => p.id !== id);
-  renderPetListPopupBody();
+  renderPetListInline();
   updatePetCountBadge();
   showToast('宠物已删除');
 }
 
+function deletePetInPopup(id) {
+  deletePetInline(id);
+}
+
 function updatePetCountBadge() {
   const badge = document.getElementById('petCountBadge');
+  if (!badge) return;
   if (profilePets.length > 0) {
     badge.textContent = profilePets.length;
     badge.classList.remove('hidden');
@@ -271,7 +277,7 @@ function savePet() {
   }
 
   closePetForm();
-  renderPetListPopupBody();
+  renderPetListInline();
   updatePetCountBadge();
   showToast(editPetId ? '宠物信息已更新' : '宠物添加成功');
   editPetId = null;
@@ -283,7 +289,7 @@ function editPet(id) {
 
 function deletePet(id) {
   profilePets = profilePets.filter((p) => p.id !== id);
-  renderPetListPopupBody();
+  renderPetListInline();
   updatePetCountBadge();
   showToast('宠物已删除');
 }
@@ -371,6 +377,7 @@ function setDefaultInPopup(id) {
 
 function updateAddrCountBadge() {
   const badge = document.getElementById('addrCountBadge');
+  if (!badge) return;
   if (profileAddresses.length > 0) {
     badge.textContent = profileAddresses.length;
     badge.classList.remove('hidden');
@@ -486,6 +493,7 @@ function renderMenuBadges() {
 
 function updateOrderCountBadge() {
   const badge = document.getElementById('orderCountBadge');
+  if (!badge) return;
   if (profileOrders.length > 0) {
     badge.textContent = profileOrders.length;
     badge.classList.remove('hidden');
