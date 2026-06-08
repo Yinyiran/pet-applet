@@ -2183,6 +2183,161 @@ body {
   color: var(--primary-dark);
 }
 
+/* ========== 答题页商品滑动卡片 ========== */
+.quiz-product-slider {
+  border-top: 2px solid #f7f4f0;
+  margin: 40px 0 16px;
+  padding-top: 40px;
+}
+.quiz-product-slider-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+.quiz-product-slider-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.quiz-product-slider-hint {
+  font-size: 10px;
+  color: var(--text-light);
+}
+.quiz-product-track {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  border-radius: var(--radius);
+}
+.quiz-product-track::-webkit-scrollbar {
+  display: none;
+}
+.quiz-product-card {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease;
+}
+.quiz-product-card:active {
+  transform: scale(0.98);
+}
+.quiz-product-card-img {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  background: linear-gradient(135deg, #fdf6f0 0%, #f5ede3 50%, #ede0d3 100%);
+  position: relative;
+}
+.quiz-product-card-img .product-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+}
+.product-tag.hot {
+  background: var(--danger);
+}
+.product-tag.new {
+  background: var(--success);
+}
+.product-tag.best {
+  background: var(--primary);
+}
+.quiz-product-card-body {
+  padding: 14px 14px 12px;
+}
+.quiz-product-card-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.quiz-product-card-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.quiz-product-card-price {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.quiz-product-card-price .unit {
+  font-size: 12px;
+  font-weight: 600;
+}
+.quiz-product-card-stock {
+  font-size: 11px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+.quiz-product-card-stock.low {
+  color: var(--danger);
+}
+.quiz-product-cart-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity var(--transition);
+  flex-shrink: 0;
+}
+.quiz-product-cart-btn:active {
+  opacity: 0.85;
+}
+.quiz-product-cart-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* 指示点 */
+.quiz-product-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 0 2px;
+}
+.quiz-product-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: #d4c8b8;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.quiz-product-dot.active {
+  width: 18px;
+  background: var(--primary);
+}
+
 /* ========== 导航按钮 ========== */
 .quiz-nav {
   display: flex;

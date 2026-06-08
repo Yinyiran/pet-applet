@@ -418,6 +418,17 @@
                     <span class="quiz-pet-label">狗狗</span>
                   </div>
                 </div>
+                <!-- 推荐商品滑动卡片 -->
+                <div class="quiz-product-slider" id="quizProductSlider">
+                  <div class="quiz-product-slider-header">
+                    <span class="quiz-product-slider-title">🔥 热销推荐</span>
+                    <span class="quiz-product-slider-hint">← 左右滑动查看 →</span>
+                  </div>
+                  <div class="quiz-product-track" id="quizProductTrack">
+                    <!-- JS 动态渲染 -->
+                  </div>
+                  <div class="quiz-product-dots" id="quizProductDots"></div>
+                </div>
               </div>
 
               <!-- ============ 猫咪题目 ============ -->
@@ -1320,7 +1331,15 @@
             <div class="profile-menu-item pet-archive-item">
               <span class="profile-menu-icon">🐾</span>
               <span class="profile-menu-label">宠物档案</span>
-              <button class="pet-list-add-btn" onclick="event.stopPropagation(); openPetForm()">+ 添加宠物</button>
+              <button
+                class="pet-list-add-btn"
+                onclick="
+                  event.stopPropagation();
+                  openPetForm();
+                "
+              >
+                + 添加宠物
+              </button>
             </div>
             <div class="pet-list-inline-body" id="petListInlineBody">
               <!-- 宠物卡片动态渲染 -->

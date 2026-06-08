@@ -267,6 +267,9 @@ function navigateToQuiz() {
   // 显示返回按钮
   document.getElementById('headerBack').classList.remove('hidden');
 
+  // 渲染推荐商品滑动卡片
+  renderQuizProducts();
+
   // 显示第一题（宠物类型选择）
   showQuestion(0);
   // 暂时隐藏导航（选完宠物类型后才显示）
@@ -1080,4 +1083,103 @@ function sharePosterImage() {
   } else {
     showToast('请长按海报图片分享给好友 📲');
   }
+}
+
+// ============ 答题页推荐商品滑动卡片 ============
+const quizProducts = [
+  { emoji: '🍗', name: '高蛋白鸡肉冻干粮', price: 89, stock: 126, tag: 'hot', tagText: '热销' },
+  { emoji: '🐟', name: '深海三文鱼美毛配方', price: 108, stock: 58, tag: 'best', tagText: '口碑' },
+  { emoji: '🥩', name: '澳洲进口牛肉高能粮', price: 136, stock: 220, tag: 'new', tagText: '新品' },
+  { emoji: '🦆', name: '清热鸭肉低敏配方', price: 99, stock: 15, tag: 'hot', tagText: '爆款' },
+  { emoji: '🦴', name: '关节养护氨糖颗粒', price: 68, stock: 89, tag: 'best', tagText: '推荐' },
+];
+
+let quizProductIndex = 0;
+
+function renderQuizProducts() {
+  const track = document.getElementById('quizProductTrack');
+  const dots = document.getElementById('quizProductDots');
+  if (!track || !dots) return;
+
+  track.innerHTML = quizProducts
+    .map(
+      (p, i) => `
+    <div class="quiz-product-card" data-index="${i}">
+      <div class="quiz-product-card-img">
+        <span class="product-tag ${p.tag}">${p.tagText}</span>
+        ${p.emoji}
+      </div>
+      <div class="quiz-product-card-body">
+        <div class="quiz-product-card-name">${p.name}</div>
+        <div class="quiz-product-card-bottom">
+          <div class="quiz-product-card-price"><span class="unit">¥</span>${p.price}</div>
+          <div class="quiz-product-card-stock ${p.stock < 30 ? 'low' : ''}">库存：${p.stock}</div>
+          <button class="quiz-product-cart-btn" onclick="event.stopPropagation(); addQuizProductToCart(${i})">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            加入购物车
+          </button>
+        </div>
+      </div>
+    </div>
+  `,
+    )
+    .join('');
+
+  dots.innerHTML = quizProducts
+    .map(
+      (_, i) => `<span class="quiz-product-dot${i === quizProductIndex ? ' active' : ''}" onclick="scrollToQuizProduct(${i})"></span>`,
+    )
+    .join('');
+
+  // 监听滚动更新指示点
+  track.addEventListener('scroll', updateQuizProductDots, { passive: true });
+  // 监听touch结束对齐卡片
+  track.addEventListener('touchend', snapQuizProductCard, { passive: true });
+  // 初始定位
+  setTimeout(() => {
+    track.scrollLeft = quizProductIndex * track.offsetWidth;
+  }, 0);
+}
+
+function updateQuizProductDots() {
+  const track = document.getElementById('quizProductTrack');
+  if (!track) return;
+  const cardWidth = track.offsetWidth;
+  if (cardWidth === 0) return;
+  const idx = Math.round(track.scrollLeft / cardWidth);
+  if (idx !== quizProductIndex) {
+    quizProductIndex = idx;
+    document.querySelectorAll('.quiz-product-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === quizProductIndex);
+    });
+  }
+}
+
+function snapQuizProductCard() {
+  const track = document.getElementById('quizProductTrack');
+  if (!track) return;
+  const cardWidth = track.offsetWidth;
+  if (cardWidth === 0) return;
+  // 延迟判断最终位置后再snap
+  setTimeout(() => {
+    const targetIndex = Math.round(track.scrollLeft / cardWidth);
+    track.scrollTo({ left: targetIndex * cardWidth, behavior: 'smooth' });
+  }, 50);
+}
+
+function scrollToQuizProduct(index) {
+  const track = document.getElementById('quizProductTrack');
+  if (!track) return;
+  const cardWidth = track.offsetWidth;
+  quizProductIndex = index;
+  track.scrollTo({ left: index * cardWidth, behavior: 'smooth' });
+  document.querySelectorAll('.quiz-product-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === index);
+  });
+}
+
+function addQuizProductToCart(index) {
+  const product = quizProducts[index];
+  if (!product) return;
+  addToCart(product.emoji, product.name, product.price);
 }
