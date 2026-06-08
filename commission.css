@@ -586,7 +586,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px;
+  padding: 10px 12px;
   background: #fff;
   border-radius: var(--radius-sm);
   margin-bottom: 6px;
@@ -607,9 +607,22 @@
   font-size: 18px;
   flex-shrink: 0;
 }
-.invite-item-info {
+.invite-item-body {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.invite-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.invite-item-row-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .invite-item-name {
   font-size: 14px;
@@ -619,21 +632,43 @@
 .invite-item-meta {
   font-size: 11px;
   color: var(--text-light);
-  margin-top: 2px;
 }
-.invite-item-contribution {
-  font-size: 14px;
-  font-weight: 700;
-  color: #10b981;
-  flex-shrink: 0;
-  text-align: right;
-}
-.invite-item-views {
-  font-size: 13px;
+.invite-item-level {
+  font-size: 10px;
   font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: #f0ebe4;
   color: var(--text-light);
-  flex-shrink: 0;
-  text-align: right;
+  white-space: nowrap;
+}
+.invite-item-level.partner {
+  background: #ffedd5;
+  color: #c2410c;
+}
+.invite-item-level.manager {
+  background: #fef3c7;
+  color: #b45309;
+}
+.invite-item-team {
+  font-size: 11px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+.invite-item-consume {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.invite-item-consume.consumed {
+  background: #dcfce7;
+  color: #16a34a;
+}
+.invite-item-consume.not-consumed {
+  background: #fee2e2;
+  color: #dc2626;
 }
 .invite-empty {
   text-align: center;

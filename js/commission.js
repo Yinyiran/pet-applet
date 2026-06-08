@@ -214,6 +214,9 @@ let inviteList = [
     name: '小王',
     avatar: '🐶',
     role: '梵优合伙人',
+    level: '梵优合伙人',
+    teamSize: 5,
+    hasConsumed: true,
     joinTime: '2026-05-15',
     totalContribution: 456.0,
     status: 'active',
@@ -225,6 +228,9 @@ let inviteList = [
     name: '张先生',
     avatar: '🐱',
     role: '用户',
+    level: '普通用户',
+    teamSize: 0,
+    hasConsumed: true,
     joinTime: '2026-04-22',
     totalContribution: 890.0,
     status: 'active',
@@ -236,6 +242,9 @@ let inviteList = [
     name: '刘女士',
     avatar: '🐰',
     role: '梵优主理人',
+    level: '梵优主理人',
+    teamSize: 12,
+    hasConsumed: true,
     joinTime: '2026-04-10',
     totalContribution: 1320.0,
     status: 'active',
@@ -247,6 +256,9 @@ let inviteList = [
     name: '赵先生',
     avatar: '🐹',
     role: '用户',
+    level: '普通用户',
+    teamSize: 2,
+    hasConsumed: true,
     joinTime: '2026-03-28',
     totalContribution: 785.0,
     status: 'active',
@@ -258,6 +270,9 @@ let inviteList = [
     name: '陈女士',
     avatar: '🐦',
     role: '梵优合伙人',
+    level: '梵优合伙人',
+    teamSize: 8,
+    hasConsumed: true,
     joinTime: '2026-03-15',
     totalContribution: 412.0,
     status: 'active',
@@ -269,6 +284,9 @@ let inviteList = [
     name: '小李',
     avatar: '🐠',
     role: '用户',
+    level: '普通用户',
+    teamSize: 0,
+    hasConsumed: true,
     joinTime: '2026-02-20',
     totalContribution: 278.0,
     status: 'active',
@@ -281,6 +299,9 @@ let inviteList = [
     name: '小赵',
     avatar: '🐢',
     role: '用户',
+    level: '普通用户',
+    teamSize: 1,
+    hasConsumed: true,
     joinTime: '2026-02-18',
     totalContribution: 635.0,
     status: 'active',
@@ -293,6 +314,9 @@ let inviteList = [
     name: '小周',
     avatar: '🐸',
     role: '梵优合伙人',
+    level: '梵优合伙人',
+    teamSize: 6,
+    hasConsumed: true,
     joinTime: '2026-01-22',
     totalContribution: 1568.0,
     status: 'active',
@@ -305,6 +329,9 @@ let inviteList = [
     name: '小明',
     avatar: '🐵',
     role: '用户',
+    level: '普通用户',
+    teamSize: 0,
+    hasConsumed: false,
     joinTime: '2026-05-08',
     totalContribution: 0,
     status: 'inactive',
@@ -317,6 +344,9 @@ let inviteList = [
     name: '小红',
     avatar: '🐔',
     role: '用户',
+    level: '普通用户',
+    teamSize: 0,
+    hasConsumed: false,
     joinTime: '2026-05-20',
     totalContribution: 0,
     status: 'inactive',
@@ -747,12 +777,13 @@ function renderInviteList(filter) {
 
   list.innerHTML = filtered
     .map(function (u) {
-      var rightHtml = '';
-      if (inviteTabActive === 'views') {
-        // rightHtml = '<div class="invite-item-views">👁 ' + u.browseCount + '</div>';
-      } else {
-        rightHtml = '<div class="invite-item-contribution">' + (u.totalContribution > 0 ? '¥' + u.totalContribution.toFixed(2) : '—') + '</div>';
-      }
+      var levelText = u.level || '普通用户';
+      var levelClass = '';
+      if (levelText === '梵优合伙人') levelClass = ' partner';
+      else if (levelText === '梵优主理人') levelClass = ' manager';
+      var teamText = (u.teamSize !== undefined ? u.teamSize : 0) + '人';
+      var consumeClass = u.hasConsumed ? 'consumed' : 'not-consumed';
+      var consumeText = u.hasConsumed ? '已消费' : '未消费';
 
       return (
         '<div class="invite-item" onclick="openInviteUserDetail(\'' +
@@ -761,15 +792,34 @@ function renderInviteList(filter) {
         '<div class="invite-item-avatar">' +
         u.avatar +
         '</div>' +
-        '<div class="invite-item-info">' +
-        '<div class="invite-item-name">' +
+        '<div class="invite-item-body">' +
+        '<div class="invite-item-row">' +
+        '<span class="invite-item-name">' +
         u.name +
+        '</span>' +
+        '<span class="invite-item-row-right">' +
+        '<span class="invite-item-level' +
+        levelClass +
+        '">' +
+        levelText +
+        '</span>' +
+        '<span class="invite-item-team">👥 ' +
+        teamText +
+        '</span>' +
+        '</span>' +
         '</div>' +
-        '<div class="invite-item-meta">最近浏览：' +
-        u.browseTime +
+        '<div class="invite-item-row">' +
+        '<span class="invite-item-meta">' +
+        `注册日期 ` +
+        u.joinTime +
+        '</span>' +
+        '<span class="invite-item-consume ' +
+        consumeClass +
+        '">' +
+        consumeText +
+        '</span>' +
         '</div>' +
         '</div>' +
-        rightHtml +
         '</div>'
       );
     })
@@ -797,11 +847,31 @@ function openInviteUserDetail(userId) {
   roleEl.textContent = user.role;
   roleEl.className = 'invite-item-role ' + roleClass;
 
+  // 等级
+  var levelEl = document.getElementById('inviteUserLevel');
+  var levelText = user.level || '普通用户';
+  levelEl.textContent = levelText;
+  levelEl.className = 'invite-user-detail-value invite-item-role ' + roleClass;
+
+  // 注册日期
   document.getElementById('inviteUserJoinTime').textContent = user.joinTime;
-  document.getElementById('inviteUserBrowseCount').textContent = user.browseCount;
-  document.getElementById('inviteUserBrowseTime').textContent = user.browseTime;
-  document.getElementById('inviteUserStatus').textContent = user.status === 'active' ? '已激活' : '未激活';
-  document.getElementById('inviteUserContribution').textContent = '¥' + user.totalContribution.toFixed(2);
+
+  // 团队人数
+  var teamSize = user.teamSize !== undefined ? user.teamSize : 0;
+  document.getElementById('inviteUserTeamSize').textContent = teamSize + '人';
+
+  // 消费状态
+  var consumeEl = document.getElementById('inviteUserConsumeStatus');
+  if (user.hasConsumed) {
+    consumeEl.textContent = '已消费';
+    consumeEl.className = 'invite-user-detail-value invite-item-consume consumed';
+  } else {
+    consumeEl.textContent = '未消费';
+    consumeEl.className = 'invite-user-detail-value invite-item-consume not-consumed';
+  }
+
+  // 状态
+  document.getElementById('inviteUserStatus').textContent = user.status === 'active' ? '活跃' : '不活跃';
 
   document.getElementById('inviteUserOverlay').classList.remove('hidden');
 }
@@ -813,7 +883,9 @@ function closeInviteUserDetail(e) {
 
 // ==================== 收益详情弹窗（点击明细条目） ====================
 function openCommissionLogDetail(logId) {
-  var log = commissionLog.find(function (l) { return l.id === logId; });
+  var log = commissionLog.find(function (l) {
+    return l.id === logId;
+  });
   if (!log) return;
 
   document.getElementById('commLogDetailTitle').textContent = log.title + (log.fromUser ? '（' + log.fromUser + '）' : '');
@@ -823,7 +895,8 @@ function openCommissionLogDetail(logId) {
   var rate = log.rate || 0;
   var earned = log.amount || 0;
   document.getElementById('commLogDetailOrderAmount').textContent = '\u00a5' + orderAmount.toFixed(2);
-  document.getElementById('commLogDetailFormula').textContent = '\u00a5' + orderAmount.toFixed(2) + ' \u00d7 ' + rate + '% = \u00a5' + earned.toFixed(2);
+  document.getElementById('commLogDetailFormula').textContent =
+    '\u00a5' + orderAmount.toFixed(2) + ' \u00d7 ' + rate + '% = \u00a5' + earned.toFixed(2);
   document.getElementById('commLogDetailEarned').textContent = '+' + earned.toFixed(2);
 
   // 状态标签
@@ -842,15 +915,23 @@ function openCommissionLogDetail(logId) {
   // 商品列表
   var itemsContainer = document.getElementById('commLogDetailItems');
   if (log.items && log.items.length > 0) {
-    itemsContainer.innerHTML = log.items.map(function (item) {
-      return (
-        '<div class="comm-log-detail-item">' +
-        '<div class="comm-log-detail-item-name">' + item.name + '</div>' +
-        '<div class="comm-log-detail-item-qty">\u00d7' + item.qty + '</div>' +
-        '<div class="comm-log-detail-item-price">\u00a5' + (item.price * item.qty).toFixed(2) + '</div>' +
-        '</div>'
-      );
-    }).join('');
+    itemsContainer.innerHTML = log.items
+      .map(function (item) {
+        return (
+          '<div class="comm-log-detail-item">' +
+          '<div class="comm-log-detail-item-name">' +
+          item.name +
+          '</div>' +
+          '<div class="comm-log-detail-item-qty">\u00d7' +
+          item.qty +
+          '</div>' +
+          '<div class="comm-log-detail-item-price">\u00a5' +
+          (item.price * item.qty).toFixed(2) +
+          '</div>' +
+          '</div>'
+        );
+      })
+      .join('');
   } else {
     itemsContainer.innerHTML = '<div class="commission-log-empty">暂无商品信息</div>';
   }

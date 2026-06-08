@@ -379,7 +379,7 @@
                 <div class="cart-bottom-total-label">合计</div>
                 <div class="cart-bottom-total-price"><span class="unit">¥</span><span id="cartTotalPrice">0</span></div>
               </div>
-              <button class="cart-bottom-btn" id="cartSubmitBtn" onclick="showToast('结算功能开发中…')">结算</button>
+              <button class="cart-bottom-btn" id="cartSubmitBtn" onclick="showToast('调用支付接口')">结算</button>
             </div>
           </div>
         </div>
@@ -2305,24 +2305,24 @@
           <span class="invite-item-role" id="inviteUserRole">用户</span>
           <div class="invite-user-detail-list">
             <div class="invite-user-detail-item">
-              <span class="invite-user-detail-label">加入时间</span>
+              <span class="invite-user-detail-label">等级</span>
+              <span class="invite-user-detail-value" id="inviteUserLevel">普通用户</span>
+            </div>
+            <div class="invite-user-detail-item">
+              <span class="invite-user-detail-label">注册日期</span>
               <span class="invite-user-detail-value" id="inviteUserJoinTime">-</span>
+            </div>
+            <div class="invite-user-detail-item">
+              <span class="invite-user-detail-label">团队人数</span>
+              <span class="invite-user-detail-value" id="inviteUserTeamSize">0人</span>
+            </div>
+            <div class="invite-user-detail-item">
+              <span class="invite-user-detail-label">消费状态</span>
+              <span class="invite-user-detail-value" id="inviteUserConsumeStatus">未消费</span>
             </div>
             <div class="invite-user-detail-item">
               <span class="invite-user-detail-label">状态</span>
               <span class="invite-user-detail-value" id="inviteUserStatus">-</span>
-            </div>
-            <div class="invite-user-detail-item">
-              <span class="invite-user-detail-label">浏览量</span>
-              <span class="invite-user-detail-value" id="inviteUserBrowseCount">0</span>
-            </div>
-            <div class="invite-user-detail-item">
-              <span class="invite-user-detail-label">最近浏览时间</span>
-              <span class="invite-user-detail-value" id="inviteUserBrowseTime">-</span>
-            </div>
-            <div class="invite-user-detail-item">
-              <span class="invite-user-detail-label">贡献收益</span>
-              <span class="invite-user-detail-value" id="inviteUserContribution">¥0.00</span>
             </div>
           </div>
         </div>
