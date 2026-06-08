@@ -2,36 +2,39 @@
 
 // ============ 积分配置 ============
 const POINTS_CONFIG = {
-  consumeRate: 1,         // 消费积分倍率：1元=1分
-  firstConsumeBonus: 50,   // 首次消费额外赠送积分
-  inviteBonus: 100,         // 邀请新用户获得积分
-  rechargeGift: {            // 充值送积分规则
-    100: 10,    // 充100送10积分
-    200: 25,    // 充200送25积分
-    500: 80,    // 充500送80积分
-    1000: 200   // 充1000送200积分
+  consumeRate: 1, // 消费积分倍率：1元=1分
+  firstConsumeBonus: 50, // 首次消费额外赠送积分
+  inviteBonus: 100, // 邀请新用户获得积分
+  rechargeGift: {
+    // 充值送积分规则
+    100: 10, // 充100送10积分
+    200: 25, // 充200送25积分
+    500: 80, // 充500送80积分
+    1000: 200, // 充1000送200积分
   },
-  memberMultiplier: {        // 会员积分倍率
+  memberMultiplier: {
+    // 会员积分倍率
     silver: 1.3,
     gold: 1.5,
-    diamond: 2.0   // 黑钻默认2.0，可自定义
+    diamond: 2.0, // 黑钻默认2.0，可自定义
   },
-  exchangeItems: [           // 可兑换商品/代金券
+  exchangeItems: [
+    // 可兑换商品/代金券
     { id: 'voucher_10', type: 'voucher', name: '代金券¥10', points: 100, value: 10, desc: '满99元可用' },
     { id: 'voucher_20', type: 'voucher', name: '代金券¥20', points: 180, value: 20, desc: '满199元可用' },
     { id: 'voucher_50', type: 'voucher', name: '代金券¥50', points: 400, value: 50, desc: '满399元可用' },
     { id: 'product_treat', type: 'product', name: '磨牙洁齿棒x2', points: 200, desc: '精选宠物零食', img: '🦴' },
     { id: 'product_snack', type: 'product', name: '深海鱼冻干', points: 400, desc: '高蛋白美味零食', img: '🐟' },
-    { id: 'product_cookie', type: 'product', name: '芝士训练饼干', points: 180, desc: '训练奖励必备', img: '🧀' }
-  ]
+    { id: 'product_cookie', type: 'product', name: '芝士训练饼干', points: 180, desc: '训练奖励必备', img: '🧀' },
+  ],
 };
 
 // ============ 用户积分数据 ============
 let userPoints = {
-  balance: 520,            // 当前积分余额
-  totalEarned: 720,        // 累计获得积分
-  totalUsed: 200,           // 累计使用积分
-  firstConsumeDone: false   // 是否已首次消费
+  balance: 520, // 当前积分余额
+  totalEarned: 720, // 累计获得积分
+  totalUsed: 200, // 累计使用积分
+  firstConsumeDone: false, // 是否已首次消费
 };
 
 // ============ 积分明细日志 ============
@@ -42,7 +45,7 @@ let pointsLog = [
   { id: 4, type: 'consume', title: '消费获得', points: 89, orderId: 'OD20260520004', time: '2026-05-20 16:50', balance: 351 },
   { id: 5, type: 'exchange', title: '兑换代金券¥10', points: -100, time: '2026-05-18 12:00', balance: 262 },
   { id: 6, type: 'invite', title: '邀请好友奖励', points: 100, time: '2026-05-15 08:20', balance: 362 },
-  { id: 7, type: 'register', title: '新用户注册奖励', points: 50, time: '2026-05-10 10:00', balance: 262 }
+  { id: 7, type: 'register', title: '新用户注册奖励', points: 50, time: '2026-05-10 10:00', balance: 262 },
 ];
 
 // ============ 获取会员积分倍率 ============
@@ -67,7 +70,7 @@ function addPointsLog(type, title, points, extra = {}) {
     points,
     time: new Date().toLocaleString('zh-CN', { hour12: false }),
     balance: userPoints.balance + points,
-    ...extra
+    ...extra,
   };
   pointsLog.unshift(log);
 
@@ -112,7 +115,9 @@ function earnRechargePoints(amount) {
 
   // 充值赠送积分
   let giftPoints = 0;
-  const rechargeGiftKeys = Object.keys(POINTS_CONFIG.rechargeGift).map(Number).sort((a, b) => b - a);
+  const rechargeGiftKeys = Object.keys(POINTS_CONFIG.rechargeGift)
+    .map(Number)
+    .sort((a, b) => b - a);
   for (const threshold of rechargeGiftKeys) {
     if (amount >= threshold) {
       giftPoints = POINTS_CONFIG.rechargeGift[threshold];
@@ -128,7 +133,7 @@ function earnRechargePoints(amount) {
 
 // ============ 积分兑换 ============
 function exchangeWithPoints(itemId) {
-  const item = POINTS_CONFIG.exchangeItems.find(i => i.id === itemId);
+  const item = POINTS_CONFIG.exchangeItems.find((i) => i.id === itemId);
   if (!item) return showToast('兑换商品不存在');
 
   if (userPoints.balance < item.points) {
@@ -209,7 +214,7 @@ function renderPointsLog() {
     first_consume: '🎁',
     invite: '👥',
     register: '🎉',
-    exchange: '🎁'
+    exchange: '🎁',
   };
 
   const typeLabels = {
@@ -218,10 +223,12 @@ function renderPointsLog() {
     first_consume: '首次消费奖励',
     invite: '邀请奖励',
     register: '注册奖励',
-    exchange: '积分兑换'
+    exchange: '积分兑换',
   };
 
-  logList.innerHTML = pointsLog.map(log => `
+  logList.innerHTML = pointsLog
+    .map(
+      (log) => `
     <div class="points-log-item">
       <div class="points-log-icon">${typeIcons[log.type] || '📋'}</div>
       <div class="points-log-info">
@@ -232,7 +239,9 @@ function renderPointsLog() {
         ${log.points > 0 ? '+' : ''}${log.points}
       </div>
     </div>
-  `).join('');
+  `,
+    )
+    .join('');
 }
 
 // ============ 渲染积分兑换商品 ============
@@ -240,7 +249,9 @@ function renderPointsExchange() {
   const exchangeList = document.getElementById('pointsExchangeList');
   if (!exchangeList) return;
 
-  exchangeList.innerHTML = POINTS_CONFIG.exchangeItems.map(item => `
+  exchangeList.innerHTML = POINTS_CONFIG.exchangeItems
+    .map(
+      (item) => `
     <div class="points-exchange-item ${userPoints.balance < item.points ? 'disabled' : ''}" onclick="${userPoints.balance >= item.points ? `confirmExchange('${item.id}')` : ''}">
       <div class="points-exchange-img">${item.img || '🎁'}</div>
       <div class="points-exchange-info">
@@ -249,12 +260,14 @@ function renderPointsExchange() {
       </div>
       <div class="points-exchange-points">${item.points}积分</div>
     </div>
-  `).join('');
+  `,
+    )
+    .join('');
 }
 
 // ============ 确认兑换 ============
 function confirmExchange(itemId) {
-  const item = POINTS_CONFIG.exchangeItems.find(i => i.id === itemId);
+  const item = POINTS_CONFIG.exchangeItems.find((i) => i.id === itemId);
   if (!item) return;
 
   if (userPoints.balance < item.points) {
@@ -314,7 +327,7 @@ function initPointsSystem() {
 }
 
 // 在页面加载时初始化
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   // 延迟初始化，确保其他组件先加载
   setTimeout(initPointsSystem, 200);
 });
