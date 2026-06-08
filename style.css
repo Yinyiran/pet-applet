@@ -1401,6 +1401,86 @@ body {
   padding: 0 4px;
 }
 
+/* ========== 购物车地址栏 ========== */
+.cart-address-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  padding: 12px 14px;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: opacity var(--transition);
+}
+.cart-address-bar:active {
+  opacity: 0.85;
+}
+.cart-address-bar-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.cart-address-bar-info {
+  flex: 1;
+  min-width: 0;
+}
+.cart-address-bar-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cart-address-bar-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.cart-address-bar-name span {
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-left: 6px;
+  font-size: 13px;
+}
+.cart-address-bar-detail {
+  font-size: 11px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cart-address-bar-arrow {
+  font-size: 18px;
+  color: #ccc;
+  flex-shrink: 0;
+}
+
+/* 地址列表弹出卡片 -- 选中状态 */
+.address-popup-card.selected {
+  border-color: var(--primary);
+  background: #fff8f2;
+  position: relative;
+}
+.address-popup-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ========== MAIN CONTENT ========== */
 .main-content {
   position: relative;
@@ -5469,7 +5549,9 @@ body {
 .member-level-card.active {
   position: relative;
   border-width: 2.5px;
-  box-shadow: 0 0 0 1px var(--primary), 0 2px 12px rgba(249, 115, 22, 0.15);
+  box-shadow:
+    0 0 0 1px var(--primary),
+    0 2px 12px rgba(249, 115, 22, 0.15);
 }
 .member-level-card.active::after {
   content: '当前等级';

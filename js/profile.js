@@ -297,11 +297,19 @@ function openAddressListPopup() {
 function closeAddressListPopup(e) {
   if (e && e.target !== e.currentTarget) return;
   document.getElementById('addressListOverlay').classList.add('hidden');
+  window._cartAddressMode = false;
 }
 
 function renderAddressListPopupBody() {
   const body = document.getElementById('addressListPopupBody');
   const empty = document.getElementById('addressListPopupEmpty');
+  const titleEl = document.querySelector('.address-list-title');
+  const isCartMode = window._cartAddressMode === true;
+
+  // 切换标题
+  if (titleEl) {
+    titleEl.textContent = isCartMode ? '📍 选择收货地址' : '📍 收货地址';
+  }
 
   if (profileAddresses.length === 0) {
     body.innerHTML = '';
@@ -310,20 +318,29 @@ function renderAddressListPopupBody() {
     empty.classList.add('hidden');
     body.innerHTML = profileAddresses
       .map(
-        (a) => `
-      <div class="address-popup-card${a.isDefault ? ' default' : ''}">
+        (a) => {
+          const isSelected = isCartMode && typeof cartSelectedAddressId !== 'undefined' && cartSelectedAddressId === a.id;
+          const cardClass = [
+            'address-popup-card',
+            a.isDefault ? 'default' : '',
+            isSelected ? 'selected' : '',
+          ].filter(Boolean).join(' ');
+
+          return `
+      <div class="${cardClass}" ${isCartMode ? `onclick="selectCartAddress(${a.id})"` : ''}>
         <div class="address-popup-card-top">
           <div class="address-popup-card-name">${a.name} <span>${a.phone}</span></div>
           ${a.isDefault ? '<span class="address-popup-default-tag">默认</span>' : ''}
         </div>
         <div class="address-popup-card-text">${a.region} ${a.detail}</div>
-        <div class="address-popup-card-actions">
+        <div class="address-popup-card-actions" ${isCartMode ? 'onclick="event.stopPropagation()"' : ''}>
           <span onclick="editAddress(${a.id})">✏️ 编辑</span>
           <span onclick="deleteAddressInPopup(${a.id})">🗑️ 删除</span>
           ${!a.isDefault ? `<span onclick="setDefaultInPopup(${a.id})">⭐ 设为默认</span>` : ''}
         </div>
       </div>
-    `,
+    `;
+        },
       )
       .join('');
   }
@@ -332,8 +349,16 @@ function renderAddressListPopupBody() {
 
 function deleteAddressInPopup(id) {
   profileAddresses = profileAddresses.filter((a) => a.id !== id);
+  // 如果删除的是购物车选中的地址，清除选择
+  if (typeof cartSelectedAddressId !== 'undefined' && cartSelectedAddressId === id) {
+    cartSelectedAddressId = null;
+  }
   renderAddressListPopupBody();
   updateAddrCountBadge();
+  // 同步刷新购物车地址栏
+  if (typeof renderCartAddress === 'function') {
+    renderCartAddress();
+  }
   showToast('地址已删除');
 }
 
@@ -426,6 +451,10 @@ function saveAddress() {
   closeAddressForm();
   renderAddressListPopupBody();
   updateAddrCountBadge();
+  // 同步刷新购物车地址栏
+  if (typeof renderCartAddress === 'function') {
+    renderCartAddress();
+  }
   showToast(editAddressId ? '地址已更新' : '地址添加成功');
   editAddressId = null;
 }

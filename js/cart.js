@@ -5,6 +5,9 @@ let cartItems = [
   { emoji: '🥩', name: '原切牛肉粒', price: 32.9, qty: 1, checked: true },
 ];
 
+// 购物车选中的地址ID（null 表示未选择）
+let cartSelectedAddressId = null;
+
 // 初始化购物车角标
 updateCartBadge();
 
@@ -71,6 +74,9 @@ function renderCart() {
   contentEl.style.display = 'block';
   bottomEl.classList.remove('hidden');
 
+  // 渲染地址栏
+  renderCartAddress();
+
   const allChecked = cartItems.every((i) => i.checked);
   document.getElementById('cartCheckAll2').checked = allChecked;
 
@@ -116,4 +122,54 @@ function addFamilyBucket() {
 
   var cartNav = document.querySelector('.nav-item[onclick*="cart"]');
   if (cartNav) switchTab('cart', cartNav);
+}
+
+// ============ 购物车地址选择 ============
+
+// 渲染购物车顶部地址栏
+function renderCartAddress() {
+  const infoEl = document.getElementById('cartAddressInfo');
+  if (!infoEl) return;
+
+  // 自动选择默认地址
+  if (!cartSelectedAddressId && typeof profileAddresses !== 'undefined' && profileAddresses.length > 0) {
+    const defaultAddr = profileAddresses.find((a) => a.isDefault);
+    cartSelectedAddressId = defaultAddr ? defaultAddr.id : profileAddresses[0].id;
+  }
+
+  if (cartSelectedAddressId && typeof profileAddresses !== 'undefined') {
+    const addr = profileAddresses.find((a) => a.id === cartSelectedAddressId);
+    if (addr) {
+      infoEl.innerHTML = `
+        <div class="cart-address-bar-name">${addr.name} <span>${addr.phone}</span></div>
+        <div class="cart-address-bar-detail">${addr.region} ${addr.detail}</div>
+      `;
+      return;
+    }
+  }
+
+  // 无地址
+  cartSelectedAddressId = null;
+  infoEl.innerHTML = '<div class="cart-address-bar-text">请选择收货地址</div>';
+}
+
+// 从购物车打开地址列表（选择模式）
+function openCartAddressList() {
+  if (typeof profileAddresses === 'undefined') return;
+  window._cartAddressMode = true;
+  if (typeof openAddressListPopup === 'function') {
+    openAddressListPopup();
+  }
+}
+
+// 在地址列表中选择地址（供地址卡片点击调用）
+function selectCartAddress(id) {
+  cartSelectedAddressId = id;
+  renderCartAddress();
+  if (typeof closeAddressListPopup === 'function') {
+    closeAddressListPopup();
+  }
+  if (typeof renderAddressListPopupBody === 'function') {
+    window._cartAddressMode = false;
+  }
 }
