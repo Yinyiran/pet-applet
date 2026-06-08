@@ -5183,6 +5183,343 @@ body {
   height: 16px;
 }
 
+/* ========== 充值管理 - 消费明细 ========== */
+.consumption-section {
+  padding: 0 16px;
+  margin-top: 20px;
+}
+.consumption-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.consumption-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.consumption-section-count {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+.consumption-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.consumption-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 0;
+}
+.consumption-empty.hidden {
+  display: none;
+}
+.consumption-empty-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+.consumption-empty-text {
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* 消费明细单项 */
+.consumption-item {
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid transparent;
+  transition: border-color var(--transition);
+}
+.consumption-item.mixed-pay {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  box-shadow: 0 1px 4px rgba(245, 158, 11, 0.12);
+}
+.consumption-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.consumption-item-id {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+.consumption-item-type {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.consumption-item-type.refund {
+  background: #fce4ec;
+  color: #c62828;
+}
+.consumption-item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.consumption-item-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.consumption-item-total {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--accent);
+}
+.consumption-item-total .unit {
+  font-size: 11px;
+  font-weight: 600;
+}
+.consumption-item-time {
+  font-size: 11px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+.consumption-item-status {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.consumption-item-status.cancelled {
+  background: #f5f5f5;
+  color: #9e9e9e;
+}
+
+/* 支付明细行 */
+.consumption-item-pay-detail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed #e8e3dc;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.consumption-item-pay-detail .pay-method {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 500;
+}
+.consumption-item-pay-detail .pay-method.balance {
+  color: var(--primary);
+}
+.consumption-item-pay-detail .pay-method.wechat {
+  color: #07c160;
+}
+.consumption-item-pay-detail .pay-sep {
+  color: var(--text-light);
+  font-size: 10px;
+}
+
+/* 混合支付标识 */
+.consumption-mixed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  color: #fff;
+  white-space: nowrap;
+  animation: mixedPulse 2s ease-in-out infinite;
+}
+@keyframes mixedPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+.consumption-mixed-badge svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ========== 消费记录 / 充值记录 Tab 切换 ========== */
+.consumption-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 14px;
+  background: #f0ece6;
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  overflow: hidden;
+}
+.consumption-tab {
+  flex: 1;
+  text-align: center;
+  padding: 9px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+.consumption-tab.active {
+  background: #fff;
+  color: var(--primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+.consumption-panel {
+  /* default visible */
+}
+.consumption-panel.hidden {
+  display: none;
+}
+
+/* ========== 充值记录 - 累计充值卡片 ========== */
+.recharge-total-card {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+.recharge-total-card::before {
+  content: '';
+  position: absolute;
+  top: -24px;
+  right: -24px;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+.recharge-total-card::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: -16px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+.recharge-total-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #7c2d12;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.recharge-total-amount {
+  font-size: 28px;
+  font-weight: 800;
+  color: #7c2d12;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== 充值记录列表项 ========== */
+.recharge-log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.recharge-log-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-sm);
+}
+.recharge-log-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.recharge-log-icon.wechat {
+  background: #e8f5e9;
+  color: #07c160;
+}
+.recharge-log-icon.balance {
+  background: #fff3e0;
+  color: #f97316;
+}
+.recharge-log-icon.card {
+  background: #e3f2fd;
+  color: #1e88e5;
+}
+.recharge-log-body {
+  flex: 1;
+  min-width: 0;
+}
+.recharge-log-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.recharge-log-meta {
+  font-size: 11px;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.recharge-log-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+.recharge-log-amount {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--success);
+}
+.recharge-log-gift {
+  font-size: 10px;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+.recharge-log-gift span {
+  color: var(--accent);
+  font-weight: 600;
+}
+
 /* ========== 订单Tabs ========== */
 .profile-order-view-all {
   font-size: 11px;
@@ -6326,14 +6663,14 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   background: #faf8f5;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
 }
 .pet-popup-card-icon {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
   border-radius: 50%;
   display: flex;
@@ -6377,7 +6714,7 @@ body {
 }
 .pet-popup-edit,
 .pet-popup-del {
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   opacity: 0.6;
   transition: opacity var(--transition);

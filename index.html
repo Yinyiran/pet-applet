@@ -1380,10 +1380,10 @@
               <span class="profile-menu-arrow">›</span>
             </div>
 
-            <!-- ========== 账户充值 ========== -->
+            <!-- ========== 充值管理 ========== -->
             <div class="profile-menu-item" onclick="openRechargeDetail()">
               <span class="profile-menu-icon">💰</span>
-              <span class="profile-menu-label">账户充值</span>
+              <span class="profile-menu-label">充值管理</span>
               <span class="profile-menu-arrow">›</span>
             </div>
 
@@ -1757,7 +1757,7 @@
         <div class="recharge-detail-sheet" onclick="event.stopPropagation()">
           <div class="pet-form-handle"></div>
           <div class="recharge-detail-header">
-            <div class="recharge-detail-title">💰 账户充值</div>
+            <div class="recharge-detail-title">💰 充值管理</div>
             <div class="recharge-detail-sub">多充多送，会员升级更划算</div>
             <div class="recharge-detail-balance" id="rechargeDetailBalance">当前余额：¥128.50</div>
           </div>
@@ -1789,6 +1789,46 @@
               自定义金额
             </div>
           </div>
+
+          <!-- 消费记录 / 充值记录 -->
+          <div class="consumption-section" id="consumptionSection">
+            <!-- Tab 切换栏 -->
+            <div class="consumption-tabs">
+              <div class="consumption-tab active" id="consumptionTabConsume" onclick="switchConsumptionTab('consume')">消费记录</div>
+              <div class="consumption-tab" id="consumptionTabRecharge" onclick="switchConsumptionTab('recharge')">充值记录</div>
+            </div>
+
+            <!-- 消费记录面板 -->
+            <div class="consumption-panel" id="consumptionPanelConsume">
+              <div class="consumption-section-header">
+                <span class="consumption-section-title">📋 消费记录</span>
+                <span class="consumption-section-count" id="consumptionCount">共 0 笔</span>
+              </div>
+              <div class="consumption-list" id="consumptionList">
+                <!-- JS 动态渲染 -->
+              </div>
+              <div class="consumption-empty hidden" id="consumptionEmpty">
+                <span class="consumption-empty-icon">📭</span>
+                <div class="consumption-empty-text">暂无消费记录</div>
+              </div>
+            </div>
+
+            <!-- 充值记录面板 -->
+            <div class="consumption-panel hidden" id="consumptionPanelRecharge">
+              <div class="recharge-total-card">
+                <div class="recharge-total-label">累计充值</div>
+                <div class="recharge-total-amount" id="rechargeTotalAmount">¥0.00</div>
+              </div>
+              <div class="recharge-log-list" id="rechargeLogList">
+                <!-- JS 动态渲染 -->
+              </div>
+              <div class="consumption-empty hidden" id="rechargeLogEmpty">
+                <span class="consumption-empty-icon">📭</span>
+                <div class="consumption-empty-text">暂无充值记录</div>
+              </div>
+            </div>
+          </div>
+
           <button class="order-list-close-btn" onclick="closeRechargeDetail()">关闭</button>
         </div>
       </div>
@@ -2096,8 +2136,15 @@
 
         <!-- 等级卡片 -->
         <div class="commission-tier-card" id="commissionTierCard">
-          <div class="commission-tier-badge" id="commTierBadge">🌟 梵优合伙人</div>
-          <div class="commission-tier-label" id="commTierLabel"></div>
+          <div class="tier-card-glow"></div>
+          <div class="tier-card-header">
+            <span class="tier-card-icon" id="tierCardIcon">🌟</span>
+            <div class="tier-card-header-text">
+              <span class="tier-card-name" id="tierCardName">梵优合伙人</span>
+              <span class="tier-card-subtitle" id="tierCardSubtitle"></span>
+            </div>
+            <span class="tier-card-total-rate" id="tierCardTotalRate">9%</span>
+          </div>
         </div>
 
         <!-- 收益统计 -->

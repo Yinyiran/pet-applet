@@ -426,15 +426,17 @@ function renderTierCard(cfg) {
   else colorClass = 'diamond';
   card.className = 'commission-tier-card ' + colorClass;
 
-  // 等级标记
-  const badge = document.getElementById('commTierBadge');
-  let rate = cfg.rates.reduce((acc, cur) => acc + cur, 0);
-  if (badge) badge.innerHTML = cfg.icon + ' ' + cfg.name + `<span class="commission-tier-rate-pct">佣金：${rate}%</span>`;
-
-  // 返佣比例
-  const labelEl = document.getElementById('commTierLabel');
-  if (labelEl) {
-    labelEl.innerHTML = `<div class="commission-tier-rate-label">${cfg.rateLabels.join('、')}</div>`;
+  // 头部：图标 + 名称 + 总佣金率
+  const iconEl = document.getElementById('tierCardIcon');
+  const nameEl = document.getElementById('tierCardName');
+  const subtitleEl = document.getElementById('tierCardSubtitle');
+  const totalRateEl = document.getElementById('tierCardTotalRate');
+  if (iconEl) iconEl.textContent = cfg.icon;
+  if (nameEl) nameEl.textContent = cfg.name;
+  const totalRate = cfg.rates.reduce((acc, cur) => acc + cur, 0);
+  if (totalRateEl) totalRateEl.textContent = totalRate + '%';
+  if (subtitleEl) {
+    subtitleEl.textContent = cfg.rateLabels.join(' + ');
   }
 }
 

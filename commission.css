@@ -95,56 +95,127 @@
   background: #e0d8ce;
 }
 
-/* ========== 等级卡片（两行布局） ========== */
+/* ========== 等级卡片 ========== */
 .commission-tier-card {
   margin: 0 16px 14px;
-  background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
   border-radius: var(--radius-lg);
-  padding: 14px 16px;
+  padding: 18px 16px 14px;
   position: relative;
   overflow: hidden;
-}
-.commission-tier-card.gold {
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-}
-.commission-tier-card.diamond {
-  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-}
-.commission-tier-rate-pct {
-  margin-left: 20px;
-  color: #ea580c;
-}
-.commission-tier-rate-label {
-  margin-left: 28px;
-  margin-top: 10px;
-  font-size: 14px;
-  color: var(--text-light);
+  /* default (orange/合伙人) */
+  background: linear-gradient(145deg, #fff7ed 0%, #ffedd5 40%, #fed7aa 100%);
+  border: 1.5px solid rgba(249, 115, 22, 0.15);
+  box-shadow: 0 2px 12px rgba(249, 115, 22, 0.08);
 }
 
-/* 主标题行：类型 + 提佣百分比 */
-.commission-tier-main {
+/* ---- gold (梵优主理人) ---- */
+.commission-tier-card.gold {
+  background: linear-gradient(150deg, #fefce8 0%, #fffbeb 25%, #fef3c7 50%, #fde68a 85%, #fcd34d 100%);
+  border: 1.5px solid rgba(217, 119, 6, 0.25);
+  box-shadow:
+    0 2px 16px rgba(217, 119, 6, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+/* 金色光晕 */
+.commission-tier-card.gold .tier-card-glow {
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.35) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+/* 金色装饰短线 */
+.commission-tier-card.gold::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.5), transparent);
+  border-radius: 1px;
+}
+
+/* ---- diamond (分公司) ---- */
+.commission-tier-card.diamond {
+  background: linear-gradient(145deg, #eff6ff 0%, #e0f2fe 40%, #bae6fd 100%);
+  border: 1.5px solid rgba(59, 130, 246, 0.2);
+  box-shadow:
+    0 2px 16px rgba(59, 130, 246, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.commission-tier-card.diamond::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.5), transparent);
+  border-radius: 1px;
+}
+
+/* ---- 卡片头部 ---- */
+.tier-card-glow {
+  display: none;
+}
+.tier-card-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
+  gap: 10px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
 }
-.commission-tier-type {
-  font-size: 16px;
+.tier-card-icon {
+  font-size: 32px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+.tier-card-header-text {
+  flex: 1;
+  min-width: 0;
+}
+.tier-card-name {
+  display: block;
+  font-size: 17px;
   font-weight: 700;
-  color: #7c2d12;
+  color: #78350f;
+  letter-spacing: 0.3px;
 }
-.commission-tier-percentage {
-  font-size: 24px;
+.commission-tier-card.gold .tier-card-name {
+  color: #78350f;
+}
+.commission-tier-card.diamond .tier-card-name {
+  color: #1e3a5f;
+}
+.tier-card-subtitle {
+  display: block;
+  font-size: 13px;
+  color: #a16207;
+  margin-top: 4px;
+}
+.commission-tier-card.diamond .tier-card-subtitle {
+  color: #3b82f6;
+}
+.tier-card-total-rate {
+  font-size: 30px;
   font-weight: 800;
-  color: var(--primary);
+  color: #c2410c;
   line-height: 1;
+  flex-shrink: 0;
 }
-
-/* 副标题：提佣构成说明 */
-.commission-tier-desc {
-  font-size: 12px;
-  color: #9a3412;
-  line-height: 1.4;
+.commission-tier-card.gold .tier-card-total-rate {
+  color: #b45309;
+  background: linear-gradient(135deg, #b45309, #d97706);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.commission-tier-card.diamond .tier-card-total-rate {
+  color: #1d4ed8;
 }
 
 /* ========== 收益统计 ========== */

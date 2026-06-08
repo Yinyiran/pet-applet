@@ -323,16 +323,11 @@ function renderAddressListPopupBody() {
   } else {
     empty.classList.add('hidden');
     body.innerHTML = profileAddresses
-      .map(
-        (a) => {
-          const isSelected = isCartMode && typeof cartSelectedAddressId !== 'undefined' && cartSelectedAddressId === a.id;
-          const cardClass = [
-            'address-popup-card',
-            a.isDefault ? 'default' : '',
-            isSelected ? 'selected' : '',
-          ].filter(Boolean).join(' ');
+      .map((a) => {
+        const isSelected = isCartMode && typeof cartSelectedAddressId !== 'undefined' && cartSelectedAddressId === a.id;
+        const cardClass = ['address-popup-card', a.isDefault ? 'default' : '', isSelected ? 'selected' : ''].filter(Boolean).join(' ');
 
-          return `
+        return `
       <div class="${cardClass}" ${isCartMode ? `onclick="selectCartAddress(${a.id})"` : ''}>
         <div class="address-popup-card-top">
           <div class="address-popup-card-name">${a.name} <span>${a.phone}</span></div>
@@ -346,8 +341,7 @@ function renderAddressListPopupBody() {
         </div>
       </div>
     `;
-        },
-      )
+      })
       .join('');
   }
   updateAddrCountBadge();
@@ -525,7 +519,7 @@ function openMemberDetail() {
   document.getElementById('memberDetailOverlay').classList.remove('hidden');
   // Highlight current member level card
   const cards = document.querySelectorAll('.member-level-card');
-  cards.forEach(card => card.classList.remove('active'));
+  cards.forEach((card) => card.classList.remove('active'));
   const currentCard = document.querySelector('.member-level-card.' + userProfile.memberLevel);
   if (currentCard) currentCard.classList.add('active');
 }
@@ -550,9 +544,221 @@ function updateMemberLevel() {
   else userProfile.memberLevel = 'silver';
 }
 
-// ============ 账户充值弹窗 ============
+// ============ 充值管理弹窗 ============
+// 当前激活的 tab: 'consume' | 'recharge'
+let currentAccountTab = 'consume';
+
+// 消费记录数据
+const consumptionLog = [
+  {
+    id: 'CS20260608001',
+    type: '商品购买',
+    item: '高蛋白鸡肉冻干粮 ×1',
+    total: 89.00,
+    balancePay: 50.00,
+    wechatPay: 39.00,
+    isMixed: true,
+    time: '2026-06-08 14:30',
+    status: '已完成',
+  },
+  {
+    id: 'CS20260607002',
+    type: '商品购买',
+    item: '深海三文鱼美毛配方 ×1',
+    total: 108.00,
+    balancePay: 108.00,
+    wechatPay: 0,
+    isMixed: false,
+    time: '2026-06-07 09:15',
+    status: '已完成',
+  },
+  {
+    id: 'CS20260605003',
+    type: '商品购买',
+    item: '关节养护氨糖颗粒 ×2',
+    total: 136.00,
+    balancePay: 36.00,
+    wechatPay: 100.00,
+    isMixed: true,
+    time: '2026-06-05 18:42',
+    status: '已完成',
+  },
+  {
+    id: 'CS20260603004',
+    type: '退款',
+    item: '零食全家桶（退款）',
+    total: -89.00,
+    balancePay: -50.00,
+    wechatPay: -39.00,
+    isMixed: true,
+    time: '2026-06-03 11:20',
+    status: '已退款',
+  },
+  {
+    id: 'CS20260601005',
+    type: '商品购买',
+    item: '澳洲进口牛肉高能粮 ×1',
+    total: 136.00,
+    balancePay: 136.00,
+    wechatPay: 0,
+    isMixed: false,
+    time: '2026-06-01 15:00',
+    status: '已完成',
+  },
+];
+
+// 充值记录数据
+const rechargeLog = [
+  { id: 'RC20260608001', method: 'wechat', methodLabel: '微信支付', amount: 500, gift: 40, time: '2026-06-08 20:15', status: '已到账' },
+  { id: 'RC20260606001', method: 'wechat', methodLabel: '微信支付', amount: 300, gift: 15, time: '2026-06-06 12:30', status: '已到账' },
+  { id: 'RC20260603001', method: 'balance', methodLabel: '余额充值', amount: 100, gift: 0, time: '2026-06-03 09:00', status: '已到账' },
+  { id: 'RC20260528001', method: 'card', methodLabel: '银行卡', amount: 1000, gift: 100, time: '2026-05-28 16:45', status: '已到账' },
+  { id: 'RC20260520001', method: 'wechat', methodLabel: '微信支付', amount: 200, gift: 10, time: '2026-05-20 10:20', status: '已到账' },
+];
+
+// 充值方式图标映射
+function getRechargeIcon(method) {
+  if (method === 'wechat') return '<span class="recharge-log-icon wechat">💚</span>';
+  if (method === 'balance') return '<span class="recharge-log-icon balance">💳</span>';
+  return '<span class="recharge-log-icon card">🏦</span>';
+}
+
+function renderRechargeLog() {
+  const listEl = document.getElementById('rechargeLogList');
+  const emptyEl = document.getElementById('rechargeLogEmpty');
+  const totalEl = document.getElementById('rechargeTotalAmount');
+
+  if (!listEl || !emptyEl || !totalEl) return;
+
+  // 累计充值金额
+  const totalRecharge = rechargeLog.reduce((s, r) => s + r.amount + r.gift, 0);
+  totalEl.textContent = `¥${totalRecharge.toFixed(2)}`;
+
+  if (rechargeLog.length === 0) {
+    listEl.style.display = 'none';
+    emptyEl.classList.remove('hidden');
+    return;
+  }
+
+  emptyEl.classList.add('hidden');
+  listEl.style.display = '';
+
+  listEl.innerHTML = rechargeLog
+    .map(
+      (r) => `
+    <div class="recharge-log-item">
+      ${getRechargeIcon(r.method)}
+      <div class="recharge-log-body">
+        <div class="recharge-log-title">${r.methodLabel}</div>
+        <div class="recharge-log-meta">
+          <span>${r.id}</span>
+          <span>${r.time}</span>
+        </div>
+      </div>
+      <div class="recharge-log-right">
+        <div class="recharge-log-amount">+¥${r.amount.toFixed(2)}</div>
+        ${r.gift > 0 ? `<div class="recharge-log-gift">赠 <span>¥${r.gift.toFixed(2)}</span></div>` : ''}
+      </div>
+    </div>`,
+    )
+    .join('');
+}
+
+function renderConsumptionList() {
+  const listEl = document.getElementById('consumptionList');
+  const emptyEl = document.getElementById('consumptionEmpty');
+  const countEl = document.getElementById('consumptionCount');
+
+  if (!listEl || !emptyEl || !countEl) return;
+
+  countEl.textContent = `共 ${consumptionLog.length} 笔`;
+
+  if (consumptionLog.length === 0) {
+    emptyEl.classList.remove('hidden');
+    listEl.style.display = 'none';
+    return;
+  }
+
+  emptyEl.classList.add('hidden');
+  listEl.style.display = '';
+
+  listEl.innerHTML = consumptionLog
+    .map(
+      (o) => {
+        const isRefund = o.type === '退款';
+        const totalSign = o.total < 0 ? '-' : '';
+        const absTotal = Math.abs(o.total);
+        const absBalance = Math.abs(o.balancePay);
+        const absWechat = Math.abs(o.wechatPay);
+
+        // 支付明细行
+        let payDetailHTML = '';
+        if (o.isMixed) {
+          payDetailHTML = `
+            <div class="consumption-item-pay-detail">
+              <span class="consumption-mixed-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+                混合支付
+              </span>
+              <span class="pay-sep">·</span>
+              <span class="pay-method balance">💳 余额 ¥${absBalance.toFixed(2)}</span>
+              <span class="pay-sep">+</span>
+              <span class="pay-method wechat">💚 微信 ¥${absWechat.toFixed(2)}</span>
+            </div>`;
+        } else if (o.wechatPay > 0) {
+          payDetailHTML = `
+            <div class="consumption-item-pay-detail">
+              <span class="pay-method wechat">💚 微信支付 ¥${absWechat.toFixed(2)}</span>
+            </div>`;
+        } else {
+          payDetailHTML = `
+            <div class="consumption-item-pay-detail">
+              <span class="pay-method balance">💳 余额支付 ¥${absBalance.toFixed(2)}</span>
+            </div>`;
+        }
+
+        return `
+          <div class="consumption-item${o.isMixed ? ' mixed-pay' : ''}">
+            <div class="consumption-item-header">
+              <span class="consumption-item-id">${o.id}</span>
+              <span class="consumption-item-type${isRefund ? ' refund' : ''}">${o.type}</span>
+            </div>
+            <div class="consumption-item-name">${o.item}</div>
+            <div class="consumption-item-bottom">
+              <div class="consumption-item-total"><span class="unit">${totalSign}¥</span>${absTotal.toFixed(2)}</div>
+              <span class="consumption-item-time">${o.time}</span>
+              <span class="consumption-item-status${isRefund ? ' cancelled' : ''}">${o.status}</span>
+            </div>
+            ${payDetailHTML}
+          </div>`;
+      },
+    )
+    .join('');
+}
+
+function switchConsumptionTab(tab) {
+  currentAccountTab = tab;
+
+  // Tab 激活态
+  document.getElementById('consumptionTabConsume').classList.toggle('active', tab === 'consume');
+  document.getElementById('consumptionTabRecharge').classList.toggle('active', tab === 'recharge');
+
+  // 面板显隐
+  document.getElementById('consumptionPanelConsume').classList.toggle('hidden', tab !== 'consume');
+  document.getElementById('consumptionPanelRecharge').classList.toggle('hidden', tab !== 'recharge');
+
+  // 切换到充值记录时渲染一次
+  if (tab === 'recharge') {
+    renderRechargeLog();
+  }
+}
+
 function openRechargeDetail() {
   document.getElementById('rechargeDetailBalance').textContent = `当前余额：¥${userProfile.balance.toFixed(2)}`;
+  renderConsumptionList();
+  renderRechargeLog();
+  // 默认显示消费记录 tab
+  switchConsumptionTab('consume');
   document.getElementById('rechargeDetailOverlay').classList.remove('hidden');
 }
 
