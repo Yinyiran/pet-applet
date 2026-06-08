@@ -469,7 +469,7 @@ function updateOrderCountBadge() {
 function renderMemberInfo() {
   const config = {
     silver: { icon: '🥈', name: '银牌会员', next: '金牌会员', threshold: 1000, color: '#9e9e9e' },
-    gold: { icon: '🥇', name: '金牌会员', next: '黑钻会员', threshold: 5000, color: '#f5a623' },
+    gold: { icon: '🥇', name: '金牌会员', next: '黑钻会员', threshold: 3000, color: '#f5a623' },
     diamond: { icon: '💎', name: '黑钻会员', next: null, threshold: Infinity, color: '#7c4dff' },
   };
 
@@ -486,6 +486,11 @@ function renderMemberInfo() {
 
 function openMemberDetail() {
   document.getElementById('memberDetailOverlay').classList.remove('hidden');
+  // Highlight current member level card
+  const cards = document.querySelectorAll('.member-level-card');
+  cards.forEach(card => card.classList.remove('active'));
+  const currentCard = document.querySelector('.member-level-card.' + userProfile.memberLevel);
+  if (currentCard) currentCard.classList.add('active');
 }
 
 function closeMemberDetail(e) {
@@ -503,7 +508,7 @@ function handleRecharge(amount) {
 
 function updateMemberLevel() {
   const spent = userProfile.totalSpent;
-  if (spent >= 5000) userProfile.memberLevel = 'diamond';
+  if (spent >= 3000) userProfile.memberLevel = 'diamond';
   else if (spent >= 1000) userProfile.memberLevel = 'gold';
   else userProfile.memberLevel = 'silver';
 }

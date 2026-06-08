@@ -14,9 +14,9 @@ const POINTS_CONFIG = {
   },
   memberMultiplier: {
     // 会员积分倍率
-    silver: 1.3,
-    gold: 1.5,
-    diamond: 2.0, // 黑钻默认2.0，可自定义
+    silver: 1.1,
+    gold: 1.3,
+    diamond: 1.5,
   },
   exchangeItems: [
     // 可兑换商品/代金券
