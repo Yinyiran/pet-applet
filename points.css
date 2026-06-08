@@ -65,6 +65,36 @@
   background: #f0ece8;
 }
 
+/* 积分内联卡片容器（我的页中显示） */
+.points-inline-card {
+  margin: 0 0 10px;
+  background: #faf8f5;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.points-inline-card .points-log-stats {
+  padding: 10px 16px;
+  background: #fff;
+}
+.points-inline-card .points-multiplier-card {
+  margin: 8px 12px;
+}
+.points-inline-card .points-log-actions {
+  padding: 0 12px 10px;
+}
+
+.points-archive-item {
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #faf8f5;
+  border: 1px solid var(--border);
+  border-top: 1px dashed var(--border);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  margin-bottom: 8px;
+}
 /* 积分统计条 */
 .points-log-stats {
   display: flex;

@@ -154,32 +154,68 @@ function exchangeWithPoints(itemId) {
   return true;
 }
 
-// ============ 渲染积分信息（菜单项数值） ============
+// ============ 渲染积分信息（菜单项数值 + 内联卡片） ============
 function renderPointsInfo() {
   const profilePointsValue = document.getElementById('profilePointsValue');
   if (profilePointsValue) {
     profilePointsValue.textContent = userPoints.balance;
   }
+  // 同步更新内联卡片统计数据
+  const inlineBalance = document.getElementById('pointsInlineBalance');
+  const inlineEarned = document.getElementById('pointsInlineTotalEarned');
+  const inlineUsed = document.getElementById('pointsInlineTotalUsed');
+  if (inlineBalance) inlineBalance.textContent = userPoints.balance;
+  if (inlineEarned) inlineEarned.textContent = userPoints.totalEarned;
+  if (inlineUsed) inlineUsed.textContent = userPoints.totalUsed;
+
+  // 同步更新内联卡片倍率信息
+  renderInlineMultiplier();
 }
 
-// ============ 渲染会员倍率信息（弹窗内） ============
-function renderMultiplierCard() {
-  const badgeEl = document.getElementById('pointsMultiplierBadge');
-  const valEl = document.getElementById('pointsMultiplierVal');
-  const calcEl = document.getElementById('pointsMultiplierCalc');
-  const exampleEl = document.getElementById('pointsMultiplierExample');
-
+// ============ 渲染内联卡片倍率信息 ============
+function renderInlineMultiplier() {
   const multiplier = getMemberPointsMultiplier();
   const level = userProfile.memberLevel || 'silver';
   const levelNames = { silver: '银牌会员', gold: '金牌会员', diamond: '黑钻会员' };
   const levelEmojis = { silver: '🥈', gold: '🥇', diamond: '💎' };
 
-  if (badgeEl) badgeEl.textContent = (levelEmojis[level] || '🥈') + ' ' + (levelNames[level] || '银牌会员');
-  if (valEl) valEl.textContent = '×' + multiplier;
-  if (calcEl) calcEl.textContent = '1元 = ' + (1 * multiplier).toFixed(1) + '积分';
-  if (exampleEl) {
-    exampleEl.innerHTML = '示例：消费100元 → 100×' + multiplier + ' = <strong>' + Math.floor(100 * multiplier) + '积分</strong>';
-  }
+  const levelText = (levelEmojis[level] || '🥈') + ' ' + (levelNames[level] || '银牌会员');
+  const valText = '×' + multiplier;
+  const calcText = '1元 = ' + (1 * multiplier).toFixed(1) + '积分';
+  const exampleHTML = '示例：消费100元 → 100×' + multiplier + ' = <strong>' + Math.floor(100 * multiplier) + '积分</strong>';
+
+  const inlineBadgeEl = document.getElementById('pointsInlineMultiplierBadge');
+  const inlineValEl = document.getElementById('pointsInlineMultiplierVal');
+  const inlineCalcEl = document.getElementById('pointsInlineMultiplierCalc');
+  const inlineExampleEl = document.getElementById('pointsInlineMultiplierExample');
+
+  if (inlineBadgeEl) inlineBadgeEl.textContent = levelText;
+  if (inlineValEl) inlineValEl.textContent = valText;
+  if (inlineCalcEl) inlineCalcEl.textContent = calcText;
+  if (inlineExampleEl) inlineExampleEl.innerHTML = exampleHTML;
+}
+
+// ============ 渲染会员倍率信息（弹窗内） ============
+function renderMultiplierCard() {
+  const multiplier = getMemberPointsMultiplier();
+  const level = userProfile.memberLevel || 'silver';
+  const levelNames = { silver: '银牌会员', gold: '金牌会员', diamond: '黑钻会员' };
+  const levelEmojis = { silver: '🥈', gold: '🥇', diamond: '💎' };
+
+  const levelText = (levelEmojis[level] || '🥈') + ' ' + (levelNames[level] || '银牌会员');
+  const valText = '×' + multiplier;
+  const calcText = '1元 = ' + (1 * multiplier).toFixed(1) + '积分';
+  const exampleHTML = '示例：消费100元 → 100×' + multiplier + ' = <strong>' + Math.floor(100 * multiplier) + '积分</strong>';
+
+  const badgeEl = document.getElementById('pointsMultiplierBadge');
+  const valEl = document.getElementById('pointsMultiplierVal');
+  const calcEl = document.getElementById('pointsMultiplierCalc');
+  const exampleEl = document.getElementById('pointsMultiplierExample');
+
+  if (badgeEl) badgeEl.textContent = levelText;
+  if (valEl) valEl.textContent = valText;
+  if (calcEl) calcEl.textContent = calcText;
+  if (exampleEl) exampleEl.innerHTML = exampleHTML;
 }
 
 // ============ 渲染积分明细 ============
