@@ -86,20 +86,75 @@ function renderProfilePage() {
 function renderProfileUserCard() {
   document.getElementById('profileAvatar').querySelector('span').textContent = userProfile.avatar;
   document.getElementById('profileUserName').textContent = userProfile.name;
-  document.getElementById('profileLevelTag').innerHTML =
-    '<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> ' +
-    userProfile.level;
 
+  // 显示手机号
+  const phoneEl = document.getElementById('profileUserPhone');
+  if (phoneEl) {
+    if (userProfile.phone) {
+      const phoneStr = String(userProfile.phone);
+      if (phoneStr.length === 11) {
+        phoneEl.textContent = '电话：' + phoneStr.substring(0, 3) + '****' + phoneStr.substring(7);
+      } else {
+        phoneEl.textContent = '电话：' + phoneStr;
+      }
+    } else {
+      phoneEl.textContent = '电话：未绑定';
+    }
+  }
+
+  // 轻创等级
+  const levelText = document.getElementById('profileLevelText');
+  if (levelText) levelText.textContent = userProfile.level;
+
+  // 会员标签
   const memberBadge = document.getElementById('profileMemberBadge');
   const badges = { silver: '🥈 银牌会员', gold: '🥇 金牌会员', diamond: '💎 黑钻会员' };
   memberBadge.textContent = badges[userProfile.memberLevel] || '🥈 银牌会员';
+}
+
+// ========= 用户详情弹窗 =========
+function openProfileDetail() {
+  document.getElementById('profileDetailAvatar').textContent = userProfile.avatar;
+  document.getElementById('profileDetailName').textContent = userProfile.name;
+
+  // 显示手机号
+  const phoneEl = document.getElementById('profileDetailPhone');
+  if (phoneEl) {
+    if (userProfile.phone) {
+      const phoneStr = String(userProfile.phone);
+      if (phoneStr.length === 11) {
+        phoneEl.textContent = '电话：' + phoneStr.substring(0, 3) + '****' + phoneStr.substring(7);
+      } else {
+        phoneEl.textContent = '电话：' + phoneStr;
+      }
+    } else {
+      phoneEl.textContent = '电话：未绑定';
+    }
+  }
+
+  // 轻创等级
+  const levelText = document.getElementById('profileDetailLevel');
+  if (levelText) levelText.textContent = userProfile.level;
+
+  // 会员标签
+  const memberBadge = document.getElementById('profileDetailMemberBadge');
+  if (memberBadge) {
+    const badges = { silver: '🥈 银牌会员', gold: '🥇 金牌会员', diamond: '💎 黑钻会员' };
+    memberBadge.textContent = badges[userProfile.memberLevel] || '🥈 银牌会员';
+  }
+
+  document.getElementById('profileDetailOverlay').classList.remove('hidden');
+}
+
+function closeProfileDetail(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('profileDetailOverlay').classList.add('hidden');
 }
 
 // ============ 个人信息编辑 ============
 function openProfileEdit() {
   document.getElementById('profileNameInput').value = userProfile.name;
   document.getElementById('profilePhoneInput').value = userProfile.phone || '';
-  document.getElementById('profileLevelSelect').value = userProfile.level;
   document.getElementById('profileEditOverlay').classList.remove('hidden');
 }
 
@@ -516,11 +571,6 @@ function renderMemberInfo() {
     diamond: { icon: '💎', name: '黑钻会员', next: null, threshold: Infinity, color: '#7c4dff' },
   };
 
-  const c = config[userProfile.memberLevel] || config.silver;
-
-  // Update menu badge
-  document.getElementById('memberBadgeInMenu').textContent = c.icon;
-
   // Update user card badge
   const badge = document.getElementById('profileMemberBadge');
   const badges = { silver: '🥈 银牌会员', gold: '🥇 金牌会员', diamond: '💎 黑钻会员' };
@@ -529,16 +579,88 @@ function renderMemberInfo() {
 
 function openMemberDetail() {
   document.getElementById('memberDetailOverlay').classList.remove('hidden');
-  // Highlight current member level card
-  const cards = document.querySelectorAll('.member-level-card');
-  cards.forEach((card) => card.classList.remove('active'));
-  const currentCard = document.querySelector('.member-level-card.' + userProfile.memberLevel);
-  if (currentCard) currentCard.classList.add('active');
+
+  // 根据当前会员等级设置初始索引
+  const levelMap = { silver: 0, gold: 1, diamond: 2 };
+  currentMemberLevelIndex = levelMap[userProfile.memberLevel] || 0;
+
+  updateMemberLevelDisplay();
 }
 
 function closeMemberDetail(e) {
   if (e && e.target !== e.currentTarget) return;
   document.getElementById('memberDetailOverlay').classList.add('hidden');
+}
+
+// ============ 会员等级轮播图 ============
+// 会员等级配置
+const MEMBER_LEVELS = [
+  { key: 'silver', icon: '🥈', name: '银牌会员', threshold: 500, nextThreshold: 1000 },
+  { key: 'gold', icon: '🥇', name: '金牌会员', threshold: 1000, nextThreshold: 3000 },
+  { key: 'diamond', icon: '💎', name: '黑钻会员', threshold: 3000, nextThreshold: null },
+];
+
+// 等级 key → 索引映射
+const levelKeyToIndex = { silver: 0, gold: 1, diamond: 2 };
+
+// 当前轮播图显示的索引（0=silver, 1=gold, 2=diamond）
+let currentMemberLevelIndex = 0;
+
+function switchMemberLevel(direction) {
+  const newIndex = currentMemberLevelIndex + direction;
+  if (newIndex < 0 || newIndex >= MEMBER_LEVELS.length) return;
+  currentMemberLevelIndex = newIndex;
+  updateMemberLevelDisplay();
+}
+
+function goToMemberLevel(index) {
+  if (index < 0 || index >= MEMBER_LEVELS.length) return;
+  currentMemberLevelIndex = index;
+  updateMemberLevelDisplay();
+}
+
+function updateMemberLevelDisplay() {
+  const track = document.getElementById('memberLevelsTrack');
+  const cards = document.querySelectorAll('.member-level-card');
+  const dots = document.querySelectorAll('.member-dot');
+  if (!track || cards.length === 0) return;
+
+  // 滚动到对应卡片
+  const cardWidth = cards[0].offsetWidth;
+  track.scrollTo({ left: cardWidth * currentMemberLevelIndex, behavior: 'smooth' });
+
+  // 更新卡片 active 状态
+  cards.forEach((card, i) => {
+    card.classList.toggle('active', i === currentMemberLevelIndex);
+  });
+
+  // 更新圆点 active 状态
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentMemberLevelIndex);
+  });
+
+  // 始终显示当前真实会员等级信息（不随轮播切换而改变）
+  const realLevelIdx = levelKeyToIndex[userProfile.memberLevel] || 0;
+  const currentConfig = MEMBER_LEVELS[realLevelIdx];
+
+  // 计算升级进度
+  const spent = userProfile.totalSpent;
+  const progressText = document.getElementById('memberProgressText');
+
+  if (!currentConfig.nextThreshold) {
+    // 已是最高等级
+    if (progressText) progressText.textContent = '已达到最高等级 🎉';
+  } else {
+    const prevThreshold = currentConfig.threshold;
+    const nextThreshold = currentConfig.nextThreshold;
+    const range = nextThreshold - prevThreshold;
+    const progress = Math.min(100, Math.max(0, ((spent - prevThreshold) / range) * 100));
+    const remaining = Math.max(0, nextThreshold - spent);
+
+    if (progressText) {
+      progressText.textContent = `还需消费或充值 ¥${remaining.toFixed(0)} 升级${MEMBER_LEVELS[realLevelIdx + 1]?.name || '下一等级'}`;
+    }
+  }
 }
 
 function handleRecharge(amount) {

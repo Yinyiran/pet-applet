@@ -1301,23 +1301,41 @@
         <div class="page" id="profilePage">
           <div class="profile-scroll">
             <!-- 用户信息卡片 -->
-            <div class="profile-user-card">
-              <div class="profile-user-avatar" id="profileAvatar" onclick="openAvatarPicker()">
+            <div class="profile-user-card" onclick="openProfileDetail()">
+              <div
+                class="profile-user-avatar"
+                id="profileAvatar"
+                onclick="
+                  event.stopPropagation();
+                  openAvatarPicker();
+                "
+              >
                 <span>🐱</span>
               </div>
-              <div class="profile-user-info" onclick="openProfileEdit()">
+              <div class="profile-user-info">
                 <div class="profile-user-name" id="profileUserName">毛毛家长</div>
+                <div class="profile-user-phone" id="profileUserPhone">电话：156****8888</div>
                 <div class="profile-user-level">
                   <span class="profile-level-tag" id="profileLevelTag">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                     </svg>
-                    梵优合伙人
+                    <span id="profileLevelText">梵优合伙人</span>
                   </span>
                   <span class="profile-member-badge" id="profileMemberBadge">🥈 银牌会员</span>
                 </div>
               </div>
-              <div class="profile-user-arrow">›</div>
+              <div class="profile-user-actions">
+                <button
+                  class="profile-edit-btn"
+                  onclick="
+                    event.stopPropagation();
+                    openProfileEdit();
+                  "
+                >
+                  编辑
+                </button>
+              </div>
             </div>
 
             <!-- ========== 宠物档案 ========== -->
@@ -1380,14 +1398,6 @@
               <span class="profile-menu-icon">👥</span>
               <span class="profile-menu-label">我的团队</span>
               <span class="profile-menu-badge" id="profileInviteBadge">35</span>
-              <span class="profile-menu-arrow">›</span>
-            </div>
-
-            <!-- ========== 会员信息 ========== -->
-            <div class="profile-menu-item" onclick="openMemberDetail()">
-              <span class="profile-menu-icon">👑</span>
-              <span class="profile-menu-label">会员信息</span>
-              <span class="" id="memberBadgeInMenu">🥈</span>
               <span class="profile-menu-arrow">›</span>
             </div>
 
@@ -1721,50 +1731,6 @@
         </div>
       </div>
 
-      <!-- ==================== 会员权益弹窗 ==================== -->
-      <div class="pet-form-overlay hidden" id="memberDetailOverlay" onclick="closeMemberDetail(event)">
-        <div class="member-detail-sheet" onclick="event.stopPropagation()">
-          <div class="pet-form-handle"></div>
-          <div class="member-detail-header">
-            <div class="member-detail-title">👑 会员权益</div>
-            <div class="member-detail-sub">升级享更多专属特权</div>
-          </div>
-          <div class="member-detail-levels">
-            <div class="member-level-card silver">
-              <div class="member-level-icon">🥈</div>
-              <div class="member-level-name">银牌会员</div>
-              <div class="member-level-threshold">累计充值或消费 ¥500+</div>
-              <div class="member-level-benefits">
-                <div class="member-benefit">✓ 全场9.8折</div>
-                <div class="member-benefit">✓ 积分加速1.1倍</div>
-                <div class="member-benefit">✓ 生日礼包一份</div>
-              </div>
-            </div>
-            <div class="member-level-card gold">
-              <div class="member-level-icon">🥇</div>
-              <div class="member-level-name">金牌会员</div>
-              <div class="member-level-threshold">累计充值或消费 ¥1,000+</div>
-              <div class="member-level-benefits">
-                <div class="member-benefit">✓ 全场9.6折</div>
-                <div class="member-benefit">✓ 积分加速1.3倍</div>
-                <div class="member-benefit">✓ 生日礼包一份（2年）</div>
-              </div>
-            </div>
-            <div class="member-level-card diamond">
-              <div class="member-level-icon">💎</div>
-              <div class="member-level-name">黑钻会员</div>
-              <div class="member-level-threshold">累计充值或消费 ¥3,000+</div>
-              <div class="member-level-benefits">
-                <div class="member-benefit">✓ 全场9.3折</div>
-                <div class="member-benefit">✓ 积分加速1.5倍</div>
-                <div class="member-benefit">✓ 生日礼包一份（终身）</div>
-              </div>
-            </div>
-          </div>
-          <button class="member-detail-close-btn" onclick="closeMemberDetail()">关闭</button>
-        </div>
-      </div>
-
       <!-- ==================== 账户充值详情弹窗 ==================== -->
       <div class="pet-form-overlay hidden" id="rechargeDetailOverlay" onclick="closeRechargeDetail(event)">
         <div class="recharge-detail-sheet" onclick="event.stopPropagation()">
@@ -1942,6 +1908,72 @@
         </div>
       </div>
 
+      <!-- ==================== 用户详情弹窗 ==================== -->
+      <div class="pet-form-overlay hidden" id="profileDetailOverlay" onclick="closeProfileDetail(event)">
+        <div class="profile-detail-sheet" onclick="event.stopPropagation()">
+          <div class="pet-form-handle"></div>
+          <div class="profile-detail-header">
+            <div class="profile-detail-avatar" id="profileDetailAvatar">🐱</div>
+            <div class="profile-detail-info">
+              <div class="profile-detail-name" id="profileDetailName">毛毛家长</div>
+              <div class="profile-detail-phone" id="profileDetailPhone">电话：156****8888</div>
+            </div>
+          </div>
+          <div class="profile-detail-tags">
+            <span class="profile-detail-level-tag" id="profileDetailLevelTag">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+              <span id="profileDetailLevel">梵优合伙人</span>
+            </span>
+            <span class="profile-detail-member-badge" id="profileDetailMemberBadge">🥈 银牌会员</span>
+          </div>
+
+          <!-- ========== 会员权益（整合在个人详情中）========== -->
+          <!-- 当前会员信息 -->
+          <div class="member-progress-text" id="memberProgressText">还需消费 ¥500 升级金牌会员</div>
+
+          <!-- 会员等级轮播 -->
+          <div class="member-levels-track" id="memberLevelsTrack">
+            <div class="member-level-card silver" data-level="silver">
+              <div class="member-level-icon">🥈</div>
+              <div class="member-level-name">银牌会员</div>
+              <div class="member-level-threshold">累计充值或消费 ¥500+</div>
+              <div class="member-level-benefits">
+                <div class="member-benefit">✓ 全场9.8折</div>
+                <div class="member-benefit">✓ 积分加速1.1倍</div>
+                <div class="member-benefit">✓ 生日礼包一份</div>
+              </div>
+            </div>
+            <div class="member-level-card gold" data-level="gold">
+              <div class="member-level-icon">🥇</div>
+              <div class="member-level-name">金牌会员</div>
+              <div class="member-level-threshold">累计充值或消费 ¥1,000+</div>
+              <div class="member-level-benefits">
+                <div class="member-benefit">✓ 全场9.6折</div>
+                <div class="member-benefit">✓ 积分加速1.3倍</div>
+                <div class="member-benefit">✓ 生日礼包一份（2年）</div>
+              </div>
+            </div>
+            <div class="member-level-card diamond" data-level="diamond">
+              <div class="member-level-icon">💎</div>
+              <div class="member-level-name">黑钻会员</div>
+              <div class="member-level-threshold">累计充值或消费 ¥3,000+</div>
+              <div class="member-level-benefits">
+                <div class="member-benefit">✓ 全场9.3折</div>
+                <div class="member-benefit">✓ 积分加速1.5倍</div>
+                <div class="member-benefit">✓ 生日礼包一份（终身）</div>
+              </div>
+            </div>
+          </div>
+          <div class="member-level-dots" id="memberLevelDots">
+            <div class="member-dot active" data-index="0" onclick="goToMemberLevel(0)"></div>
+            <div class="member-dot" data-index="1" onclick="goToMemberLevel(1)"></div>
+            <div class="member-dot" data-index="2" onclick="goToMemberLevel(2)"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- ==================== 个人信息编辑弹窗 ==================== -->
       <div class="pet-form-overlay hidden" id="profileEditOverlay" onclick="closeProfileEdit(event)">
         <div class="pet-form-sheet" onclick="event.stopPropagation()">
@@ -1955,13 +1987,6 @@
             <div class="pet-form-field">
               <label>手机号</label>
               <input class="pet-form-input" type="tel" id="profilePhoneInput" placeholder="请输入手机号" maxlength="11" />
-            </div>
-            <div class="pet-form-field">
-              <label>轻创等级</label>
-              <select class="pet-form-select" id="profileLevelSelect">
-                <option value="梵优合伙人">梵优合伙人</option>
-                <option value="梵优主理人">梵优主理人</option>
-              </select>
             </div>
             <div class="pet-form-actions">
               <button class="pet-form-btn cancel" onclick="closeProfileEdit()">取消</button>
