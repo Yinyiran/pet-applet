@@ -663,52 +663,7 @@ function renderShopList() {
   }
 
   list.innerHTML = products
-    .map(function (p, idx) {
-      if (idx === 0) {
-        // 第一个商品：横向大卡片
-        return (
-          '<div class="shop-product-card shop-product-card--featured" onclick="openProductDetail(\'' +
-          p.id +
-          '\')">' +
-          '<div class="shop-product-img-wrap--featured">' +
-          '<div class="shop-product-img--featured">' +
-          p.emoji +
-          '</div>' +
-          (p.tag ? '<span class="shop-product-tag ' + p.tag + '">' + p.tagText + '</span>' : '') +
-          '</div>' +
-          '<div class="shop-product-info--featured">' +
-          '<div class="shop-product-name--featured">' +
-          p.name +
-          '</div>' +
-          '<div class="shop-product-desc--featured">' +
-          p.desc +
-          '</div>' +
-          '<div class="shop-product-meta--featured">' +
-          '<span class="shop-product-price"><span class="unit">¥</span>' +
-          p.price +
-          '</span>' +
-          '<span class="shop-product-orig">¥' +
-          p.orig +
-          '</span>' +
-          '</div>' +
-          '<div class="shop-product-bottom--featured">' +
-          '<span class="shop-product-sales--featured">已售 ' +
-          formatSales(p.sales) +
-          '</span>' +
-          '<span class="shop-product-stock--featured">库存 ' +
-          p.stock +
-          '</span>' +
-          '<span class="shop-product-cart-btn--featured" onclick="event.stopPropagation(); addShopProductToCart(\'' +
-          p.id +
-          '\')">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>' +
-          '</span>' +
-          '</div>' +
-          '</div>' +
-          '</div>'
-        );
-      }
-      // 其余商品：原价布局 + 购物车icon
+    .map(function (p) {
       return (
         '<div class="shop-product-card" onclick="openProductDetail(\'' +
         p.id +
@@ -723,17 +678,15 @@ function renderShopList() {
         '<div class="shop-product-name">' +
         p.name +
         '</div>' +
+        '<div class="shop-product-desc">' +
+        p.desc +
+        '</div>' +
         '<div class="shop-product-meta">' +
         '<span class="shop-product-price"><span class="unit">¥</span>' +
         p.price +
         '</span>' +
         '<span class="shop-product-orig">¥' +
         p.orig +
-        '</span>' +
-        '<span class="shop-product-cart-btn" onclick="event.stopPropagation(); addShopProductToCart(\'' +
-        p.id +
-        '\')">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>' +
         '</span>' +
         '</div>' +
         '<div class="shop-product-bottom">' +
@@ -742,6 +695,11 @@ function renderShopList() {
         '</span>' +
         '<span class="shop-product-stock">库存 ' +
         p.stock +
+        '</span>' +
+        '<span class="shop-product-cart-btn" onclick="event.stopPropagation(); addShopProductToCart(\'' +
+        p.id +
+        '\')">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>' +
         '</span>' +
         '</div>' +
         '</div>' +

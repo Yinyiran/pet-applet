@@ -563,7 +563,7 @@ body {
   gap: 8px;
 }
 .city-detail-products-grid .shop-product-card {
-  width: calc(50% - 4px);
+  width: 100%;
 }
 
 /* 申请合作入口 */
@@ -2979,30 +2979,35 @@ body {
   display: none;
 }
 
-/* 商品卡片（两列） */
+/* 商品卡片（单列横向布局） */
 .shop-product-card {
-  width: calc(50% - 4px);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
   background: #fff;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   cursor: pointer;
   transition: transform var(--transition);
+  margin-bottom: 4px;
 }
 .shop-product-card:active {
   transform: scale(0.97);
 }
 .shop-product-img-wrap {
+  width: 140px;
+  min-height: 140px;
+  flex-shrink: 0;
   position: relative;
-  width: 100%;
-  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #fdf6f0, #faf1e6);
 }
 .shop-product-img {
-  font-size: 48px;
+  font-size: 56px;
   line-height: 1;
 }
 .shop-product-tag {
@@ -3025,24 +3030,40 @@ body {
   background: var(--primary);
 }
 .shop-product-info {
-  padding: 8px 10px 10px;
+  flex: 1;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
 }
 .shop-product-name {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 4px;
 }
+.shop-product-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
 .shop-product-meta {
   display: flex;
   align-items: baseline;
   gap: 6px;
+  margin-bottom: 6px;
 }
 .shop-product-price {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 800;
   color: var(--danger);
 }
@@ -3183,8 +3204,8 @@ body {
 /* ============ 普通卡片购物车 icon ============ */
 .shop-product-cart-btn {
   margin-left: auto;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3196,8 +3217,8 @@ body {
   flex-shrink: 0;
 }
 .shop-product-cart-btn svg {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
 }
 .shop-product-cart-btn:active {
   opacity: 0.85;

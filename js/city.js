@@ -217,17 +217,15 @@ function openCityDetail(idx) {
           '<div class="shop-product-name">' +
           p.name +
           '</div>' +
+          '<div class="shop-product-desc">' +
+          p.desc +
+          '</div>' +
           '<div class="shop-product-meta">' +
           '<span class="shop-product-price"><span class="unit">¥</span>' +
           p.price +
           '</span>' +
           '<span class="shop-product-orig">¥' +
           p.orig +
-          '</span>' +
-          '<span class="shop-product-cart-btn" onclick="event.stopPropagation(); addShopProductToCart(\'' +
-          p.id +
-          '\')">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>' +
           '</span>' +
           '</div>' +
           '<div class="shop-product-bottom">' +
@@ -236,6 +234,11 @@ function openCityDetail(idx) {
           '</span>' +
           '<span class="shop-product-stock">库存 ' +
           p.stock +
+          '</span>' +
+          '<span class="shop-product-cart-btn" onclick="event.stopPropagation(); addShopProductToCart(\'' +
+          p.id +
+          '\')">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>' +
           '</span>' +
           '</div>' +
           '</div>' +
