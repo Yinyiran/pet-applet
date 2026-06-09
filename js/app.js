@@ -195,6 +195,44 @@ function fallbackCopy(text) {
   autoTimer = setInterval(next, 3500);
 })();
 
+// ============ 抖音直播间介绍卡片 ============
+function openDouyinCard() {
+  document.getElementById('douyinOverlay').classList.remove('hidden');
+}
+
+function closeDouyinCard(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('douyinOverlay').classList.add('hidden');
+}
+
+function copyDouyinId(e) {
+  if (e) e.stopPropagation();
+  const id = document.getElementById('douyinIdText').textContent;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(id).then(() => {
+      showToast('抖音号已复制：' + id);
+    }).catch(() => {
+      fallbackCopyDouyinId(id);
+    });
+  } else {
+    fallbackCopyDouyinId(id);
+  }
+}
+
+function fallbackCopyDouyinId(text) {
+  const input = document.createElement('input');
+  input.value = text;
+  document.body.appendChild(input);
+  input.select();
+  try {
+    document.execCommand('copy');
+    showToast('抖音号已复制：' + text);
+  } catch (e) {
+    showToast('复制失败：' + text);
+  }
+  document.body.removeChild(input);
+}
+
 // ============ 倒计时 ============
 function startCountdown() {
   let total = 3 * 3600 + 22 * 60 + 45;
