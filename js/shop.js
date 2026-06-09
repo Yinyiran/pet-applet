@@ -498,7 +498,7 @@ const shopProducts = {
 };
 
 // 分类顺序（全部排列）
-const catOrder = ['all', 'handmade-snack', 'brand-select', 'clothing-accessories', 'pet-toy'];
+const catOrder = ['all', 'snack', 'brand', 'clothes', 'toy'];
 
 // 当前状态
 var currentShopCat = 'all';
