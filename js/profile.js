@@ -16,6 +16,9 @@ let profileOrders = [
     status: 'pendingPay',
     items: [{ name: '磨牙洁齿棒', img: '🦴', price: 19.9, qty: 2 }],
     total: 39.8,
+    originalTotal: 49.8,
+    discount: 10.0,
+    payment: { balance: 0, wechat: 39.8 },
     time: '2026-06-01 10:30',
     logistics: null,
   },
@@ -24,6 +27,9 @@ let profileOrders = [
     status: 'pendingShip',
     items: [{ name: '深海三文鱼冻干', img: '🐟', price: 39.9, qty: 1 }],
     total: 39.9,
+    originalTotal: 49.9,
+    discount: 10.0,
+    payment: { balance: 20.0, wechat: 19.9 },
     time: '2026-05-28 14:20',
     logistics: null,
   },
@@ -35,6 +41,9 @@ let profileOrders = [
       { name: '原切牛肉粒', img: '🥩', price: 32.9, qty: 1 },
     ],
     total: 89.6,
+    originalTotal: 109.6,
+    discount: 20.0,
+    payment: { balance: 50.0, wechat: 39.6 },
     time: '2026-05-25 09:15',
     logistics: { company: '顺丰速运', no: 'SF1234567890' },
   },
@@ -43,6 +52,9 @@ let profileOrders = [
     status: 'completed',
     items: [{ name: '零食全家桶', img: '🎁', price: 89.0, qty: 1 }],
     total: 89.0,
+    originalTotal: 99.0,
+    discount: 10.0,
+    payment: { balance: 89.0, wechat: 0 },
     time: '2026-05-20 16:45',
     logistics: { company: '中通快递', no: 'ZT9876543210' },
   },
@@ -554,9 +566,9 @@ const consumptionLog = [
     id: 'CS20260608001',
     type: '商品购买',
     item: '高蛋白鸡肉冻干粮 ×1',
-    total: 89.00,
-    balancePay: 50.00,
-    wechatPay: 39.00,
+    total: 89.0,
+    balancePay: 50.0,
+    wechatPay: 39.0,
     isMixed: true,
     time: '2026-06-08 14:30',
     status: '已完成',
@@ -565,8 +577,8 @@ const consumptionLog = [
     id: 'CS20260607002',
     type: '商品购买',
     item: '深海三文鱼美毛配方 ×1',
-    total: 108.00,
-    balancePay: 108.00,
+    total: 108.0,
+    balancePay: 108.0,
     wechatPay: 0,
     isMixed: false,
     time: '2026-06-07 09:15',
@@ -576,9 +588,9 @@ const consumptionLog = [
     id: 'CS20260605003',
     type: '商品购买',
     item: '关节养护氨糖颗粒 ×2',
-    total: 136.00,
-    balancePay: 36.00,
-    wechatPay: 100.00,
+    total: 136.0,
+    balancePay: 36.0,
+    wechatPay: 100.0,
     isMixed: true,
     time: '2026-06-05 18:42',
     status: '已完成',
@@ -587,9 +599,9 @@ const consumptionLog = [
     id: 'CS20260603004',
     type: '退款',
     item: '零食全家桶（退款）',
-    total: -89.00,
-    balancePay: -50.00,
-    wechatPay: -39.00,
+    total: -89.0,
+    balancePay: -50.0,
+    wechatPay: -39.0,
     isMixed: true,
     time: '2026-06-03 11:20',
     status: '已退款',
@@ -598,8 +610,8 @@ const consumptionLog = [
     id: 'CS20260601005',
     type: '商品购买',
     item: '澳洲进口牛肉高能粮 ×1',
-    total: 136.00,
-    balancePay: 136.00,
+    total: 136.0,
+    balancePay: 136.0,
     wechatPay: 0,
     isMixed: false,
     time: '2026-06-01 15:00',
@@ -632,7 +644,7 @@ function renderRechargeLog() {
 
   // 累计充值金额
   const totalRecharge = rechargeLog.reduce((s, r) => s + r.amount + r.gift, 0);
-  totalEl.textContent = `¥${totalRecharge.toFixed(2)}`;
+  totalEl.textContent = `累计充值：¥${totalRecharge.toFixed(2)}`;
 
   if (rechargeLog.length === 0) {
     listEl.style.display = 'none';
@@ -683,42 +695,37 @@ function renderConsumptionList() {
   listEl.style.display = '';
 
   listEl.innerHTML = consumptionLog
-    .map(
-      (o) => {
-        const isRefund = o.type === '退款';
-        const totalSign = o.total < 0 ? '-' : '';
-        const absTotal = Math.abs(o.total);
-        const absBalance = Math.abs(o.balancePay);
-        const absWechat = Math.abs(o.wechatPay);
+    .map((o) => {
+      const isRefund = o.type === '退款';
+      const totalSign = o.total < 0 ? '-' : '';
+      const absTotal = Math.abs(o.total);
+      const absBalance = Math.abs(o.balancePay);
+      const absWechat = Math.abs(o.wechatPay);
 
-        // 支付明细行
-        let payDetailHTML = '';
-        if (o.isMixed) {
-          payDetailHTML = `
+      // 支付明细行
+      let payDetailHTML = '';
+      if (o.isMixed) {
+        payDetailHTML = `
             <div class="consumption-item-pay-detail">
-              <span class="consumption-mixed-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
-                混合支付
-              </span>
               <span class="pay-sep">·</span>
               <span class="pay-method balance">💳 余额 ¥${absBalance.toFixed(2)}</span>
               <span class="pay-sep">+</span>
               <span class="pay-method wechat">💚 微信 ¥${absWechat.toFixed(2)}</span>
             </div>`;
-        } else if (o.wechatPay > 0) {
-          payDetailHTML = `
+      } else if (o.wechatPay > 0) {
+        payDetailHTML = `
             <div class="consumption-item-pay-detail">
               <span class="pay-method wechat">💚 微信支付 ¥${absWechat.toFixed(2)}</span>
             </div>`;
-        } else {
-          payDetailHTML = `
+      } else {
+        payDetailHTML = `
             <div class="consumption-item-pay-detail">
               <span class="pay-method balance">💳 余额支付 ¥${absBalance.toFixed(2)}</span>
             </div>`;
-        }
+      }
 
-        return `
-          <div class="consumption-item${o.isMixed ? ' mixed-pay' : ''}">
+      return `
+          <div class="consumption-item">
             <div class="consumption-item-header">
               <span class="consumption-item-id">${o.id}</span>
               <span class="consumption-item-type${isRefund ? ' refund' : ''}">${o.type}</span>
@@ -731,8 +738,7 @@ function renderConsumptionList() {
             </div>
             ${payDetailHTML}
           </div>`;
-      },
-    )
+    })
     .join('');
 }
 
@@ -906,8 +912,20 @@ function openOrderDetail(orderId) {
     )
     .join('');
 
-  document.getElementById('orderDetailTotal').textContent = `¥${order.total.toFixed(2)}`;
+  document.getElementById('orderDetailOriginalTotal').textContent = `¥${order.originalTotal.toFixed(2)}`;
+  document.getElementById('orderDetailDiscount').textContent = order.discount > 0 ? `-¥${order.discount.toFixed(2)}` : '¥0.00';
   document.getElementById('orderDetailPay').textContent = `¥${order.total.toFixed(2)}`;
+
+  // 支付方式明细
+  const breakdownEl = document.getElementById('orderDetailPayBreakdown');
+  const paymentLabels = { balance: '余额支付', wechat: '微信支付', alipay: '支付宝' };
+  let breakdownHtml = '';
+  for (const [key, label] of Object.entries(paymentLabels)) {
+    if (order.payment && order.payment[key] > 0) {
+      breakdownHtml += `<div class="order-detail-row order-detail-pay-item"><span>${label}</span><span>¥${order.payment[key].toFixed(2)}</span></div>`;
+    }
+  }
+  breakdownEl.innerHTML = breakdownHtml;
 
   // 物流信息
   const logisticsSection = document.getElementById('orderLogisticsSection');

@@ -718,7 +718,7 @@ function submitWithdraw() {
   showToast('提现申请已提交，预计24小时内到账');
 }
 
-// ==================== 邀请明细弹窗 ====================
+// ==================== 我的团队弹窗 ====================
 let inviteTabActive = 'total'; // 'total' | 'views'
 
 function openInviteDetail() {

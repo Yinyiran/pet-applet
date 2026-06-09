@@ -539,7 +539,7 @@
   cursor: not-allowed;
 }
 
-/* ========== 邀请明细弹窗 ========== */
+/* ========== 我的团队弹窗 ========== */
 .invite-overlay {
   position: absolute;
   inset: 0;

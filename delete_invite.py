@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""删除 index.html 中的邀请明细弹窗和邀请用户详情弹窗"""
+"""删除 index.html 中的我的团队弹窗和邀请用户详情弹窗"""
 
 with open('D:/Project/pet-applet/index.html', 'r', encoding='utf-8') as f:
     lines = f.readlines()
 
-# 找到邀请明细弹窗的开始行
+# 找到我的团队弹窗的开始行
 start_idx = None
 for i in range(len(lines) - 1, -1, -1):
-    if '<!-- ==================== 邀请明细弹窗 ==================== -->' in lines[i]:
+    if '<!-- ==================== 我的团队弹窗 ==================== -->' in lines[i]:
         start_idx = i
         break
 
@@ -33,4 +33,4 @@ if start_idx is not None:
     deleted_count = len(lines) - len(new_lines)
     print(f'成功删除了 {deleted_count} 行（邀请弹窗已移除）')
 else:
-    print('未找到邀请明细弹窗，无需删除')
+    print('未找到我的团队弹窗，无需删除')

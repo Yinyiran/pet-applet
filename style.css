@@ -5238,11 +5238,7 @@ body {
   border: 1px solid transparent;
   transition: border-color var(--transition);
 }
-.consumption-item.mixed-pay {
-  border-color: #f59e0b;
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-  box-shadow: 0 1px 4px rgba(245, 158, 11, 0.12);
-}
+
 .consumption-item-header {
   display: flex;
   align-items: center;
@@ -5400,51 +5396,15 @@ body {
 }
 
 /* ========== 充值记录 - 累计充值卡片 ========== */
-.recharge-total-card {
-  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-  border-radius: var(--radius);
-  padding: 16px;
-  text-align: center;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-.recharge-total-card::before {
-  content: '';
-  position: absolute;
-  top: -24px;
-  right: -24px;
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-}
-.recharge-total-card::after {
-  content: '';
-  position: absolute;
-  bottom: -16px;
-  left: -16px;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-}
-.recharge-total-label {
-  font-size: 12px;
-  font-weight: 500;
-  color: #7c2d12;
-  margin-bottom: 4px;
-  position: relative;
-  z-index: 1;
-}
 .recharge-total-amount {
-  font-size: 28px;
-  font-weight: 800;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
   color: #7c2d12;
-  letter-spacing: 1px;
-  position: relative;
-  z-index: 1;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-right: 10px;
 }
 
 /* ========== 充值记录列表项 ========== */
@@ -5902,6 +5862,22 @@ body {
   font-size: 14px;
   font-weight: 700;
   color: var(--text);
+}
+.order-detail-discount span:last-child {
+  color: #e53935;
+  font-weight: 600;
+}
+.order-detail-pay-breakdown {
+  padding: 2px 0 0;
+}
+.order-detail-pay-item {
+  font-size: 11px;
+  color: var(--text-tertiary, #999);
+  padding: 2px 0;
+}
+.order-detail-pay-item span:last-child {
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 .order-detail-price {
   font-size: 16px;
@@ -6634,10 +6610,9 @@ body {
   background: #faf8f5;
 }
 .pet-list-inline-body {
-  padding: 8px 12px 10px;
+  padding: 2px 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
   background: #faf8f5;
   border: 1px solid var(--border);
   border-top: 1px dashed var(--border);
@@ -6662,21 +6637,21 @@ body {
 .pet-popup-card {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
+  padding: 10px;
   background: #faf8f5;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  &:last-child {
+    border-bottom: none;
+  }
 }
 .pet-popup-card-icon {
-  width: 38px;
-  height: 38px;
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 27px;
+  margin-right: 10px;
   flex-shrink: 0;
 }
 .pet-popup-card-info {
