@@ -47,6 +47,9 @@ function switchTab(tab, el) {
   // 确保购买弹窗关闭
   var purchaseOverlay = document.getElementById('purchaseOverlay');
   if (purchaseOverlay) purchaseOverlay.classList.add('hidden');
+
+  // 客服悬浮按钮显隐
+  showCSButtonOnHome();
 }
 
 // 统一返回处理（header back button）
@@ -60,6 +63,16 @@ function handleHeaderBack() {
   } else if (document.getElementById('quizPage').classList.contains('active')) {
     goBackFromQuiz();
   }
+  // 回到首页后显示客服按钮
+  showCSButtonOnHome();
+}
+
+// 首页显示客服按钮，其他页隐藏
+function showCSButtonOnHome() {
+  var csBtn = document.getElementById('csFloatBtn');
+  if (!csBtn) return;
+  var onHome = document.getElementById('homePage').classList.contains('active');
+  csBtn.style.display = onHome ? 'flex' : 'none';
 }
 
 // ============ 申请合作 ============
@@ -209,11 +222,14 @@ function copyDouyinId(e) {
   if (e) e.stopPropagation();
   const id = document.getElementById('douyinIdText').textContent;
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(id).then(() => {
-      showToast('抖音号已复制：' + id);
-    }).catch(() => {
-      fallbackCopyDouyinId(id);
-    });
+    navigator.clipboard
+      .writeText(id)
+      .then(() => {
+        showToast('抖音号已复制：' + id);
+      })
+      .catch(() => {
+        fallbackCopyDouyinId(id);
+      });
   } else {
     fallbackCopyDouyinId(id);
   }
@@ -257,3 +273,127 @@ function startCountdown() {
 }
 
 startCountdown();
+
+// ============ 客服悬浮按钮（拖拽吸附四边） ============
+(function initCSFloatBtn() {
+  var btn = document.getElementById('csFloatBtn');
+  if (!btn) return;
+
+  var container = document.querySelector('.app-container');
+  var header = document.querySelector('.header');
+  var bottomNav = document.querySelector('.bottom-nav');
+
+  var dragging = false;
+  var startX = 0,
+    startY = 0;
+  var startLeft = 0,
+    startTop = 0;
+  var btnW = 40,
+    btnH = 40;
+  var margin = 4;
+  var snapAnimTimer = null;
+
+  function getBtnPos() {
+    var r = btn.getBoundingClientRect();
+    var c = container.getBoundingClientRect();
+    return { left: r.left - c.left, top: r.top - c.top };
+  }
+
+  function getBounds() {
+    var cw = container.clientWidth;
+    var ch = container.clientHeight;
+    var topB = (header ? header.offsetHeight : 0) + margin;
+    var botB = (bottomNav ? bottomNav.offsetHeight : 0) + margin;
+    return { minX: margin, maxX: cw - btnW - margin, minY: topB, maxY: ch - botB - btnH - margin };
+  }
+
+  function clamp(v, a, b) {
+    return Math.max(a, Math.min(b, v));
+  }
+
+  // 初始右下角
+  (function initPos() {
+    var b = getBounds();
+    btn.style.left = b.maxX + 'px';
+    btn.style.top = b.maxY + 'px';
+    btn.style.right = 'auto';
+  })();
+
+  btn.addEventListener('touchstart', function (e) {
+    if (e.touches.length !== 1) return;
+    dragging = true;
+    var p = getBtnPos();
+    btn.style.left = p.left + 'px';
+    btn.style.top = p.top + 'px';
+    btn.style.right = 'auto';
+    startLeft = p.left;
+    startTop = p.top;
+    startX = e.touches[0].pageX;
+    startY = e.touches[0].pageY;
+    btn.classList.add('dragging');
+    btn.classList.remove('snapping');
+    if (snapAnimTimer) {
+      clearTimeout(snapAnimTimer);
+      snapAnimTimer = null;
+    }
+    e.preventDefault();
+  });
+
+  btn.addEventListener('touchmove', function (e) {
+    if (!dragging) return;
+    var dx = e.touches[0].pageX - startX;
+    var dy = e.touches[0].pageY - startY;
+    var b = getBounds();
+    btn.style.left = clamp(startLeft + dx, b.minX, b.maxX) + 'px';
+    btn.style.top = clamp(startTop + dy, b.minY, b.maxY) + 'px';
+    e.preventDefault();
+  });
+
+  btn.addEventListener('touchend', function () {
+    if (!dragging) return;
+    dragging = false;
+    btn.classList.remove('dragging');
+    var p = getBtnPos();
+    var cw = container.clientWidth;
+    var b = getBounds();
+    var cx = p.left + btnW / 2;
+    var cy = p.top + btnH / 2;
+    var dL = cx - b.minX;
+    var dR = b.maxX + btnW - cx;
+    var dT = cy - b.minY;
+    var dB = b.maxY + btnH - cy;
+    var minD = Math.min(dL, dR, dT, dB);
+
+    if (minD === dL) {
+      btn.style.left = b.minX + 'px';
+      btn.style.top = clamp(p.top, b.minY, b.maxY) + 'px';
+    } else if (minD === dR) {
+      btn.style.left = b.maxX + 'px';
+      btn.style.top = clamp(p.top, b.minY, b.maxY) + 'px';
+    } else if (minD === dT) {
+      btn.style.left = clamp(p.left, b.minX, b.maxX) + 'px';
+      btn.style.top = b.minY + 'px';
+    } else {
+      btn.style.left = clamp(p.left, b.minX, b.maxX) + 'px';
+      btn.style.top = b.maxY + 'px';
+    }
+    btn.style.right = 'auto';
+    btn.classList.add('snapping');
+    snapAnimTimer = setTimeout(function () {
+      btn.classList.remove('snapping');
+    }, 400);
+  });
+
+  window.addEventListener('resize', function () {
+    var p = getBtnPos();
+    var b = getBounds();
+    btn.style.left = clamp(p.left, b.minX, b.maxX) + 'px';
+    btn.style.top = clamp(p.top, b.minY, b.maxY) + 'px';
+    btn.style.right = 'auto';
+  });
+})();
+
+// ============ 客服入口 ============
+function openCustomerService() {
+  showToast('客服已连接，请描述您遇到的问题');
+}

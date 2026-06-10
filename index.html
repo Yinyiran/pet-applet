@@ -1422,6 +1422,9 @@
         <!-- /#profilePage -->
       </main>
 
+      <!-- ==================== 客服悬浮按钮 ==================== -->
+      <div class="cs-float-btn" id="csFloatBtn" onclick="openCustomerService()">客服</div>
+
       <!-- ==================== 底部导航栏 ==================== -->
       <nav class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('home', this)">
@@ -2386,10 +2389,13 @@
           </div>
         </div>
 
-        <!-- 搜索 -->
-        <div class="invite-search">
-          <span class="invite-search-icon">🔍</span>
-          <input type="text" class="invite-search-input" placeholder="搜索邀请用户..." oninput="searchInvite(this)" />
+        <!-- 等级筛选 -->
+        <div class="invite-level-filter" id="inviteLevelFilter">
+          <span class="invite-level-chip active" data-level="all" onclick="filterInviteByLevel('all', this)">全部</span>
+          <span class="invite-level-chip" data-level="普通用户" onclick="filterInviteByLevel('普通用户', this)">普通用户</span>
+          <span class="invite-level-chip" data-level="梵优合伙人" onclick="filterInviteByLevel('梵优合伙人', this)">梵优合伙人</span>
+          <span class="invite-level-chip" data-level="梵优主理人" onclick="filterInviteByLevel('梵优主理人', this)">梵优主理人</span>
+          <!-- <span class="invite-level-chip" data-level="分公司" onclick="filterInviteByLevel('分公司', this)">分公司</span> -->
         </div>
 
         <!-- 邀请列表 -->

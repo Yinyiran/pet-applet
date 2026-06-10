@@ -720,9 +720,11 @@ function submitWithdraw() {
 
 // ==================== 我的团队弹窗 ====================
 let inviteTabActive = 'total'; // 'total' | 'views'
+let inviteLevelFilter = 'all'; // 'all' | '普通用户' | '梵优合伙人' | '梵优主理人' | '分公司'
 
 function openInviteDetail() {
   inviteTabActive = 'total';
+  inviteLevelFilter = 'all';
   renderInviteDetail();
   document.getElementById('inviteOverlay').classList.remove('hidden');
 }
@@ -742,6 +744,11 @@ function renderInviteDetail() {
     t.classList.toggle('active', t.getAttribute('data-tab') === inviteTabActive);
   });
 
+  // 等级筛选激活状态
+  document.querySelectorAll('#inviteLevelFilter .invite-level-chip').forEach(function (c) {
+    c.classList.toggle('active', c.getAttribute('data-level') === inviteLevelFilter);
+  });
+
   renderInviteList();
 }
 
@@ -750,7 +757,7 @@ function switchInviteTab(tab, el) {
   renderInviteDetail();
 }
 
-function renderInviteList(filter) {
+function renderInviteList() {
   var list = document.getElementById('inviteList');
   if (!list) return;
 
@@ -765,15 +772,16 @@ function renderInviteList(filter) {
           })
       : inviteList.slice();
 
-  if (filter) {
-    var keyword = filter.toLowerCase();
+  if (inviteLevelFilter !== 'all') {
     filtered = filtered.filter(function (u) {
-      return u.name.toLowerCase().indexOf(keyword) !== -1 || u.id.toLowerCase().indexOf(keyword) !== -1;
+      return (u.level || '普通用户') === inviteLevelFilter;
     });
   }
 
+  var hasFilter = inviteLevelFilter !== 'all';
+
   if (filtered.length === 0) {
-    list.innerHTML = '<div class="invite-empty">' + (filter ? '未搜索到相关用户' : '暂无邀请记录') + '</div>';
+    list.innerHTML = '<div class="invite-empty">' + (hasFilter ? '该等级暂无团队成员' : '暂无邀请记录') + '</div>';
     return;
   }
 
@@ -828,8 +836,12 @@ function renderInviteList(filter) {
     .join('');
 }
 
-function searchInvite(el) {
-  renderInviteList(el.value);
+function filterInviteByLevel(level, el) {
+  inviteLevelFilter = level;
+  document.querySelectorAll('#inviteLevelFilter .invite-level-chip').forEach(function (c) {
+    c.classList.toggle('active', c.getAttribute('data-level') === level);
+  });
+  renderInviteList();
 }
 
 // ==================== 邀请用户详情弹窗 ====================
