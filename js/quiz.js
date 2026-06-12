@@ -90,6 +90,12 @@ function showQuestion(index) {
   document.querySelectorAll('#quizQuestionsArea .quiz-field').forEach((f) => {
     f.style.display = 'none';
   });
+  const quizeDom = document.querySelector('#quizProductSlider');
+  if (index === 0) {
+    quizeDom.style.display = '';
+  } else {
+    quizeDom.style.display = 'none';
+  }
 
   // 显示当前题目
   const current = questions[index];
@@ -1126,9 +1132,7 @@ function renderQuizProducts() {
     .join('');
 
   dots.innerHTML = quizProducts
-    .map(
-      (_, i) => `<span class="quiz-product-dot${i === quizProductIndex ? ' active' : ''}" onclick="scrollToQuizProduct(${i})"></span>`,
-    )
+    .map((_, i) => `<span class="quiz-product-dot${i === quizProductIndex ? ' active' : ''}" onclick="scrollToQuizProduct(${i})"></span>`)
     .join('');
 
   // 监听滚动更新指示点

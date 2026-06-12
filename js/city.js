@@ -281,7 +281,7 @@ function copyTel(tel) {
     navigator.clipboard
       .writeText(tel)
       .then(() => {
-        showToast('电话已复制：' + tel);
+        showToast('一键拨打 ' + tel);
       })
       .catch(() => {
         fallbackCopyTel(tel);
@@ -298,7 +298,7 @@ function fallbackCopyTel(tel) {
   input.select();
   try {
     document.execCommand('copy');
-    showToast('电话已复制：' + tel);
+    showToast('一键拨打 ' + tel);
   } catch (e) {
     showToast('复制失败，请手动复制：' + tel);
   }
