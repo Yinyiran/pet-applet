@@ -1458,6 +1458,12 @@ body {
   flex-shrink: 0;
 }
 
+/* 运费标签高亮 */
+.cart-bottom-total-label .shipping-highlight {
+  color: #fff;
+  font-weight: 700;
+}
+
 /* 地址列表弹出卡片 -- 选中状态 */
 .address-popup-card.selected {
   border-color: var(--primary);
@@ -2185,7 +2191,7 @@ body {
 
 /* ========== 答题页商品滑动卡片 ========== */
 .quiz-product-slider {
-  margin: 40px 0 16px;
+  margin: 20px 0 0;
   margin-bottom: 20px;
   padding: 14px;
   background: var(--card-bg);

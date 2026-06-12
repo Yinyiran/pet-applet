@@ -81,7 +81,25 @@ function renderCart() {
   document.getElementById('cartCheckAll2').checked = allChecked;
 
   const checkedTotal = cartItems.filter((i) => i.checked).reduce((s, i) => s + i.price * i.qty, 0);
-  document.getElementById('cartTotalPrice').textContent = checkedTotal.toFixed(1);
+  const SHIPPING_FREE = 80;
+  const shippingFee = checkedTotal > 0 && checkedTotal < SHIPPING_FREE ? 10 : 0;
+
+  // 运费标签（合并到 cart-bottom-total-label 中）
+  const labelEl = document.getElementById('cartShippingLabel');
+  if (labelEl) {
+    if (checkedTotal === 0) {
+      labelEl.innerHTML = '满<span class="shipping-highlight">¥80</span>免运费，运费<span class="shipping-highlight">¥10.00</span>/单';
+    } else if (shippingFee === 0) {
+      labelEl.innerHTML = '已满<span class="shipping-highlight">¥80</span>，免运费';
+    } else {
+      const remain = (SHIPPING_FREE - checkedTotal).toFixed(1);
+      labelEl.innerHTML = '还差<span class="shipping-highlight">¥' + remain + '</span>享免运费，运费<span class="shipping-highlight">¥10.00</span>';
+    }
+  }
+
+  // 合计 = 商品金额 + 运费
+  const grandTotal = checkedTotal + shippingFee;
+  document.getElementById('cartTotalPrice').textContent = grandTotal.toFixed(1);
 
   const totalQty = cartItems.filter((i) => i.checked).reduce((s, i) => s + i.qty, 0);
   document.getElementById('cartSubmitBtn').textContent = totalQty > 0 ? `结算(${totalQty})` : '结算';
