@@ -154,23 +154,23 @@
               <div class="family-bucket-desc">
                 精选磨牙棒、冻干肉、牛肉粒、芝士饼干、牛骨、鸡肝、蔬菜圈等8大爆款，一次满足爱宠所有口味。优质天然食材，低盐低脂配方，营养全面均衡，好吃更健康
               </div>
-            </div>
-            <div class="family-bucket-right">
-              <div class="family-bucket-price"><span class="unit">¥</span>89<span class="orig">¥168</span></div>
-              <button
-                class="family-bucket-btn"
-                onclick="
-                  event.stopPropagation();
-                  addFamilyBucket();
-                "
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <circle cx="9" cy="21" r="1" />
-                  <circle cx="20" cy="21" r="1" />
-                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                </svg>
-                立即选购
-              </button>
+              <div class="family-bucket-right">
+                <div class="family-bucket-price"><span class="unit">¥</span>89<span class="orig">¥168</span></div>
+                <button
+                  class="family-bucket-btn"
+                  onclick="
+                    event.stopPropagation();
+                    addFamilyBucket();
+                  "
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                  </svg>
+                  立即选购
+                </button>
+              </div>
             </div>
           </div>
 
@@ -363,7 +363,7 @@
               <div class="cart-empty-desc">快去挑选心仪的宠物好物吧</div>
               <button class="cart-empty-btn" onclick="switchTab('home', document.querySelector('.nav-item'))">去逛逛</button>
             </div>
-            <div id="cartContent" style="display: none; flex: 1">
+            <div id="cartContent" style="display: none; flex: 1; overflow: auto">
               <!-- 收货地址栏 -->
               <div class="cart-address-bar" id="cartAddressBar" onclick="openCartAddressList()">
                 <div class="cart-address-bar-icon">📍</div>

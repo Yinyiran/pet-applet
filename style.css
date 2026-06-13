@@ -142,6 +142,7 @@ body {
   display: none;
 }
 .page.active {
+  height: 100%;
   display: block;
 }
 
@@ -1323,10 +1324,6 @@ body {
 }
 
 .cart-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background: linear-gradient(135deg, #ffc596 0%, #ff9549 100%);
   border-top: none;
   display: flex;
@@ -2734,26 +2731,30 @@ body {
   font-size: 16px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 .family-bucket-desc {
   font-size: 11px;
   color: var(--text-secondary);
   line-height: 1.4;
+  text-align: justify;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .family-bucket-right {
   display: flex;
-  flex-direction: column;
   align-items: flex-end;
+  justify-content: flex-end;
   gap: 6px;
   flex-shrink: 0;
+  margin-top: 4px;
 }
 .family-bucket-price {
   font-size: 18px;
   font-weight: 800;
+  display: flex;
+  align-items: center;
   color: var(--accent);
 }
 .family-bucket-price .unit {
@@ -2763,6 +2764,7 @@ body {
 .family-bucket-price .orig {
   font-size: 10px;
   color: var(--text-light);
+  margin-left: 10px;
   text-decoration: line-through;
   font-weight: 400;
   display: block;
@@ -2778,6 +2780,7 @@ body {
   border-radius: 16px;
   font-size: 12px;
   font-weight: 600;
+  margin-left: 20px;
   border: none;
   cursor: pointer;
   transition: background var(--transition);
@@ -7266,10 +7269,11 @@ body {
 .family-bucket-imgs {
   width: 100px !important;
   height: 90px !important;
-  grid-template-columns: 1fr 1fr 1fr 1fr !important;
-  grid-template-rows: 1fr 1fr !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
+  grid-template-rows: 1fr 1fr 1fr !important;
   gap: 2px !important;
   padding: 4px !important;
+  margin-bottom: 22px;
 }
 .family-bucket-imgs-item {
   font-size: 18px !important;
