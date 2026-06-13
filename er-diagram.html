@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>梵优茗宠 — 数据库ER图</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #f8f4f0;
+    color: #3d2c1e;
+    padding: 20px;
+  }
+  .header {
+    text-align: center;
+    padding: 24px 16px 16px;
+    background: linear-gradient(135deg, #fdf0e6, #fae8d8);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(61,44,30,0.08);
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+  .header p {
+    font-size: 13px;
+    color: #8c7b6e;
+    line-height: 1.5;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin: 16px 0 20px;
+    padding: 0 16px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #8c7b6e;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .diagram-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(61,44,30,0.08);
+    overflow-x: auto;
+  }
+  .diagram-section h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #3d2c1e;
+    margin-bottom: 12px;
+    padding-left: 10px;
+    border-left: 3px solid #f97316;
+  }
+  .mermaid-container {
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+  }
+  .mermaid-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+  .note {
+    background: #fff7ed;
+    border-left: 3px solid #f97316;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #8c7b6e;
+    line-height: 1.6;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #1a1a2e; color: #e8e3dc; }
+    .diagram-section { background: #16213e; }
+    .header { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+    .header p { color: #b8a898; }
+    .note { background: #16213e; color: #b8a898; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>梵优茗宠 — 数据库ER图</h1>
+  <p>基于项目代码分析，参考电商+宠物行业最佳实践设计，覆盖所有功能模块</p>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#4facfe"></div>用户</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7dd3fc"></div>宠物</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>商品/订单</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div>课程/内容</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div>分佣/邀请</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f472b6"></div>AI/配餐</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div>积分/账户</div>
+</div>
+
+<!-- 核心业务ER图 -->
+<div class="diagram-section">
+  <h2>核心业务ER图 — 用户 · 宠物 · 商品 · 订单</h2>
+  <div class="mermaid-container">
+    <div class="mermaid">
+classDiagram
+    direction TB
+
+    class USER {
+        +id : bigint PK
+        +open_id : varchar 微信OpenID
+        +phone : varchar 手机号
+        +nickname : varchar
+        +avatar : varchar 头像URL
+        +gender : varchar
+        +birthday : date
+        +level : varchar 轻创等级
+        +member_level : varchar 会员等级
+        +balance : decimal 账户余额
+        +total_spent : decimal 累计消费
+        +points : int 积分余额
+        +city : varchar 所在城市
+        +is_active : boolean
+        +created_at : timestamp
+        +updated_at : timestamp
+    }
+
+    class USER_ADDRESS {
+        +id : bigint PK
+        +user_id : bigint FK
+        +name : varchar 收货人
+        +phone : varchar
+        +region : varchar 省市区
+        +detail : varchar 详细地址
+        +is_default : boolean
+        +created_at : timestamp
+    }
+
+    class USER_PET {
+        +id : bigint PK
+        +user_id : bigint FK
+        +name : varchar 宠物名
+        +type : varchar cat/dog
+        +breed : varchar 品种
+        +weight : decimal 体重kg
+        +birthday : date
+        +gender : varchar
+        +is_neutered : boolean 是否绝育
+        +age_group : varchar 年龄段
+        +created_at : timestamp
+    }
+
+    class PRODUCT {
+        +id : bigint PK
+        +name : varchar 商品名
+        +description : text
+        +price : decimal 售价
+        +original_price : decimal 原价
+        +stock : int
+        +category : varchar
+        +tags : varchar 标签
+        +img_url : varchar 主图
+        +gallery : json 轮播图
+        +specs : json 规格JSON
+        +is_active : boolean
+        +sales : int 销量
+        +created_at : timestamp
+    }
+
+    class PRODUCT_CATEGORY {
+        +id : int PK
+        +name : varchar 分类名
+        +parent_id : int 父分类ID
+        +sort_order : int
+        +is_active : boolean
+    }
+
+    class CART {
+        +id : bigint PK
+        +user_id : bigint FK
+        +product_id : bigint FK
+        +qty : int 数量
+        +selected_spec : json 选中规格
+        +is_checked : boolean
+        +created_at : timestamp
+    }
+
+    class ORDER {
+        +id : bigint PK
+        +order_no : varchar UK 订单号
+        +user_id : bigint FK
+        +address_id : bigint FK
+        +total_amount : decimal 订单总额
+        +original_amount : decimal 原始总额
+        +discount_amount : decimal 优惠金额
+        +status : varchar 订单状态
+        +payment : json 支付明细
+        +logistics_company : varchar
+        +logistics_no : varchar
+        +paid_at : timestamp
+        +shipped_at : timestamp
+        +received_at : timestamp
+        +created_at : timestamp
+    }
+
+    class ORDER_ITEM {
+        +id : bigint PK
+        +order_id : bigint FK
+        +product_id : bigint FK
+        +product_name : varchar 快照
+        +price : decimal 单价快照
+        +qty : int
+        +subtotal : decimal 小计
+    }
+
+    class PAYMENT {
+        +id : bigint PK
+        +order_no : varchar FK
+        +method : varchar 支付方式
+        +amount : decimal 支付金额
+        +status : varchar 支付状态
+        +transaction_id : varchar
+        +paid_at : timestamp
+    }
+
+    class REFUND {
+        +id : bigint PK
+        +order_no : varchar FK
+        +user_id : bigint FK
+        +type : varchar 退款/换货
+        +reason : varchar 售后原因
+        +status : varchar 处理状态
+        +refund_amount : decimal
+        +created_at : timestamp
+    }
+
+    USER "1" --> "0..*" USER_ADDRESS : 拥有
+    USER "1" --> "0..*" USER_PET : 拥有
+    USER "1" --> "0..*" CART : 购物车
+    USER "1" --> "0..*" ORDER : 下单
+    USER "1" --> "0..*" PAYMENT : 支付
+    USER "1" --> "0..*" REFUND : 申请售后
+    USER_ADDRESS "1" --> "0..*" ORDER : 收货地址
+    PRODUCT "1" --> "0..*" CART : 加入购物车
+    PRODUCT "1" --> "0..*" ORDER_ITEM : 包含
+    ORDER "1" --> "1..*" ORDER_ITEM : 包含明细
+    ORDER "1" --> "0..*" PAYMENT : 支付记录
+    ORDER "1" --> "0..*" REFUND : 售后记录
+    PRODUCT_CATEGORY "1" --> "0..*" PRODUCT : 归类于
+    </div>
+  </div>
+  <div class="note">覆盖：用户注册/登录、宠物档案、商品浏览、购物车、下单支付、物流跟踪、售后退款全流程</div>
+</div>
+
+<!-- 分佣与邀请系统 -->
+<div class="diagram-section">
+  <h2>分佣与邀请系统ER图</h2>
+  <div class="mermaid-container">
+    <div class="mermaid">
+classDiagram
+    direction TB
+
+    class USER {
+        +id : bigint PK
+        +open_id : varchar 微信OpenID
+        +nickname : varchar 昵称
+        +level : varchar 轻创等级
+        +balance : decimal 账户余额
+    }
+
+    class ORDER {
+        +id : bigint PK
+        +order_no : varchar UK
+        +user_id : bigint FK
+        +total_amount : decimal 订单总额
+        +status : varchar
+    }
+
+    class COMMISSION_TIER {
+        +id : int PK
+        +name : varchar 等级名
+        +level : int 等级序号
+        +icon : varchar
+        +rates : varchar 佣金率JSON
+        +upgrade_condition : varchar
+        +color : varchar 主题色
+        +is_active : boolean
+    }
+
+    class USER_COMMISSION {
+        +id : bigint PK
+        +user_id : bigint FK UK
+        +tier_id : int FK
+        +total_earned : decimal 累计收益
+        +pending_amount : decimal 待结算
+        +available_balance : decimal 可提现
+        +invite_count : int 邀请人数
+        +active_invite_count : int 活跃数
+        +total_views : int 总浏览量
+        +this_month_earned : decimal 本月收益
+        +updated_at : timestamp
+    }
+
+    class USER_INVITE {
+        +id : bigint PK
+        +user_id : bigint FK 被邀请人
+        +parent_id : bigint FK 邀请人
+        +level_depth : int 关系深度
+        +status : varchar
+        +created_at : timestamp
+    }
+
+    class COMMISSION_LOG {
+        +id : bigint PK
+        +log_no : varchar UK
+        +user_id : bigint FK 受益人
+        +from_user_id : bigint FK 消费用户
+        +order_id : bigint FK 关联订单
+        +type : varchar order/withdraw
+        +title : varchar
+        +amount : decimal 金额
+        +commission_level : int 佣金层级
+        +rate : decimal 佣金率
+        +order_amount : decimal 订单金额
+        +status : varchar 结算状态
+        +settled_at : timestamp
+        +created_at : timestamp
+    }
+
+    class WITHDRAW {
+        +id : bigint PK
+        +withdraw_no : varchar UK
+        +user_id : bigint FK
+        +amount : decimal 提现金额
+        +method : varchar 微信/银行卡
+        +account_info : varchar 加密
+        +status : varchar 审核状态
+        +audit_remark : varchar
+        +applied_at : timestamp
+        +finished_at : timestamp
+    }
+
+    COMMISSION_TIER "1" --> "0..*" USER_COMMISSION : 等级对应
+    USER "1" --> "0..1" USER_COMMISSION : 分佣账户
+    USER "1" --> "0..*" USER_INVITE : 作为邀请人
+    USER_INVITE "0..*" --> "1" USER : 被邀请人
+    USER_COMMISSION "1" --> "0..*" COMMISSION_LOG : 收益明细
+    USER_COMMISSION "1" --> "0..*" WITHDRAW : 提现记录
+    ORDER "1" --> "0..*" COMMISSION_LOG : 关联订单
+    </div>
+  </div>
+  <div class="note">覆盖：三级分佣体系、邀请关系树、佣金自动结算、提现申请审批、团队业绩统计</div>
+</div>
+
+<!-- AI配餐与答题系统 -->
+<div class="diagram-section">
+  <h2>AI配餐与答题系统ER图</h2>
+  <div class="mermaid-container">
+    <div class="mermaid">
+classDiagram
+    direction TB
+
+    class USER {
+        +id : bigint PK
+        +open_id : varchar 微信OpenID
+        +nickname : varchar 昵称
+        +balance : decimal 账户余额
+    }
+
+    class QUIZ_RECORD {
+        +id : bigint PK
+        +user_id : bigint FK
+        +pet_type : varchar 猫/狗
+        +answers : json 答题答案
+        +constitution_type : varchar 体质类型
+        +constitution_desc : text 体质描述
+        +tags : varchar 体质标签JSON
+        +created_at : timestamp
+    }
+
+    class MEAL_PLAN {
+        +id : bigint PK
+        +pet_type : varchar cat/dog
+        +name : varchar 方案名称
+        +tag : varchar
+        +match_rules : json 匹配规则
+        +ingredients : json 食材配方
+        +monthly_price : decimal 月单价
+        +sort_order : int
+        +is_default : boolean
+        +is_active : boolean
+    }
+
+    class MEAL_INGREDIENT {
+        +id : bigint PK
+        +plan_id : bigint FK
+        +name : varchar 食材名
+        +weight : decimal 配比克数
+        +sort_order : int
+    }
+
+    class MEAL_ORDER {
+        +id : bigint PK
+        +order_no : varchar UK
+        +user_id : bigint FK
+        +plan_id : bigint FK
+        +quiz_id : bigint FK
+        +meal_freq : int 每日餐次
+        +meal_days : int 周期天数
+        +total_price : decimal 总价
+        +status : varchar
+        +created_at : timestamp
+    }
+
+    USER "1" --> "0..*" QUIZ_RECORD : 答题用户
+    USER "1" --> "0..*" MEAL_ORDER : 订购用户
+    MEAL_PLAN "1" --> "0..*" MEAL_INGREDIENT : 包含食材
+    MEAL_ORDER "0..*" --> "1" MEAL_PLAN : 对应方案
+    MEAL_ORDER "0..*" --> "1" QUIZ_RECORD : 对应答题
+    </div>
+  </div>
+  <div class="note">覆盖：AI答题分页、体质分析引擎、配餐方案智能匹配、配餐订单（按餐次/天数计价）</div>
+</div>
+
+<!-- 同城服务与轻创课程 -->
+<div class="diagram-section">
+  <h2>同城服务与轻创课程ER图</h2>
+  <div class="mermaid-container">
+    <div class="mermaid">
+classDiagram
+    direction TB
+
+    class USER {
+        +id : bigint PK
+        +open_id : varchar 微信OpenID
+        +nickname : varchar 昵称
+        +level : varchar 轻创等级
+    }
+
+    class CITY_MERCHANT {
+        +id : bigint PK
+        +name : varchar 商家名称
+        +type : varchar shop/hospital等
+        +tags : json 标签JSON
+        +description : text
+        +address : varchar
+        +phone : varchar
+        +score : decimal 评分
+        +distance : int 距离米
+        +img_url : varchar 封面图
+        +business_hours : json 营业时间
+        +lat : decimal 纬度
+        +lng : decimal 经度
+        +status : varchar
+        +created_at : timestamp
+    }
+
+    class MERCHANT_APPLY {
+        +id : bigint PK
+        +merchant_type : varchar 商户类型
+        +name : varchar 商户名称
+        +contact : varchar 联系人
+        +phone : varchar
+        +city : varchar
+        +address : varchar
+        +description : text
+        +wechat : varchar 微信号
+        +status : varchar 审核状态
+        +reviewer_id : bigint 审核人
+        +created_at : timestamp
+    }
+
+    class COURSE {
+        +id : bigint PK
+        +name : varchar 课程名
+        +tier : varchar basic/pro/partner
+        +description : text
+        +price : decimal 价格
+        +hero_img : varchar 封面
+        +features : json 特色JSON
+        +chapter_list : json 章节JSON
+        +sort_order : int
+        +is_active : boolean
+    }
+
+    class COURSE_VIDEO {
+        +id : bigint PK
+        +course_id : bigint FK
+        +title : varchar 视频标题
+        +video_url : varchar 视频地址
+        +thumbnail : varchar 缩略图
+        +duration : int 时长秒
+        +is_free : boolean
+        +sort_order : int
+    }
+
+    class USER_COURSE {
+        +id : bigint PK
+        +user_id : bigint FK
+        +course_id : bigint FK
+        +status : varchar 状态
+        +paid_at : timestamp 购买时间
+        +expire_at : timestamp 到期时间
+    }
+
+    class LIVE_ROOM {
+        +id : bigint PK
+        +name : varchar 直播间名
+        +platform : varchar douyin
+        +room_id : varchar 房间号
+        +share_code : varchar 分享口令
+        +is_active : boolean
+    }
+
+    CITY_MERCHANT "1" --> "0..*" MERCHANT_APPLY : 合作申请
+    COURSE "1" --> "0..*" COURSE_VIDEO : 包含视频
+    USER "1" --> "0..*" USER_COURSE : 购买用户
+    USER_COURSE "0..*" --> "1" COURSE : 购买课程
+    </div>
+  </div>
+  <div class="note">覆盖：同城服务LBS、商家合作入驻申请、三档轻创课程、视频章节权限、直播间分享</div>
+</div>
+
+<!-- 积分与账户系统 -->
+<div class="diagram-section">
+  <h2>积分与账户系统ER图</h2>
+  <div class="mermaid-container">
+    <div class="mermaid">
+classDiagram
+    direction TB
+
+    class USER {
+        +id : bigint PK
+        +open_id : varchar 微信OpenID
+        +nickname : varchar 昵称
+        +member_level : varchar 会员等级
+        +balance : decimal 账户余额
+        +total_spent : decimal 累计消费
+        +points : int 积分余额
+    }
+
+    class POINTS_LOG {
+        +id : bigint PK
+        +user_id : bigint FK
+        +type : varchar earn/spend/expire
+        +source : varchar 来源
+        +change_value : int 变动值
+        +balance_after : int 变动后余额
+        +remark : varchar 备注
+        +related_id : bigint 关联ID
+        +created_at : timestamp
+    }
+
+    class RECHARGE_LOG {
+        +id : bigint PK
+        +recharge_no : varchar UK
+        +user_id : bigint FK
+        +method : varchar 微信/余额/卡
+        +amount : decimal 充值金额
+        +gift_amount : decimal 赠送金额
+        +status : varchar 状态
+        +transaction_id : varchar 第三方交易号
+        +created_at : timestamp
+    }
+
+    class CONSUMPTION_LOG {
+        +id : bigint PK
+        +log_no : varchar UK
+        +user_id : bigint FK
+        +type : varchar 商品购买/退款
+        +item_summary : varchar 商品摘要
+        +total_amount : decimal 总金额
+        +balance_pay : decimal 余额支付
+        +wechat_pay : decimal 微信支付
+        +status : varchar 状态
+        +created_at : timestamp
+    }
+
+    class MEMBER_LEVEL {
+        +level_key : varchar PK
+        +name : varchar 等级名
+        +threshold : decimal 升级门槛
+        +next_threshold : decimal 下一档门槛
+        +points_rate : int 积分倍率
+        +privileges : json 权益JSON
+        +sort_order : int
+    }
+
+    USER "1" --> "0..*" POINTS_LOG : 积分变动
+    USER "1" --> "0..*" RECHARGE_LOG : 充值记录
+    USER "1" --> "0..*" CONSUMPTION_LOG : 消费记录
+    MEMBER_LEVEL "1" --> "0..*" USER : 当前等级
+    </div>
+  </div>
+  <div class="note">覆盖：积分获取/消耗/过期、余额充值（含赠送）、消费支付明细、会员等级自动升降级</div>
+</div>
+
+<!-- 完整关系总览 -->
+<div class="diagram-section">
+  <h2>数据库表关系总览</h2>
+  <div class="mermaid-container">
+    <div class="mermaid">
+classDiagram
+    direction LR
+
+    class USER {
+        +id : PK
+        +open_id : 微信OpenID
+        +phone : 手机号
+        +level : 轻创等级
+        +member_level : 会员等级
+        +balance : 账户余额
+        +total_spent : 累计消费
+        +points : 积分余额
+    }
+
+    class USER_PET {
+        +id : PK
+        +user_id : FK
+        +name : 宠物名
+        +type : cat/dog
+    }
+
+    class USER_ADDRESS {
+        +id : PK
+        +user_id : FK
+        +is_default
+    }
+
+    class CART {
+        +id : PK
+        +user_id : FK
+        +product_id : FK
+    }
+
+    class ORDER {
+        +id : PK
+        +order_no : UK
+        +user_id : FK
+        +status
+    }
+
+    class ORDER_ITEM {
+        +id : PK
+        +order_id : FK
+        +product_id : FK
+    }
+
+    class PRODUCT {
+        +id : PK
+        +name : 商品名
+        +price
+    }
+
+    class USER_COMMISSION {
+        +id : PK
+        +user_id : FK UK
+    }
+
+    class USER_INVITE {
+        +id : PK
+        +user_id : FK
+        +parent_id : FK
+    }
+
+    class COMMISSION_LOG {
+        +id : PK
+        +user_id : FK
+        +order_id : FK
+    }
+
+    class WITHDRAW {
+        +id : PK
+        +user_id : FK
+    }
+
+    class QUIZ_RECORD {
+        +id : PK
+        +user_id : FK
+    }
+
+    class MEAL_PLAN {
+        +id : PK
+        +pet_type
+    }
+
+    class MEAL_ORDER {
+        +id : PK
+        +user_id : FK
+        +plan_id : FK
+    }
+
+    class COURSE {
+        +id : PK
+        +name : 课程名
+    }
+
+    class USER_COURSE {
+        +id : PK
+        +user_id : FK
+        +course_id : FK
+    }
+
+    class POINTS_LOG {
+        +id : PK
+        +user_id : FK
+    }
+
+    class RECHARGE_LOG {
+        +id : PK
+        +user_id : FK
+    }
+
+    USER "1" --> "0..*" USER_PET : 宠物档案
+    USER "1" --> "0..*" USER_ADDRESS : 收货地址
+    USER "1" --> "0..*" CART : 购物车
+    USER "1" --> "0..*" ORDER : 订单
+    USER "1" --> "0..*" USER_INVITE : 邀请关系
+    USER "1" --> "0..*" QUIZ_RECORD : AI答题
+    USER "1" --> "0..*" MEAL_ORDER : 配餐订单
+    USER "1" --> "0..*" USER_COURSE : 课程学习
+    USER "1" --> "0..*" POINTS_LOG : 积分流水
+    USER "1" --> "0..*" RECHARGE_LOG : 充值记录
+    USER "1" --> "0..1" USER_COMMISSION : 分佣账户
+
+    ORDER "1" --> "1..*" ORDER_ITEM : 订单明细
+    ORDER "1" --> "0..*" PAYMENT : 支付
+    ORDER "1" --> "0..*" REFUND : 售后
+
+    PRODUCT "1" --> "0..*" CART : 购物车
+    PRODUCT "1" --> "0..*" ORDER_ITEM : 订单商品
+
+    MEAL_PLAN "1" --> "0..*" MEAL_ORDER : 配餐订单
+
+    COURSE "1" --> "0..*" USER_COURSE : 购买
+    </div>
+  </div>
+  <div class="note">实体总数：26张表 | 关系总数：20+ | 设计遵循第三范式(3NF)，并在分佣日志等高频查询场景保留适度冗余</div>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#fff7ed',
+      primaryTextColor: '#3d2c1e',
+      primaryBorderColor: '#f97316',
+      lineColor: '#8c7b6e',
+      secondaryColor: '#f0f7ff',
+      tertiaryColor: '#fdf0e6',
+      background: '#ffffff',
+      mainBkg: '#ffffff',
+      nodeBorder: '#f97316',
+      clusterBkg: '#f8f4f0',
+      titleColor: '#3d2c1e',
+      edgeLabelBackground: '#ffffff',
+      fontFamily: '-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif',
+    }
+  });
+</script>
+</body>
+</html>
