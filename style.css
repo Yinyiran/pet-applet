@@ -7229,3 +7229,48 @@ body {
 .order-popup-card-action:active {
   opacity: 0.8;
 }
+
+/* 购物车分类头部（标题+提示同一行） */
+.cart-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 4px 4px;
+}
+
+/* 购物车分类标题 */
+.cart-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 购物车分类提示 */
+.cart-section-tip {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: #fff3e0;
+  color: #e6a23c;
+}
+
+.cart-section-tip.ok {
+  background: #f0f9eb;
+  color: #67c23a;
+}
+
+/* 零食全家桶图片区：4x2 网格（8款商品） */
+.family-bucket-imgs {
+  width: 100px !important;
+  height: 90px !important;
+  grid-template-columns: 1fr 1fr 1fr 1fr !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 2px !important;
+  padding: 4px !important;
+}
+.family-bucket-imgs-item {
+  font-size: 18px !important;
+}
