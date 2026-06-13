@@ -140,7 +140,7 @@ function renderCart() {
     const customTotal = customItems.reduce((s, i) => s + i.qty, 0);
     var customStatus = '';
     if (customTotal === 8) {
-      customStatus = '✅ 已凑齐';
+      customStatus = '已满8份';
     } else {
       customStatus = '还需凑' + (8 - customTotal) + '份，当前' + customTotal + '份';
     }
@@ -161,16 +161,17 @@ function renderCart() {
 function renderCartItem(item) {
   const typeStr = item.type || 'normal';
   var html = '<div class="cart-item">';
-  html += '<input type="checkbox" ' + (item.checked ? 'checked' : '') + ' onchange="toggleItemCheck(this, \'' + typeStr + '\', \'' + item.name + '\')">';
+  html +=
+    '<input type="checkbox" ' + (item.checked ? 'checked' : '') + ' onchange="toggleItemCheck(this, \'' + typeStr + "', '" + item.name + '\')">';
   html += '<div class="cart-item-img">' + item.emoji + '</div>';
   html += '<div class="cart-item-info">';
   html += '<div class="cart-item-name">' + item.name + '</div>';
   html += '<div class="cart-item-price"><span class="unit">¥</span>' + item.price.toFixed(1) + '</div>';
   html += '</div>';
   html += '<div class="cart-qty">';
-  html += '<div class="cart-qty-btn" onclick="updateQty(\'' + item.name + '\', \'' + typeStr + '\', -1)">−</div>';
+  html += '<div class="cart-qty-btn" onclick="updateQty(\'' + item.name + "', '" + typeStr + '\', -1)">−</div>';
   html += '<div class="cart-qty-num">' + item.qty + '</div>';
-  html += '<div class="cart-qty-btn" onclick="updateQty(\'' + item.name + '\', \'' + typeStr + '\', 1)">+</div>';
+  html += '<div class="cart-qty-btn" onclick="updateQty(\'' + item.name + "', '" + typeStr + '\', 1)">+</div>';
   html += '</div>';
   html += '</div>';
   return html;
@@ -190,14 +191,14 @@ function addFamilyBucket() {
   // 先移除旧的专属定制商品
   cartItems = cartItems.filter((i) => i.type !== 'custom');
   const items = [
-    { emoji: '🍖', name: '磨牙洁齿棒', price: 19.9 },
-    { emoji: '🐟', name: '三文鱼冻干', price: 29.9 },
-    { emoji: '🧀', name: '芝士训练饼干', price: 15.9 },
-    { emoji: '🥩', name: '原切牛肉粒', price: 24.9 },
-    { emoji: '🍗', name: '鸡肉绕钙奶棒', price: 32.9 },
-    { emoji: '🦴', name: '牛骨头磨牙', price: 22.9 },
-    { emoji: '🐔', name: '冻干鸡肝', price: 18.9 },
-    { emoji: '🥕', name: '蔬菜磨牙圈', price: 12.9 },
+    { emoji: '🍖', name: '磨牙洁齿棒', price: 10 },
+    { emoji: '🐟', name: '三文鱼冻干', price: 10 },
+    { emoji: '🧀', name: '芝士训练饼干', price: 10 },
+    { emoji: '🥩', name: '原切牛肉粒', price: 10 },
+    { emoji: '🍗', name: '鸡肉绕钙奶棒', price: 10 },
+    { emoji: '🦴', name: '牛骨头磨牙', price: 10 },
+    { emoji: '🐔', name: '冻干鸡肝', price: 10 },
+    { emoji: '🥕', name: '蔬菜磨牙圈', price: 10 },
   ];
   items.forEach((i) => addToCart(i.emoji, i.name, i.price, 'custom'));
   showToast('已添加零食全家桶(8件)到购物车 🎉');
